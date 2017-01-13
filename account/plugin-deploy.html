@@ -1,0 +1,61 @@
+{{ $pl := .LoadPlugin (.PathVar "id") }}
+{{ $title := printf "Deploy %s" $pl.Name }}
+{{.Include "/account/includes/header.html" $title}}
+<script src="/resources/js/account/deploy-plugin.js"></script>
+
+<main>
+	<h1>Deploy Plugin</h1>
+
+	<h2>{{$pl.Name}}</h2>
+
+	<table class="key-value-pairs">
+		<tr>
+			<th>Package</th>
+			<td class="wrap">{{$pl.ImportPath}}</td>
+		</tr>
+		<tr>
+			<th>Repository</th>
+			<td class="wrap">{{$pl.SourceRepo}}</td>
+		</tr>
+		<tr>
+			<th>Current Release</th>
+			<td class="wrap">{{if $pl.LatestRelease}}{{$pl.LatestRelease.Version}}{{else}}&mdash;{{end}}</td>
+		</tr>
+	</table>
+
+	<p>
+		This page will help you release an updated version of your plugin. You can release at any point that you can "git checkout": branches, tags, and commits.
+	</p>
+	<p>
+		To release a tag, make sure your tag has already been created and pushed. To release a commit, ensure the commit is pushed, then paste the full SHA.
+	</p>
+	<p>
+		If releasing at a branch name, your plugin will be deployed now as it currently is on the given branch. However, if your plugin's package is a dependency of any other plugin, it's possible that it will be updated to the latest on the branch without warning. In other words, deploying from a branch name may not stay at the same commit as it is right now. It's always recommended to release a tag or commit instead.
+	</p>
+
+	<form method="POST" action="/api/deploy-plugin">
+		<input type="hidden" name="plugin_id" value="{{$pl.ID}}">
+		<table class="form">
+			<tr>
+				<td class="field">
+					<h2>Version</h2>
+					<p>
+						The tag, name of branch, or full commit SHA to deploy.
+					</p>
+					<input type="text" name="plugin_version">
+				</td>
+			</tr>
+			<tr>
+				<td class="field">
+					<p>
+						Clicking this button will initiate a new release of your plugin. You will receive a notification with the result of the deploy when it is finished.
+					</p>
+					<button class="submit wide">Deploy</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+
+
+</main>
+{{.Include "/account/includes/footer.html"}}

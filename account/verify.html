@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Confirm Account - Caddy</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="/resources/css/sweetalert2.min.css">
+		<link rel="stylesheet" href="/resources/css/account-common.css">
+		<script src="/resources/js/jquery-3.1.1.min.js"></script>
+		<script src="/resources/js/sweetalert2.min.js"></script>
+		<script src="/resources/js/common.js"></script>
+		<script src="/resources/js/account-confirm.js"></script>
+	</head>
+	<body>
+		<form class="fullpage" method="POST" action="/api/confirm-account" id="register">
+			<div class="logo-container">
+				<a href="/"><img src="/resources/images/caddy-black.png" alt="Caddy" class="logo"></a><br>
+				Developer Portal
+			</div>
+			<h1>Activate Account</h1>
+			<div class="alt-link">or <a href="/account/login">log in</a></div>
+
+			<input type="email" name="email" id="email" placeholder="Email address" disabled>
+			<input type="text" name="acct" id="acct" placeholder="Account ID" disabled>
+
+			<button type="submit" id="submit" disabled>Activate</button>
+		</form>
+	</body>
+</html>

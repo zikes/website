@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<head>
+	<head>
+		<title>The Caddyfile - Introduction to Configuring Caddy</title>
+		{{.Include "/includes/head.html"}}
+		<link rel="stylesheet" href="/resources/css/docs.css">
+	</head>
+	<body>
+		<header>
+			{{.Include "/includes/header-nav.html"}}
+			<div class="content">
+				<h1>Caddyfile</h1>
+			</div>
+		</header>
+		{{.Include "/includes/docs-nav.html"}}
+
+		<main class="content">
+			{{.Include "/includes/tutorials-nav.html"}}
+			<article>
+				<p>
+					This tutorial will show you how easy it is to configure Caddy with the Caddyfile.
+				</p>
+
+				<h2>Your First Caddyfile</h2>
+				<p>
+					Caddy can be acutely customized by placing a text file named Caddyfile next to your site. Writing a Caddyfile is very intuitive.
+				</p>
+				<p>
+					<b>The first line of the Caddyfile is <i>always</i> the address of the site to serve.</b> For example:
+				</p>
+				<code class="block"><span class="cf-addr">localhost:8080</span></code>
+				<p>
+					When you save that in a file called Caddyfile, Caddy will automatically find it when you start it:
+				</p>
+				<code class="block cmd bash">caddy</code>
+				<p>
+					If the Caddyfile is in a different location or has a different name, tell Caddy where it is:
+				</p>
+				<code class="block cmd bash">caddy -conf "../path/to/Caddyfile"</code>
+
+
+
+
+
+
+
+
+				<!-- <h2>Site Addresses</h2>
+				<p>
+					Site addresses can take several forms:
+				</p>
+				<code class="block"><span class="cf-addr">localhost, 127.0.0.1, :8080, 127.0.0.1:8080</code>
+				<p>
+					Other valid formats follow what you would naturally use in web browsers or URLs:
+				</p>
+				<code class="block"><span class="cf-addr">example.com, http://example.com, http://example.com:8080,
+example.com/blog, http://example.co</code> -->
+				<p>
+					Lines after the site address start with a directive. Directives are <a href="#">(TODO)keywords that Caddy recognizes</a>. For example:
+				</p>
+				<code class="block"><span class="cf-addr">localhost:8080</span>
+<span class="cf-dir">gzip</span></code>
+				<p>
+					Directives might have one or more arguments after them:
+				</p>
+				<code class="block"><span class="cf-addr">localhost:8080</span>
+<span class="cf-dir">gzip</span>
+<span class="cf-dir">log</span> <span class="cf-arg">../access.log</span></code>
+				<p>
+					Some directives require more configuration than can fit on one line. For those directives, you can open a <i>block</i> and set more parameters. The open curly brace must be at the end of a line:
+				</p>
+				<code class="block"><span class="cf-addr">localhost:8080</span>
+<span class="cf-dir">gzip</span>
+<span class="cf-dir">log</span> <span class="cf-arg">../access.log</span>
+<span class="cf-dir">markdown</span> <span class="cf-arg">/blog</span> {
+    <span class="cf-subdir">css</span> /blog.css
+    <span class="cf-subdir">js</span>  /scripts.js
+}</code>
+				<p>
+					If the directive block is left empty, you should omit the curly braces entirely.
+				</p>
+				<p>
+					Arguments that contain whitespace must be enclosed in quotes <code>&quot;</code>.
+				</p>
+				<p>
+					The Caddyfile can also have comments starting with the <code>#</code> character:
+				</p>
+				<code class="block"><span class="cf-comment"># Comments can start a line</span>
+<span class="cf-dir">foobar</span> <span class="cf-comment"># or go at the end</span></code>
+				<p>
+					To configure multiple sites with a single Caddyfile, you must use curly braces around each one to separate their configurations:
+				</p>
+				<code class="block"><span class="cf-addr">mysite.com</span> {
+    <span class="cf-dir">root</span> <span class="cf-arg">/www/mysite.com</span>
+}<br>
+<span class="cf-addr">sub.mysite.com</span> {
+    <span class="cf-dir">root</span> <span class="cf-arg">/www/sub.mysite.com</span>
+    <span class="cf-dir">gzip</span>
+    <span class="cf-dir">log</span> <span class="cf-arg">../access.log</span>
+}</code>
+				<p>
+					As with directives, the opening curly brace must be at the end of the same line. The closing curly brace must be on its own line.
+				</p>
+				<p>
+					For sites which share the same configuration, specify multiple addresses:
+				</p>
+				<code class="block"><span class="cf-addr">localhost:8080, https://site.com, http://mysite.com</span> {
+    ...
+}</code>
+				<p>
+					Site addresses can also be defined under a specific path or have wildcards in place of individual domain labels from the left side:
+				</p>
+
+<p><code class="block"><span class="cf-addr">example.com/static</span>
+<span class="cf-addr">*.example.com</span></code></p>
+
+<p>Note that using a path in your site address routes requests by longest matching prefix. If your base path is a directory, you may wish to suffix the path with a forward slash <code>/</code>.</p>
+
+<p>Use of environment variables is allowed in addresses and arguments. They must be enclosed in curly braces, and you can use either Unix or Windows variable formats:</p>
+
+<p><code class="block"><span class="cf-addr">localhost:{$PORT}</span>
+<span class="cf-dir">root</span> <span class="cf-arg">{%SITE_ROOT%}</span></code></p>
+
+<p>Either syntax works on any platform. A single environment variable does not expand out into multiple arguments/values.</p>
+
+<h3 id="addresses">Addresses</h3>
+
+<p>Addresses are specified in the form <code><span class="cf-addr">scheme</span>://<span class="cf-addr">host</span>:<span class="cf-addr">port</span>/<span class="cf-addr">path</span></code>, where all but one are optional. The host portion is usually localhost or the domain name. The default port is 2015 (unless the site qualifies for <a href="/docs/automatic-https">automatic HTTPS</a>, in which case it's 443). The scheme portion is another way to specify a port. Valid schemes are &quot;http&quot; or &quot;https&quot; which represent, respectively, ports 80 and 443. If both a scheme and port are specified, the port will override the scheme. For example:</p>
+
+<p><code class="block"><span class="cf-addr">:2015</span>                    <span class="cf-comment"># Host: (any), Port: 2015</span>
+<span class="cf-addr">localhost</span>                <span class="cf-comment"># Host: localhost, Port: 2015</span>
+<span class="cf-addr">localhost:8080</span>           <span class="cf-comment"># Host: localhost, Port: 8080</span>
+<span class="cf-addr">example.com</span>              <span class="cf-comment"># Host: example.com, Port: 443</span>
+<span class="cf-addr">http://example.com</span>       <span class="cf-comment"># Host: example.com, Port: 80</span>
+<span class="cf-addr">https://example.com</span>      <span class="cf-comment"># Host: example.com, Port: 443</span>
+<span class="cf-addr">http://example.com:1234</span>  <span class="cf-comment"># Host: example.com, Port: 1234</span>
+<span class="cf-addr">https://example.com:80</span>   <span class="cf-comment"># Error! HTTPS on port 80</span>
+<span class="cf-addr">*.example.com</span>            <span class="cf-comment"># Hosts: *.example.com, Port: 443</span>
+<span class="cf-addr">example.com/foo/</span>         <span class="cf-comment"># Host: example.com, Port: 443, Path: /foo/</span>
+<span class="cf-addr">/foo/</span>                    <span class="cf-comment"># Host: (any), Port: 2015, Path: /foo/</span>
+</code></p>
+
+<h3 id="directives">Directives</h3>
+
+<p>Each line in a server block must start with a valid directive. The order they appear in does not matter. A directive is the first word of a line, and it may be followed by arguments, which are extra values used to configure the directive. A directive may also open a block to specify more parameters.</p>
+
+<p>Most directives invoke a layer of middleware. Middleware is a small layer in the application that handles HTTP requests and does one thing really well. Middleware are chained together (pre-compiled, if you will) at startup. Only middleware handlers which are invoked from the Caddyfile will be chained in, so small Caddyfiles are very fast and efficient.</p>
+
+<p>The syntax of arguments varies from directive to directive. Some have required arguments, others don't. Consult the documentation of each directive for their signatures.</p>
+
+<h3 id="path-matching">Path Matching</h3>
+
+<p>Some directives accept an argument that specifies a <em>base path</em> to match. A base path is a prefix, so if the URL starts with the base path, it will be a match. For example, a base path of <code>/foo</code> will match requests to <code>/foo</code>, <code>/foo.html</code>, <code>/foobar</code>, and <code>/foo/bar.html</code>. If you want to limit a base path to match a specific directory only, then suffix it with a forward slash like <code>/foo/</code>, which will <em>not</em> match <code>/foobar</code>.</p>
+
+
+
+
+			</article>
+		</main>
+
+		{{.Include "/includes/footer.html"}}
+	</body>
+</head>

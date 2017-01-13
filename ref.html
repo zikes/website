@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<head>
+	<head>
+		<title>Caddy Documentation</title>
+		{{.Include "/includes/head.html"}}
+		<link rel="stylesheet" href="/resources/css/docs.css">
+	</head>
+	<body>
+		<header>
+			{{.Include "/includes/header-nav.html"}}
+			<div class="content">
+				<h1>User Guide</h1>
+			</div>
+		</header>
+		{{.Include "/includes/docs-nav.html"}}
+
+		<main class="content">
+			<article>
+			<!--<code class="block"><span class="cf-addr">example.com</span>
+
+<span class="cf-dir">root</span>  <span class="cf-arg">/www/example.com</span>
+<span class="cf-dir">proxy</span> <span class="cf-arg">/blog 127.0.0.1:9000</span> {
+    <span class="cf-subdir">without</span> /blog
+    <span class="cf-subdir">transparent</span>
+}</code>-->
+				<img src="/resources/images/docs-directives.png" alt="Directives" width="400">
+
+				<h4>Using Caddy</h4>
+				<ul>
+					<li><a href="/">Command Line Interface</a></li>
+					<li><a href="/">Caddyfile Syntax</a></li>
+				</ul>
+				<h4>HTTP Server</h4>
+				<ul>
+					<li><a href="/">Automatic HTTPS</a></li>
+					<li><a href="/">Placeholders</a></li>
+					<li><a href="/">Template Actions</a></li>
+				</ul>
+				<h5>Directives</h5>
+				<ul>
+					<li><a href="/docs/awslambda">awslambda<span class="addon">A</span></a></li>
+					<li><a href="/docs/basicauth">basicauth</a></li>
+					<li><a href="/docs/bind">bind</a></li>
+					<li><a href="/docs/browse">browse</a></li>
+					<li><a href="/docs/cors">cors<span class="addon">A</span></a></li>
+					<li><a href="/docs/errors">errors</a></li>
+					<li><a href="/docs/expires">expires<span class="addon">A</span></a></li>
+					<li><a href="/docs/expvar">expvar</a></li>
+					<li><a href="/docs/ext">ext</a></li>
+					<li><a href="/docs/fastcgi">fastcgi</a></li>
+					<li><a href="/docs/filemanager">filemanager<span class="addon">A</span></a></li>
+					<li><a href="/docs/filter">filter<span class="addon">A</span></a></li>
+					<li><a href="/docs/git">git<span class="addon">A</span></a></li>
+					<li><a href="/docs/gzip">gzip</a></li>
+					<li><a href="/docs/header">header</a></li>
+					<li><a href="/docs/hugo">hugo<span class="addon">A</span></a></li>
+					<li><a href="/docs/import">import</a></li>
+					<li><a href="/docs/internal">internal</a></li>
+					<li><a href="/docs/ipfilter">ipfilter<span class="addon">A</span></a></li>
+					<li><a href="/docs/jsonp">jsonp<span class="addon">A</span></a></li>
+					<li><a href="/docs/jwt">jwt<span class="addon">A</span></a></li>
+					<li><a href="/docs/locale">locale<span class="addon">A</span></a></li>
+					<li><a href="/docs/log">log</a></li>
+					<li><a href="/docs/mailout">mailout<span class="addon">A</span></a></li>
+					<li><a href="/docs/markdown">markdown</a></li>
+					<li><a href="/docs/maxrequestbody">maxrequestbody</a></li>
+					<li><a href="/docs/mime">mime</a></li>
+					<li><a href="/docs/minify">minify<span class="addon">A</span></a></li>
+					<li><a href="/docs/multipass">multipass<span class="addon">A</span></a></li>
+					<li><a href="/docs/pprof">pprof</a></li>
+					<li><a href="/docs/prometheus">prometheus<span class="addon">A</span></a></li>
+					<li><a href="/docs/proxy">proxy</a></li>
+					<li><a href="/docs/ratelimit">ratelimit<span class="addon">A</span></a></li>
+					<li><a href="/docs/realip">realip<span class="addon">A</span></a></li>
+					<li><a href="/docs/redir">redir</a></li>
+					<li><a href="/docs/rewrite">rewrite</a></li>
+					<li><a href="/docs/root">root</a></li>
+					<li><a href="/docs/search">search<span class="addon">A</span></a></li>
+					<li><a href="/docs/shutdown">shutdown</a></li>
+					<li><a href="/docs/startup">startup</a></li>
+					<li><a href="/docs/status">status</a></li>
+					<li><a href="/docs/templates">templates</a></li>
+					<li><a href="/docs/tls">tls</a></li>
+					<li><a href="/docs/upload">upload<span class="addon">A</span></a></li>
+					<li><a href="/docs/websocket">websocket</a></li>
+				</ul>
+				<!--<h4>Standard HTTP Directives</h4>
+				<ul>
+					<li><a href="/docs/awslambda">awslambda<span class="addon">A</span></a></li>
+					<li><a href="/docs/basicauth">basicauth</a></li>
+					<li><a href="/docs/bind">bind</a></li>
+					<li><a href="/docs/browse">browse</a></li>
+					<li><a href="/docs/cors">cors<span class="addon">A</span></a></li>
+					<li><a href="/docs/errors">errors</a></li>
+					<li><a href="/docs/expires">expires<span class="addon">A</span></a></li>
+					<li><a href="/docs/expvar">expvar</a></li>
+					<li><a href="/docs/ext">ext</a></li>
+					<li><a href="/docs/fastcgi">fastcgi</a></li>
+					<li><a href="/docs/filemanager">filemanager<span class="addon">A</span></a></li>
+					<li><a href="/docs/filter">filter<span class="addon">A</span></a></li>
+					<li><a href="/docs/git">git<span class="addon">A</span></a></li>
+					<li><a href="/docs/gzip">gzip</a></li>
+					<li><a href="/docs/header">header</a></li>
+					<li><a href="/docs/hugo">hugo<span class="addon">A</span></a></li>
+					<li><a href="/docs/import">import</a></li>
+					<li><a href="/docs/internal">internal</a></li>
+					<li><a href="/docs/ipfilter">ipfilter<span class="addon">A</span></a></li>
+					<li><a href="/docs/jsonp">jsonp<span class="addon">A</span></a></li>
+					<li><a href="/docs/jwt">jwt<span class="addon">A</span></a></li>
+					<li><a href="/docs/locale">locale<span class="addon">A</span></a></li>
+					<li><a href="/docs/log">log</a></li>
+					<li><a href="/docs/mailout">mailout<span class="addon">A</span></a></li>
+					<li><a href="/docs/markdown">markdown</a></li>
+					<li><a href="/docs/maxrequestbody">maxrequestbody</a></li>
+					<li><a href="/docs/mime">mime</a></li>
+					<li><a href="/docs/minify">minify<span class="addon">A</span></a></li>
+					<li><a href="/docs/multipass">multipass<span class="addon">A</span></a></li>
+					<li><a href="/docs/pprof">pprof</a></li>
+					<li><a href="/docs/prometheus">prometheus<span class="addon">A</span></a></li>
+					<li><a href="/docs/proxy">proxy</a></li>
+					<li><a href="/docs/ratelimit">ratelimit<span class="addon">A</span></a></li>
+					<li><a href="/docs/realip">realip<span class="addon">A</span></a></li>
+					<li><a href="/docs/redir">redir</a></li>
+					<li><a href="/docs/rewrite">rewrite</a></li>
+					<li><a href="/docs/root">root</a></li>
+					<li><a href="/docs/search">search<span class="addon">A</span></a></li>
+					<li><a href="/docs/shutdown">shutdown</a></li>
+					<li><a href="/docs/startup">startup</a></li>
+					<li><a href="/docs/status">status</a></li>
+					<li><a href="/docs/templates">templates</a></li>
+					<li><a href="/docs/tls">tls</a></li>
+					<li><a href="/docs/upload">upload<span class="addon">A</span></a></li>
+					<li><a href="/docs/websocket">websocket</a></li>
+				</ul>-->
+			</article>
+		</main>
+
+		{{.Include "/includes/footer.html"}}
+	</body>
+</head>
