@@ -1,0 +1,33 @@
+{{ $title := "Notifications" }}
+{{.Include "/account/includes/header.html" $title}}
+<script src="/resources/js/account/notifications.js"></script>
+
+<main>
+
+	<h1>{{$title}}</h1>
+
+	<b>Send email for:</b> &nbsp;&nbsp;&nbsp;
+	<label><input type="checkbox" class="email-toggle" data-level="0"{{if .Account.EmailNotifyInfo}} checked{{end}}> Info</label>
+	&nbsp;&nbsp;
+	<label><input type="checkbox" class="email-toggle" data-level="1"{{if .Account.EmailNotifySuccess}} checked{{end}}> Success</label>
+	&nbsp;&nbsp;
+	<label><input type="checkbox" class="email-toggle" data-level="2"{{if .Account.EmailNotifyWarn}} checked{{end}}> Warning</label>
+	&nbsp;&nbsp;
+	<label><input type="checkbox" class="email-toggle" data-level="3"{{if .Account.EmailNotifyError}} checked{{end}}> Error</label>
+	<br><br>
+
+	{{range .Notifications}}
+	<div class="notification notif-level{{.Level}}{{if eq (len (.Body)) 0}} no-expand{{end}}{{if .Acknowledged}} notif-ack{{end}}" data-id="{{.ID}}">
+		<div class="notif-dismiss">X</div>
+		<div class="notif-main">
+			<div class="notif-info">
+				<div class="notif-when">{{$.When .Timestamp}}</div>
+				<div class="notif-headline">{{.Headline}}</div>
+				<div class="notif-body">{{$.Markdown .Body}}</div>
+			</div>
+			{{if gt (len (.Body)) 0}}<div class="notif-expand"><span class="notif-expand-arrow">▾</span></div>{{end}}
+		</div>
+	</div>
+	{{end}}
+</main>
+{{.Include "/account/includes/footer.html"}}

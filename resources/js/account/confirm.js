@@ -14,12 +14,11 @@ $(function() {
 			});
 		}).fail(function(jqxhr, msg, error)
 		{
-			alert(error);
-			// if (jqxhr.status == 404)
-			// 	$('#password').notify("Incorrect email/password combination. Please try again!");
-			// else
-			// 	$.notify("Error: " + jqxhr.status + " " + error + ".");
-
+			swal({
+				type: "error",
+				titleText: error,
+				text: jqxhr.responseText
+			});
 			$('#submit').prop('disabled', false);
 		});
 

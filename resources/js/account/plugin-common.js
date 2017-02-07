@@ -11,7 +11,10 @@ $(function() {
 	$('#example-list').on('click', '.delete-example', function(event) {
 		var $example = $(this).closest('.example');
 		if ($('.example').length == 1) {
-			alert("Can't delete the only example, but you can leave it blank.");
+			swal({
+				type: "error",
+				text: "Can't delete the only example, but you can leave it blank."
+			});
 			return suppress(event);
 		}
 		$example.remove();

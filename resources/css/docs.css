@@ -119,6 +119,10 @@ article li {
 	line-height: 1.7rem;
 }
 
+article li p {
+	margin: 1rem 0;
+}
+
 .note {
 	padding: 1rem;
 	border: 2px solid #dff2f7;

@@ -41,7 +41,7 @@ header .logo {
 
 header .subtitle,
 header nav {
-	line-height: 33px;
+	line-height: 30px;
 }
 
 header .subtitle {
@@ -283,9 +283,124 @@ table.data-table td {
 }
 
 
-code.block {
+code.block,
+pre > code {
 	background: #F0F0F0;
 	display: block;
 	padding: 8px;
 	margin: 1em 0;
+	overflow: auto;
+	white-space: pre-wrap;
+}
+
+.notification {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 1rem;
+}
+
+.notif-level0 .notif-headline { color: #000; }
+.notif-level1 .notif-headline { color: green; }
+.notif-level2 .notif-headline { color: orange; }
+.notif-level3 .notif-headline { color: #dd0000; }
+
+
+.notif-main,
+.notif-dismiss {
+	border: 2px solid #AAA;
+}
+
+.notif-main {
+	display: flex;
+	flex-grow: 1;
+	cursor: pointer;
+	border-top-right-radius: 8px;
+	border-bottom-right-radius: 8px;
+	border-left: none;
+}
+
+.notification:hover .notif-dismiss,
+.notification:hover .notif-main {
+	border-color: #555;
+}
+
+.notification.no-expand .notif-main {
+	cursor: inherit;
+}
+
+.notif-main:hover .notif-expand {
+	color: #000;
+	background: #DDD;
+}
+
+.notif-ack .notif-main,
+.notif-ack .notif-dismiss {
+	border-width: 1px;
+}
+
+.notif-ack .notif-headline {
+	font-weight: normal;
+}
+
+.notif-ack .notif-expand {
+	border-top-right-radius: 7px;
+	border-bottom-right-radius: 7px;
+}
+
+.notif-info {
+	padding: 10px;
+	flex-grow: 1;
+}
+
+.notification code.block,
+.notification pre > code {
+	max-height: 300px;
+	font-size: 12px;
+}
+
+.notif-when {
+	font-size: 12px;
+	color: #555;
+	margin-bottom: 5px;
+}
+
+.notif-headline {
+	font-weight: bold;
+}
+
+.notif-body {
+	display: none;
+	margin-top: 1rem;
+	cursor: text;
+}
+
+.notif-dismiss,
+.notif-expand {
+	background: #EFEFEF;
+	color: #AAA;
+	font-weight: bold;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+}
+
+.notif-expand {
+	width: 75px;
+	border-top-right-radius: 6px;
+	border-bottom-right-radius: 6px;
+	border-left: none;
+}
+
+.notif-dismiss {
+	cursor: pointer;
+	width: 50px;
+	border-top-left-radius: 6px;
+	border-bottom-left-radius: 6px;
+	border-right: none;
+}
+
+.notif-dismiss:hover {
+	color: #ff0000;
+	background: #ffcece;
 }

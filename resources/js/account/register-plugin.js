@@ -15,8 +15,12 @@ $(function() {
 		}
 		var $repoPathInput = $('.part1 input[name=clone_url]');
 		if (!/https:\/\//i.test($repoPathInput.val())) {
-			alert("Repository must be a git repo in the HTTPS format");
-			$repoPathInput.focus();
+			swal({
+				type: "error",
+				text: "Repository must be a git repo in the HTTPS format."
+			}).then(function() {
+				$repoPathInput.focus();
+			});
 			return suppress(event);
 		}
 
@@ -55,12 +59,11 @@ $(function() {
 			$('.part1').slideUp(200);
 			$('.part2').slideDown(200);
 		}).fail(function(jqxhr, msg, error) {
-			alert(error);
-			// TODO
-			// if (jqxhr.status == 404)
-			// 	$('#password').notify("Incorrect email/password combination. Please try again!");
-			// else
-			// 	$.notify("Error: " + jqxhr.status + " " + error + ".");
+			swal({
+				type: "error",
+				titleText: error,
+				text: jqxhr.responseText
+			});
 		}).always(function() {
 			$('.part1 .submit').prop('disabled', false).html("Next &rsaquo;");
 		});
@@ -78,8 +81,11 @@ $(function() {
 			$('.part2').slideUp(200);
 			$('.part3').slideDown(200);
 		}).fail(function(jqxhr, msg, error) {
-			alert(error);
-			// TODO
+			swal({
+				type: "error",
+				titleText: error,
+				text: jqxhr.responseText
+			});
 		}).always(function() {
 			$('.part2 .submit').prop('disabled', false).html("Publish");
 		});
