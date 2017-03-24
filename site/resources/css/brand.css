@@ -1,0 +1,112 @@
+hr {
+	border: 0;
+	border-top: 4px dotted #17bb7a;
+	margin-top: 3rem;
+}
+
+h2 {
+	color: #17bb7a;
+	text-align: center;
+	font-size: 5rem;
+	line-height: 1.5em;
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+}
+
+.notice {
+	text-align: center;
+	font-size: 20px;
+	max-width: 500px;
+	line-height: 1.5em;
+	margin: 1rem auto 2rem;
+}
+
+.branding {
+	display: flex;
+	flex-wrap: wrap;
+	text-align: center;
+}
+
+.branding img {
+	width: 100%;
+}
+
+.brand-50,
+.brand-25 {
+	padding: 1rem;
+}
+
+.brand-50 {
+	width: 50%;
+	font-size: 20px;
+}
+
+.brand-25 {
+	width: 25%;
+}
+
+.gallery-item {
+	margin-bottom: 50px;
+	text-align: center;
+}
+
+.canvas {
+	line-height: .75em;
+	padding: 30px 5%;
+	margin-bottom: 15px;
+	border-radius: 10px;
+	border: 1px solid #DDD;
+}
+
+.canvas.transparent {
+	background-image: url('/resources/images/transparency.png');
+}
+
+.canvas.dark {
+	background-color: #333;
+	border: none;
+}
+
+.guidelines {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.guideline {
+	width: 50%;
+	padding: 0 2rem;
+}
+
+.guideline h3 {
+	font-size: 1.5rem;
+}
+
+.guideline p {
+	margin-top: 1rem;
+}
+
+@media (max-width: 900px) {
+	.brand-25 {
+		width: 50%;
+	}
+
+	h2 {
+		font-size: 3rem;
+		word-wrap: break-word;
+	}
+}
+
+@media (max-width: 650px) {
+	.brand-50,
+	.guideline {
+		width: 100%;
+	}
+
+	.guideline {
+		padding: 0 .5rem;
+	}
+
+	.brand-25 {
+		width: 100%;
+	}
+}

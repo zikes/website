@@ -1,0 +1,14 @@
+<header>
+	{{.Include "/includes/header-nav.html"}}
+	<div class="content">
+		<h1>User Guide</h1>
+	</div>
+</header>
+
+<nav class="main">
+	<div class="content">
+		<a href="/docs"{{if .PathMatches "/docs"}} class="current"{{end}}>Documentation</a>
+		<a href="/tutorial"{{if .PathMatches "/tutorial"}} class="current"{{end}}>Tutorials</a>
+		<a href="https://github.com/caddyserver/examples" class="external-link">Examples</a>
+	</div>
+</nav>

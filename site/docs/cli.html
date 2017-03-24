@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<head>
+	<head>
+		<title>Command Line Interface - Caddy</title>
+		{{.Include "/includes/head.html"}}
+		<link rel="stylesheet" href="/resources/css/docs.css">
+	</head>
+	<body>
+		{{.Include "/includes/docs-nav.html"}}
+
+		<div class="content-container">
+			{{.Include "/includes/docs-nav-side.html"}}
+
+			<article>
+				<h2>Command Line Interface</h2>
+
+				<p>This page describes Caddy's command line interface. For a quick reference and to see default values, run Caddy with <code>-help</code> or <code>-h</code>, for example: <code>caddy -h</code>.</p>
+
+				<mark class="block">Remember that Caddy runs fine without any options. These flags simply give you more control over the process if needed.</mark>
+
+				<h3 id="flags">Flags</h3>
+
+				<h5 id="agree">-agree</h5>
+
+				<p>Indicates that you have read and agree to the Let's Encrypt Subscriber Agreement. If this flag is not specified, it is possible that Caddy will prompt you to agree to terms during runtime. Thus, this flag is recommended in automated environments.</p>
+
+				<h5 id="ca">-ca</h5>
+
+				<p>Base URL to the certificate authority's ACME server directory. Used for creating TLS certificates.</p>
+
+				<h5 id="catimeout">-catimeout</h5>
+
+				<p>Change the ACME CA HTTP timeout. Not usually necessary unless your network experiences significant latency contacting the ACME CA server. In those cases, raising this value can help. Accepts a duration value; default is <code>10s</code>.</p>
+
+				<h5 id="conf">-conf</h5>
+
+				<p>The Caddyfile to use to configure Caddy. Must be a valid path to the file, either relative or absolute.</p>
+
+				<h5 id="cpu">-cpu</h5>
+
+				<p>CPU cap. Can be a percentage (e.g. &quot;75%&quot;) or a number indicating how many cores to use (e.g. 3).</p>
+
+				<h5 id="email">-email</h5>
+
+				<p>Email address to use for TLS certificate generation if not <a href="/docs/tls">specified for a site in the Caddyfile</a>. It is not required, but is strongly recommended so you can recover your account if you lose your private key. If an email is not available, Caddy may prompt you for an email address during runtime. This option is recommended in automated environments if not <a href="/docs/tls">specified in the Caddyfile</a>.</p>
+
+				<h5 id="grace">-grace</h5>
+
+				<p>Duration of the graceful shutdown period. If you reload extremely frequently (multiple times per second), make this duration short. Syntax is same as Go's <a href="https://golang.org/pkg/time/#ParseDuration">time.ParseDuration</a> function (5s, 1m30s, etc).</p>
+
+				<h5 id="help">-help or -h</h5>
+
+				<p>Show basic flag help. Caddy will terminate after showing help; it will not serve sites.</p>
+
+				<h5 id="host">-host</h5>
+
+				<p>The default hostname or IP address to listen on.</p>
+
+				<h5 id="http2">-http2</h5>
+
+				<p>HTTP/2 support. Disable it by setting to false. Necessary to use WebSockets on secure connections.</p>
+
+				<h5 id="log">-log</h5>
+
+				<p>Enable the process log. The value must be either the path to a log file, stdout, or stderr. Caddy will create the log file if it does not already exist. This file will be used to log information and errors that occur during runtime. The log file is rotated when it gets large, so it is safe to use for long-running processes.</p>
+
+				<h5 id="pidfile">-pidfile</h5>
+
+				<p>The pidfile to write. Used with automated environments. Caddy will write a file containing the current process ID.</p>
+
+				<h5 id="plugins">-plugins</h5>
+
+				<p>Lists the plugins registered with Caddy. Caddy will terminate after printing; it will not serve sites.</p>
+
+				<h5 id="port">-port</h5>
+
+				<p>The default port to listen on.</p>
+
+				<h5 id="quic">-quic</h5>
+
+				<p>Enables experimental QUIC support. See <a href="https://github.com/mholt/caddy/wiki/QUIC">the QUIC wiki page</a> for more details how to experiment with QUIC.</p>
+
+				<h5 id="quiet">-quiet</h5>
+
+				<p>Quiet mode. If quiet, Caddy will not print informational initialization output, only the addresses being served.</p>
+
+				<h5 id="revoke">-revoke</h5>
+
+				<p>Hostname for which to revoke the SSL certificate. Caddy will stop after revocation is complete; it will not serve sites if this option is used. The certificate must be under Caddy's management. <mark>Revocation is meant for compromised private keys only. Do not revoke a certificate to renew it.</mark></p>
+
+				<h5 id="root">-root</h5>
+
+				<p>Path to the default site root from which to serve files.</p>
+
+				<h5 id="type">-type</h5>
+
+				<p>Change the server type. Default is http. If your Caddyfile is for another server type, use this option to tell it which server type to use.</p>
+
+				<h5 id="validate">-validate</h5>
+
+				<p>Parses the Caddyfile and exits. If syntactically valid, a message will be printed to stdout and the process log (if any) and will exit with status 0. If not, an error will be returned with a non-zero exit status.</p>
+
+				<h5 id="version">-version</h5>
+
+				<p>Prints the version. It also prints build information if not from a tagged release. Caddy will terminate after printing; it does not serve sites if this option is used.</p>
+
+				<h3 id="signals">Signals</h3>
+
+				<p>On POSIX-compliant systems, Caddy can be controlled with signals. Here we list them roughly in order from the most forceful action to most graceful.</p>
+
+				<h5 id="term">TERM</h5>
+
+				<p>Forcefully exits the process without executing shutdown hooks.</p>
+
+				<h5 id="int">INT</h5>
+
+				<p>Forcefully exits the process after executing shutdown hooks. This is the only &quot;signal&quot; that works on Windows (Ctrl+C). A second SIGINT forces immediate termination, even if shutdown hooks are still running.</p>
+
+				<h5 id="hup">HUP</h5>
+
+				<p>Gracefully stops the server, but does not execute shutdown hooks.</p>
+
+				<h5 id="quit">QUIT</h5>
+
+				<p>Gracefully stops the server after executing shutdown hooks.</p>
+
+				<h5 id="usr1">USR1</h5>
+
+				<p>Reloads the configuration file, then gracefully restarts the server.</p>
+
+				<h3 id="short-caddyfile">Short Caddyfile</h3>
+
+				<p>Caddy also accepts non-flag arguments, which are understood to be shorthand Caddyfile text. This is useful for quick, temporary server instances.</p>
+
+				<p>Each unflagged argument is a line in a Caddyfile that serves the default host and port. Remember to enclose the line in quotes if it contains spaces or other special characters.</p>
+
+				<p>For example, a server that lets you browse files on the default host and port:</p>
+
+				<code class="block cmd">$ caddy browse</code>
+
+				<p>To serve markdown files on-the-fly, instantly, on a custom port:</p>
+
+				<code class="block cmd">$ caddy -port 8080 markdown</code>
+
+				<p>All of the above, but with an access log:</p>
+
+				<code class="block cmd">$ caddy -port 8080 browse markdown "log access.log"</code>
+
+				<p>This shorthand feature is intended for quick, simple configurations only.</p>
+
+				<h3 id="pipe-a-caddyfile">Pipe a Caddyfile</h3>
+
+				<p>Advanced users may wish to pipe the contents of a Caddyfile into Caddy from programmed environments. If you pipe in the Caddyfile, you must use the <code>-conf</code> flag with a value of <code>stdin</code> - for example:</p>
+
+				<code class="block cmd">$ echo "localhost:1234" | caddy -conf stdin</code>
+
+				<p>Piping the Caddyfile is convenient when starting Caddy using a dynamically-generated Caddyfile from a parent process you have control over.</p>
+
+				<mark class="block">Warning: If you pipe in a Caddyfile, it will be impossible to read from stdin later in the program because the parent process must send EOF to close the pipe so Caddy can unblock and start serving. This will cause problems, for instance, if Caddy has to prompt you for an email address or agreement to terms. So when piping input, use flags to avoid the need for stdin later (e.g. the -email flag).</mark>
+
+				<h3 id="environment-variables">Environment Variables</h3>
+
+				<p>Caddy recognizes certain environment variables.</p>
+
+				<h5 id="home">HOME</h5>
+
+				<p>The home folder. Caddy will create a .caddy folder here if using managed TLS (automatic HTTPS), and possibly persist other state here in the future or if configured to do so.</p>
+
+				<h5 id="caddypath">CADDYPATH</h5>
+
+				<p>If set, Caddy will use this folder to store assets instead of the default $HOME/.caddy.</p>
+
+				<h5 id="case-sensitive-path">CASE_SENSITIVE_PATH</h5>
+
+				<p>If <code>0</code> or <code>false</code>, Caddy will treat request paths in a case-insensitive manner when accessing assets on the file system or matching requests for middleware handlers. The default is 1/true (case-sensitive paths).</p>
+
+
+			</article>
+		</div>
+
+		{{.Include "/includes/footer.html"}}
+	</body>
+</head>

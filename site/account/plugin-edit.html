@@ -1,0 +1,153 @@
+{{ $pl := .Context "plugin" }}
+{{ $title := printf "Edit %s" $pl.Name }}
+{{.Include "/account/includes/header.html" $title}}
+<script src="/resources/js/account/plugin-common.js"></script>
+<script src="/resources/js/account/edit-plugin.js"></script>
+<link rel="stylesheet" href="/resources/css/account/plugin-common.css">
+
+<main>
+	<h1>Edit Plugin</h1>
+
+	<p>
+		Thank you for keeping your plugin information up-to-date at all times! Editing a plugin will not create a new release, but it will update its listing on the site.
+	</p>
+
+	<h2>{{$pl.Name}}</h2>
+
+	<form method="POST" action="/api/edit-plugin">
+		<input type="hidden" name="plugin_id" value="{{$pl.ID}}">
+		<table class="form">
+			<tr>
+				<td class="field">
+					<h2>Package</h2>
+					<p>
+						The fully-qualified package name used in Go source code to import your plugin.
+						<br>For example: <code>github.com/user/repo/myplugin</code>
+					</p>
+					<input type="text" name="import_path" value="{{$pl.ImportPath}}">
+				</td>
+			</tr>
+			<tr>
+				<td class="field">
+					<h2>Clone URL</h2>
+					<p>
+						The URL from which to clone the Git repository hosting your plugin. Must use the https:// form.
+						<br>For example: <code>https://github.com/user/repo.git</code>
+					</p>
+					<input type="text" name="clone_url" value="{{$pl.SourceRepo}}">
+				</td>
+			</tr>
+			<tr>
+				<td class="field">
+					<h2>Description</h2>
+					<p>
+						Please provide a few sentences that clearly describe what your plugin does. The first sentence should be sufficient as a summary, but feel free to use one or two paragraphs. This will be the primary content of your plugin's page on the Caddy website. Do not cram the entire documentation here.
+						<br><br>First sentence example: <i>The gizmo directive adds custom sprocket headers to the response.</i>
+					</p>
+					<textarea rows="5" name="description">{{$pl.Description}}</textarea>
+				</td>
+			</tr>
+			<tr>
+				<td class="field">
+					<h2>Examples</h2>
+					<p>
+						Provide minimal, instructive examples for users to start using your plugin quickly. They should be able to glance at the examples and immediately get an idea how to begin using it. Each example should contain a short, one-line title, the code/content of the example, and a very concise explanation (no more than a few sentences) of precisely what it does.
+					</p>
+					<div id="example-list">
+					{{if eq (len $pl.Examples) 0}}
+						<table id="example-0" class="example">
+							<tr>
+								<th></th>
+								<td><h3>Example <span class="example-num">1</span></h3></td>
+							</tr>
+							<tr>
+								<th>Title:</th>
+								<td><input type="text" name="example_title"></td>
+							</tr>
+							<tr>
+								<th>Code:</th>
+								<td><textarea rows="3" name="example_code" class="code"></textarea></td>
+							</tr>
+							<tr>
+								<th>Explanation:</th>
+								<td><textarea rows="3" name="example_explanation"></textarea></td>
+							</tr>
+							<tr>
+								<th></th>
+								<td>
+									<a href="javascript:" class="delete-example">Delete example</a>
+								</td>
+							</tr>
+						</table>
+					{{else}}
+						{{range $i, $ex := $pl.Examples}}
+						<table id="example-{{$i}}" class="example">
+							<tr>
+								<th></th>
+								<td><h3>Example <span class="example-num">{{$i}}</span></h3></td>
+							</tr>
+							<tr>
+								<th>Title:</th>
+								<td><input type="text" name="example_title" value="{{$ex.Title}}"></td>
+							</tr>
+							<tr>
+								<th>Code:</th>
+								<td><textarea rows="3" name="example_code" class="code">{{$ex.Code}}</textarea></td>
+							</tr>
+							<tr>
+								<th>Explanation:</th>
+								<td><textarea rows="3" name="example_explanation">{{$ex.Explanation}}</textarea></td>
+							</tr>
+							<tr>
+								<th></th>
+								<td>
+									<a href="javascript:" class="delete-example">Delete example</a>
+								</td>
+							</tr>
+						</table>
+						{{end}}
+					{{end}}
+						<a href="javascript:" class="add-example">Add an example</a>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="field">
+					<h2>Project Homepage</h2>
+					<p>
+						Full HTTPS link to the project's homepage or website, like a GitHub project page.
+						<br>For example: <code>https://github.com/me/project</code>
+					</p>
+					<input type="text" name="website" value="{{$pl.Website}}">
+				</td>
+			</tr>
+			<tr>
+				<td class="field">
+					<h2>Documentation Link</h2>
+					<p>
+						Direct link to the full documentation (user guide or README) for your plugin. After clicking this link, the instructions should be immediately available to the user without further clicking.
+						<br>For example: <code>https://github.com/me/project/blob/master/README.md</code>
+					</p>
+					<input type="text" name="docs_link" value="{{$pl.Docs}}">
+				</td>
+			</tr>
+			<tr>
+				<td class="field">
+					<h2>Support Link</h2>
+					<p>
+						Where users can go to get help from the developer or report bugs. This should be a direct link to issues or a forum (or something interactive).
+						<br>For example: <code>https://github.com/me/project/issues</code>
+					</p>
+					<input type="text" name="support_link" value="{{$pl.Support}}">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<button class="submit">Save Changes</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+
+</main>
+{{.Include "/account/includes/footer.html"}}

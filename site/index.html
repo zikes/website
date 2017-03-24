@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<head>
+	<head>
+		<title>Caddy - The HTTP/2 Web Server with Automatic HTTPS</title>
+		{{.Include "/includes/head.html"}}
+		<link rel="stylesheet" href="/resources/css/home.css">
+	</head>
+	<body>
+		<header>
+			{{.Include "/includes/header-nav.html"}}
+
+			<div class="banner content">
+				<div>
+					<h1>
+						<span class="every">Every</span>
+						<span class="site-on">Site on</span>
+						<span class="https">HTTPS</span>
+					</h1>
+
+					<h2>
+						Caddy is the HTTP/2 web server
+						with automatic HTTPS.
+					</h2>
+
+					<a href="/download" class="button">Download</a>
+					<iframe src="https://ghbtns.com/github-btn.html?user=mholt&repo=caddy&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px" class="github-stars"></iframe>
+				</div>
+				<div>
+					<img src="/resources/images/lock.png" id="biglock">
+				</div>
+			</div>
+		</header>
+
+		<section class="content">
+			
+			<h2>How to Use Caddy</h2>
+
+			<div class="howto">
+				<div class="howto-step">
+					<h3>1. Make a Caddyfile</h3>
+					<p>
+						The <a href="/tutorial/caddyfile">Caddyfile</a> is a text file that configures Caddy. It's designed to be easy to type and hard to get wrong.
+					</p>
+					<p>
+						The first line of the Caddyfile is always the address(es) of the site to serve.
+					</p>
+					<p>
+						You can define as many sites as you want; Caddy supports virtual hosting and <a href="/features">lots of other features</a>!
+					</p>
+				</div>
+				<div class="howto-step howto-visual">
+					<code class="block"><span class="cf-addr">matt.life</span>   <span class="cf-comment"># Your site's address</span>
+
+<span class="cf-dir">ext</span> <span class="cf-arg">.html</span>   <span class="cf-comment"># Clean URLs</span>
+<span class="cf-dir">errors</span> {
+    <span class="cf-subdir">log</span> ../errors.log    <span class="cf-comment"># Error log</span>
+    <span class="cf-subdir">404</span> error-404.html   <span class="cf-comment"># Custom error page</span>
+}
+
+<span class="cf-comment"># PHP backend</span>
+<span class="cf-dir">fastcgi</span> <span class="cf-arg">/blog localhost:9000 php</span>
+
+<span class="cf-comment"># API load balancer</span>
+<span class="cf-dir">proxy</span> <span class="cf-arg">/api localhost:5001 localhost:5002</span>
+</code>
+				</div>
+				<div class="howto-step">
+					<h3>2. Run Caddy</h3>
+					<p>
+						All you have to do is run <code class="cmd">caddy</code> and voilà! Caddy automatically loads your Caddyfile if it's in the same folder. For production sites, <b>HTTPS is <a href="/docs/automatic-https">on by default</a>!</b>
+					</p>
+				</div>
+				<div class="howto-step howto-visual">
+					<code class="block cmd bash">caddy
+Activating privacy features... done.
+http://matt.life
+https://matt.life
+<span class="blink">_</span></code>
+				</div>
+				<div class="howto-step">
+					<h3>3. Open your Browser</h3>
+					<p>
+						Type your site's address to see it in action. Live sites are redirected to HTTPS for you.
+					</p>
+					<p>
+						Caddy is great for building sites at home or work, and for serving sites in production. Try it out!
+					</p>
+					<p>
+						<a href="/download" class="button blue-border">Download Caddy</a>
+						&nbsp; &nbsp;
+						<a href="/features" class="button blue-border">Features</a>
+					</p>
+				</div>
+				<div class="howto-step visual">
+					<img src="/resources/images/open-your-browser.png" class="shadowed" alt="Caddy automatically sets up HTTPS for your site">
+				</div>
+			</div>
+		</section>
+
+		<div class="quotes-container">
+			<div class="quotes-background"></div>
+			<section class="content quotes-content">
+				<h2>The Most Beloved Server</h2>
+				<div class="quotes">
+					<blockquote>
+						Caddy and Let's Encrypt is pretty incredible. A 3-line config file yields a fully A-rated SSL site. Trivial!
+						<cite>
+							John Resig
+							<br>
+							Creator of jQuery
+							<br>
+							<a href="https://twitter.com/jeresig/status/821768122017398785" target="_blank">Link</a>
+						</cite>
+					</blockquote>
+					<blockquote>
+						Caddy is an amazing server project. Auto-HTTPS, GitHub integration, etc. ... Caddy is a perfect solution. ... Two thumbs up. I'm going to use it for all the things.
+						<cite>
+							Mike West
+							<br>
+							<a href="https://twitter.com/mikewest/status/817961519627509760" target="_blank">Link</a>
+						</cite>
+					</blockquote>
+					<!--
+					TODO: Get the quotes in some sort of rotation
+
+					<blockquote>
+						This is a brilliant piece of software. ... Even on first install, the defaults are pretty sane. Truly, great work.
+						<cite>
+							Kenn White
+							<br>
+							<a href="https://twitter.com/kennwhite/status/674023537380724736" target="_blank">Link</a>
+						</cite>
+					</blockquote>
+					-->
+				</div>
+			</section>
+			<section class="content call-to-action">
+				<a href="/download" class="button">Download</a>
+				<a href="/pricing" class="button pricing">Pricing</a>
+			</section>
+		</div>
+
+		{{.Include "/includes/footer.html"}}
+	</body>
+</html>

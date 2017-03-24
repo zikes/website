@@ -1,0 +1,14 @@
+baseURL = "/blog"
+publishDir = "site/blog"
+contentDir = "blogposts"
+languageCode = "en-us"
+uglyURLs = true
+copyright = "(c) Light Code Labs. All rights reserved."
+
+[blackfriday]
+extensionsmask = [ "autolink" ]
+fractions = false
+smartypants = false
+
+[taxonomies]
+# none

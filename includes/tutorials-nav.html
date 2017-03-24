@@ -1,8 +1,0 @@
-<aside>
-	<nav>
-		{{ $path := .Replace .Req.URL.Path ".html" "" }}
-		{{ $href := "/tutorial" }}<a href="{{$href}}"{{if eq $path $href}} class="current"{{end}}>Quick Start</a>
-		{{ $href := "/tutorial/detailed" }}<a href="{{$href}}"{{if eq $path $href}} class="current"{{end}}>Guided Tutorial</a>
-		{{ $href := "/tutorial/caddyfile" }}<a href="{{$href}}"{{if eq $path $href}} class="current"{{end}}>The Caddyfile</a>
-	</nav>
-</aside>

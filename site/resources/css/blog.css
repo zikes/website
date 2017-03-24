@@ -1,0 +1,312 @@
+header {
+	background-image: linear-gradient(0deg, #9fb8ca 0%, #458ab9 100%);
+}
+
+main {
+	background: #9fb8ca;
+}
+
+main > h1,
+.pagenum {
+	text-shadow: 0 1px 3px rgba(0,0,0,.3);
+	text-align: center;
+	color: #FFF;
+}
+
+main > h1 {
+	font-size: 5rem;
+	font-weight: 300;
+	margin-bottom: 4rem;
+}
+
+.pagenum {
+	font-size: 1.5rem;
+	margin-top: -3rem;
+	color: #fff;
+	text-align: center;
+	font-weight: bold;
+}
+
+.pagenum a {
+	text-shadow: none;
+	color: #FFF;
+	padding: 0 .25rem;
+}
+
+.post-link,
+.pages {
+	padding: 2rem;
+	background: #fff;
+	max-width: 700px;
+	margin: 2rem auto;
+	box-shadow: 0 1px 2px rgba(0,0,0,.5);
+}
+
+.post-link {
+	color: inherit;
+	display: block;
+	transition: all .25s ease;
+	word-wrap: break-word;
+}
+
+.post-link:hover {
+	color: inherit;
+	transform: translateY(-1px);
+	box-shadow: 0 2px 5px 0 rgba(0,0,0,.6)
+}
+
+.post-link:active {
+	box-shadow: 0 1px 3px 0 rgba(0,0,0,.7) inset;
+	transform: translateY(1px);
+	transition: none;
+}
+
+.post-link h2 {
+	font-family: inherit;
+	font-size: 1.5rem;
+	margin-top: 0;
+}
+
+.post-link h2:after {
+	content: '\00BB';
+	font-weight: bold;
+	position: relative;
+	color: #168ff9;
+	opacity: 0;
+	left: 0;
+	transition: left .15s, opacity .15s;
+}
+
+.post-link:hover h2 {
+	color: #168ff9;
+}
+
+.post-link:hover h2:after {
+	opacity: 1;
+	left: 5px;
+}
+
+.pages {
+	text-align: center;
+}
+
+.page-number {
+	font-weight: bold;
+	margin: 0 .5rem;
+	font-size: 1.25rem;
+}
+
+article {
+	background: #fff;
+	max-width: 900px;
+	margin: 0 auto;
+	padding: 5rem 7rem;
+}
+
+article h1 {
+	font-size: 3rem;
+	text-align: center;
+}
+
+article h2 {
+	font-family: inherit;
+	font-weight: normal;
+	font-size: 1.75rem;
+	margin: 2.5rem 0 1.5rem;
+}
+
+article h3 {
+	font-size: 1.25rem;
+	margin: 2rem 0 1rem;
+}
+
+article h4 {
+	font-size: 1rem;
+	margin-bottom: .5rem;
+}
+
+article p,
+article li {
+	font-family: 'Helvetica Neue', Arial, sans-serif;
+	font-size: 14px;
+	line-height: 1.5rem;
+}
+
+article p {
+	margin: 0 0 1rem 0;
+}
+
+article ul,
+article ol {
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
+
+article iframe {
+	margin: 1rem auto 2rem;
+}
+
+.back.float {
+	float: left;
+}
+
+#timestamp,
+.timestamp {
+	color: #555;
+	padding-bottom: 1rem;
+}
+
+#timestamp {
+	text-align: right;
+	padding-bottom: 2rem;
+}
+
+#author {
+	text-align: center;
+	max-width: 500px;
+	margin: 1rem auto 3rem;
+	font-size: 20px;
+	font-weight: 300;
+}
+
+#author b {
+	font-weight: normal;
+}
+
+#author + h2,
+#author + h3,
+#author + h4,
+#author + h5,
+#author + h6 {
+	margin-top: 0;
+}
+
+article pre > code,
+article code.block {
+	margin-top: 0;
+}
+
+article li pre > code,
+article li code.block {
+	margin-top: 1rem;
+}
+
+article code {
+	font-size: .9em;
+}
+
+article code.block {
+	font-size: inherit;
+}
+
+article blockquote {
+	background: #F3F3F3;
+	border-left: 10px solid #E0E0E0;
+	margin-top: 25px;
+	margin-bottom: 25px;
+	padding: 1rem;
+}
+
+article img {
+	margin: 0 auto;
+	display: block;
+	max-width: 100%;
+}
+
+blockquote p {
+	margin-bottom: 0;
+	color: #000;
+}
+
+hr {
+	border: none;
+	border-top: 1px solid #CCC;
+	margin: 2rem auto 1rem;
+}
+
+.end {
+	text-align: center;
+	margin-top: 2rem;
+}
+
+.end .button {
+	margin: .5rem;
+	border: 1px solid #168ff9;
+}
+
+.rss-link {
+	color: #fff;
+	font-weight: bold;
+}
+
+.rss-link:hover {
+	color: #eee;
+}
+
+footer .footer-sponsors {
+	border-top: none;
+}
+
+@media (max-width: 650px) {
+	main {
+		padding: 0;
+	}
+
+	main h1 {
+		font-size: 3rem;
+	}
+
+	article {
+		padding: 2rem;
+	}
+
+	article p,
+	article li {
+		text-align: left;
+	}
+
+	.post-link h2 {
+		line-height: 1.55rem;
+	}
+}
+
+@media print {
+	header,
+	nav.main,
+	.footer-sponsors,
+	footer {
+		display: none;
+	}
+
+	main {
+		padding: 0;
+	}
+
+	article h1 {
+		padding: 0;
+	}
+
+	h1,
+	article h2 {
+		zoom: .8;
+	}
+
+	h1,
+	article h2,
+	article h3,
+	article h4 {
+		margin-top: .2in;
+		margin-bottom: .1in;
+	}
+
+	article p,
+	article li {
+		line-height: 1.25rem;
+		margin: 0 0 .5rem 0;
+	}
+
+	p {
+		margin: 0;
+		padding: 0;
+	}
+}

@@ -1,0 +1,35 @@
+body {
+	background: #F0ECE5;
+	padding: 5%;
+}
+#main {
+	margin: 0 auto;
+	max-width: 600px;
+	border: 1px solid #BDA99D;
+	border-radius: 10px;
+	background: #FFFCF4;
+	padding: 8% 4%;
+}
+
+#main img {
+	display: block;
+	width: 100%;
+	max-width: 180px;
+	margin: 0 auto 50px;
+}
+
+h1 {
+	text-align: center;
+	color: #CC0000;
+	font-size: 24px;
+	margin-bottom: 2rem;
+}
+
+h2 {
+	color: blue;
+	text-align: center;
+}
+
+p {
+	margin: 1rem 0;
+}

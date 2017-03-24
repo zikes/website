@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<head>
+	<head>
+		<title>Caddyfile Tutorial - How to Configure Caddy</title>
+		{{.Include "/includes/head.html"}}
+		<link rel="stylesheet" href="/resources/css/docs.css">
+	</head>
+	<body>
+		{{.Include "/includes/docs-nav.html"}}
+
+		<main class="content">
+			{{.Include "/includes/tutorials-nav.html"}}
+			<article>
+				<h2>Caddyfile Primer</h2>
+				<p>
+					This tutorial will show you how easy it is to configure Caddy with the Caddyfile.
+				</p>
+				<p>
+					The Caddyfile is a text file that configures how Caddy runs.
+				</p>
+				<p>
+					<b>The first line of the Caddyfile is <i>always</i> the address of the site to serve.</b> For example:
+				</p>
+				<code class="block"><span class="cf-addr">localhost:8080</span></code>
+				<p>
+					When you save that in a file called Caddyfile, Caddy will automatically find it when you start it:
+				</p>
+
+				<div class="tab-box os-tabs">
+					<div class="tabs">
+						<div class="tab tab-windows" data-tab="windows">Windows</div>
+						<div class="tab tab-mac" data-tab="mac">macOS</div>
+						<div class="tab tab-linux" data-tab="linux">Linux</div>
+					</div>
+					<div class="tab-box-body tab-windows">
+						<code class="block cmd">caddy</code>
+					</div>
+					<div class="tab-box-body tab-mac tab-linux">
+						<code class="block cmd bash">caddy</code>
+					</div>
+				</div>
+
+				<p>
+					If the Caddyfile is in a different location or has a different name, tell Caddy where it is:
+				</p>
+
+				<div class="tab-box os-tabs">
+					<div class="tabs">
+						<div class="tab tab-windows" data-tab="windows">Windows</div>
+						<div class="tab tab-mac" data-tab="mac">macOS</div>
+						<div class="tab tab-linux" data-tab="linux">Linux</div>
+					</div>
+					<div class="tab-box-body tab-windows">
+						<code class="block cmd">caddy -conf C:\path\to\Caddyfile</code>
+					</div>
+					<div class="tab-box-body tab-mac tab-linux">
+						<code class="block cmd bash">caddy -conf ../path/to/Caddyfile</code>
+					</div>
+				</div>
+
+				<p>
+					The lines following a site address start with a directive. Directives are <a href="/docs">keywords that Caddy recognizes</a>. For example, <a href="/docs/gzip">gzip</a> is an HTTP directive:
+				</p>
+				<code class="block"><span class="cf-addr">localhost:8080</span>
+<span class="cf-dir">gzip</span></code>
+				<p>
+					Directives might have one or more arguments after them:
+				</p>
+				<code class="block"><span class="cf-addr">localhost:8080</span>
+<span class="cf-dir">gzip</span>
+<span class="cf-dir">log</span> <span class="cf-arg">../access.log</span></code>
+				<p>
+					Some directives require more configuration than can fit on one line. For those directives, you can open a <i>block</i> and set more parameters. The open curly brace must be at the end of a line:
+				</p>
+				<code class="block"><span class="cf-addr">localhost:8080</span>
+<span class="cf-dir">gzip</span>
+<span class="cf-dir">log</span> <span class="cf-arg">../access.log</span>
+<span class="cf-dir">markdown</span> <span class="cf-arg">/blog</span> {
+    <span class="cf-subdir">css</span> /blog.css
+    <span class="cf-subdir">js</span>  /scripts.js
+}</code>
+				<p>
+					If the directive block is left empty, you should omit the curly braces entirely.
+				</p>
+				<p>
+					Arguments that contain whitespace must be enclosed in quotes <code>&quot;</code>.
+				</p>
+				<p>
+					The Caddyfile can also have comments starting with the <code>#</code> character:
+				</p>
+				<code class="block"><span class="cf-comment"># Comments can start a line</span>
+<span class="cf-dir">foobar</span> <span class="cf-comment"># or go at the end</span></code>
+				<p>
+					To configure multiple sites with a single Caddyfile, you <b>must</b> use curly braces around each one to separate their configurations:
+				</p>
+				<code class="block"><span class="cf-addr">mysite.com</span> {
+    <span class="cf-dir">root</span> <span class="cf-arg">/www/mysite.com</span>
+}<br>
+<span class="cf-addr">sub.mysite.com</span> {
+    <span class="cf-dir">root</span> <span class="cf-arg">/www/sub.mysite.com</span>
+    <span class="cf-dir">gzip</span>
+    <span class="cf-dir">log</span> <span class="cf-arg">../access.log</span>
+}</code>
+				<p>
+					As with directives, the opening curly brace must be at the end of the same line. The closing curly brace must be on its own line.
+				</p>
+				<p>
+					For sites which share the same configuration, specify multiple addresses:
+				</p>
+				<code class="block"><span class="cf-addr">localhost:8080, https://site.com, http://mysite.com</span> {
+    ...
+}</code>
+				<p>
+					Site addresses can also be defined under a specific path or have wildcards in place of individual domain labels from the left side:
+				</p>
+				<code class="block"><span class="cf-addr">example.com/static, *.example.com</span> {
+    ...
+}</code>
+
+<p>Note that using a path in your site address will route requests by longest matching prefix. If your base path is a directory, you may wish to suffix the path with a forward slash <code>/</code>.</p>
+
+<p>Use of environment variables is allowed in addresses and arguments. They must be enclosed in curly braces, and you can use either Unix or Windows variable formats:</p>
+
+<p><code class="block"><span class="cf-addr">localhost:{$PORT}</span>
+<span class="cf-dir">root</span> <span class="cf-arg">{%SITE_ROOT%}</span></code></p>
+
+				<p>Either syntax works on any platform. A single environment variable does not expand out into multiple arguments/values.</p>
+
+				<p>
+					There is <b>no inheritence or scripting</b> in the Caddyfile and <b>you may not specify the same site address more than once</b>. Yes, sometimes that means you copy+paste a few repeated lines. If you have many repeated lines, you can use the <a href="/docs/import">import</a> directive to reduce repetition.
+				</p>
+
+				<p>
+					Alrighty, that should be more than enough to make you literate in the <a href="/docs">Caddy docs</a>. Go forth and conquer!
+				</p>
+			</article>
+		</main>
+
+		{{.Include "/includes/footer.html"}}
+	</body>
+</head>

@@ -1,0 +1,13 @@
+.part2,
+.part3 {
+	display: none;
+}
+
+mark.block {
+	display: block;
+	background: #FFFFCC;
+	font-size: 12px;
+	padding: 1rem;
+	max-width: 550px;
+	color: #907300;
+}

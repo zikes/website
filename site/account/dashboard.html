@@ -1,0 +1,48 @@
+{{.Include "/account/includes/header.html" "Dashboard"}}
+<link rel="stylesheet" href="/resources/css/account/dashboard.css">
+
+<main>
+
+	Welcome back, {{.Account.Name}}
+
+	<table id="account-info">
+		<tr>
+			<th>Account ID</th>
+			<td>{{.Account.ID}}</td>
+		</tr>
+		<tr>
+			<th>API Key</th>
+			<td>{{.Account.APIKeyHex}}</td>
+		</tr>
+	</table>
+
+	<table id="plugin-list">
+		<tr>
+			<th>Name</th>
+			<th>Plugin ID</th>
+			<th>Version</th>
+			<th>Last Release</th>
+			<th>Downloads</th>
+			<th></th>
+		</tr>
+		{{range .OwnedPlugins}}
+		<tr>
+			<td>
+				<b><a href="/account/plugin/{{.ID}}" title="Details">{{.Name}}</a></b>
+				<div class="plugin-type">{{.Type.Name}}</div>
+			</td>
+			<td>{{.ID}}</td>
+			<td class="wrap">{{if .LatestRelease}}{{.LatestRelease.Version}}{{else}}&mdash;{{end}}</td>
+			<td>{{if .LatestRelease}}{{.LatestRelease.Timestamp}}{{else}}&mdash;{{end}}</td>
+			<td>{{.DownloadCount}}</td>
+			<td>
+				&bull; <a href="/account/plugin/{{.ID}}">Details</a>
+				<br>
+				&bull; <a href="/account/plugin/{{.ID}}/edit">Edit</a>
+				<br>
+				&bull; <a href="/account/plugin/{{.ID}}/deploy">New Deploy</a>
+			</td>
+		{{end}}
+	</table>
+</main>
+{{.Include "/account/includes/footer.html"}}

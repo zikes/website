@@ -1,0 +1,298 @@
+header {
+	background-image: linear-gradient(0deg, #578BDE 0%, #9029E9 100%);
+}
+
+.cards-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 4rem;
+	padding-bottom: 2rem;
+}
+
+.card {
+	display: flex;
+	background: #FFFFFF;
+	border-radius: 20px;
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.40);
+}
+
+.card.caddy-free {
+	padding: 2rem;
+	display: block;
+	background-color: rgba(255, 255, 255, .8);
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.card h2,
+h2.product {
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: normal;
+}
+
+h2.product {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.card h2 {
+	text-align: center;
+	font-size: 24px;
+	color: #000000;
+	margin-top: 0;
+	line-height: 1.5rem;
+}
+
+.card h2 .small {
+	font-size: 14px;
+	display: block;
+}
+
+hr.product {
+	width: 75px;
+	margin: 1rem auto 0;
+	border: none;
+	border-top: 3px solid #000;
+}
+
+.card hr.product {
+	max-width: 35px;
+	border-top-width: 2px;
+}
+
+.card .sponsorship-blue { color: #5E81DF; }
+hr.product.sponsorship-blue { border-color: #5E81DF; }
+
+.card .engineering-red { color: #DF5E5E; }
+hr.product.engineering-red { border-color: #DF5E5E; }
+
+.product-table {
+	margin: 2rem 3rem;
+	border-collapse: collapse;
+}
+
+.product-table th,
+.product-table td {
+	padding: .5rem;
+}
+
+.product-table th {
+	vertical-align: bottom;
+	font-size: 14px;
+}
+
+.product-table td {
+	border-bottom: 1px solid #DDD;
+}
+
+.product-table .subheader td {
+	font-size: 14px;
+	font-weight: bold;
+	text-align: center;
+	vertical-align: top;
+	border-bottom: none;
+}
+
+.product-table th:last-child,
+.product-table td:last-child {
+	padding-left: 2rem;
+}
+
+.product-table tr:last-child td {
+	border-bottom: none;
+}
+
+.product-table td {
+	text-align: center;
+}
+
+.product-table td:first-child {
+	text-align: left;
+}
+
+.product-table .no-bottom-border td {
+	border-bottom: none;
+}
+
+.product-table .last-row td {
+	vertical-align: top;
+	padding-top: 2rem;
+}
+
+.product-table .excluded {
+	color: #777;
+	font-weight: bold;
+	visibility: hidden;
+}
+
+.sales {
+	font-size: 20px;
+	text-align: center;
+	max-width: 800px;
+	margin: 1rem auto 0;
+}
+
+.card .sales {
+	font-size: 18px;
+}
+
+.boxes {
+	display: flex;
+}
+
+.boxes-center {
+	justify-content: center;
+}
+
+.box-33,
+.box-50 {
+	margin-right: 4rem;
+}
+
+.box-33:last-child,
+.box-50:last-child {
+	margin-right: 0;
+}
+
+.box-33 {
+	width: 33.3333%;
+}
+
+.box-50 {
+	width: 50%;
+}
+
+h2 {
+	text-align: center;
+}
+
+h3 {
+	font-size: 22px;
+	margin: 2rem 0 -1.25rem;
+}
+
+.footnotes {
+	font-size: 14px;
+	font-style: italic;
+}
+
+@media (max-width: 900px) {
+	.cards-container {
+		flex-direction: column-reverse;
+	}
+
+	.card.caddy-free {
+		border-radius: 0 0 20px 20px;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+
+	.card.caddy-free hr.product {
+		display: none;
+	}
+
+	.card.caddy-free ul {
+		margin: 0 3rem;
+	}
+
+	.boxes {
+		flex-direction: column;
+	}
+
+	.box-33,
+	.box-50 {
+		width: 100%;
+	}
+}
+
+@media (max-width: 700px) {
+	.product-table th,
+	.product-table td {
+		position: relative;
+		display: block;
+		text-align: right;
+		border-bottom: none;
+		padding: .2rem;
+		font-size: 80%;
+	}
+
+	.product-table .excluded {
+		visibility: visible;
+	}
+
+	.product-table td:nth-child(1) {
+		text-transform: uppercase;
+	}
+
+	.product-table td:nth-child(1),
+	.product-table td:before {
+		font-weight: bold;
+	}
+
+	.product-table td:nth-of-type(2):before {
+		content: "Sponsorship";
+	}
+
+	.product-table td:nth-of-type(3):before {
+		content: "Engineering Package";
+	}
+
+	.product-table tr:nth-child(2) {
+		display: none;
+	}
+
+	.product-table .last-row td {
+		text-align: center;
+	}
+
+	.product-table .last-row td:before {
+		display: none;
+	}
+
+	.product-table td:before {
+		left: 0;
+		padding-right: 10px;
+		position: absolute;
+		width: 50%;
+		text-align: left;
+	}
+
+	.product-table th:last-child,
+	.product-table td:last-child {
+		padding-left: inherit;
+		text-transform: none;
+		font-weight: normal;
+	}
+
+	.product-table .last-row td {
+		font-weight: normal;
+		text-transform: none;
+	}
+
+	.product-table tr:first-child {
+		display: none;
+	}
+
+	.product-table tr:nth-child(3) td {
+		padding-top: 0;
+	}
+
+	.product-table td:first-child {
+		text-align: center;
+		border-bottom: 1px solid #DDD;
+		padding-right: 0;
+		padding-top: 2rem;
+	}
+
+	.card.caddy-free ul {
+		margin: 1rem 3rem;
+	}
+
+	.card.caddy-free {
+		flex-direction: column;
+		padding-left: 0;
+		padding-right: 0;
+	}
+}

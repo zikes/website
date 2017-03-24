@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<head>
+	<head>
+		<title>Template Actions - Caddy</title>
+		{{.Include "/includes/head.html"}}
+		<link rel="stylesheet" href="/resources/css/docs.css">
+	</head>
+	<body>
+		{{.Include "/includes/docs-nav.html"}}
+
+		<div class="content-container">
+			{{.Include "/includes/docs-nav-side.html"}}
+
+			<article>
+				<h2>Template Actions</h2>
+
+				<p>Caddy's template features make it possible to add some dynamic content to your static website and include pages to help reduce duplication. Templates are supported by a few different directives such as <a href="/docs/templates">templates</a>, <a href="/docs/browse">browse</a>, and <a href="/docs/markdown">markdown</a>.</p>
+
+				<mark class="block">Template actions only work on directives that support them. Check the documentation for your directive to see if and how they can be used.</mark>
+
+				<p>Caddy templates use the syntax defined in Go's <a href="http://golang.org/pkg/text/template/">text/template</a> package. Understanding text/template will help you take full advantage of templates, but for those of us who aren't programmers, here are some simplified instructions. Caddy also adds some extra helpful functions for templating web pages specifically, which we've documented here.</p>
+
+				<h3 id="basic-syntax">Basic Syntax</h3>
+
+				<p>Template actions are enclosed between <code>&#123;&#123;</code> and <code>&#125;&#125;</code> markers. Template words are case-sensitive.</p>
+
+				<h3 id="common-functions">Common Functions</h3>
+
+				<h5>Include another file:</h5>
+
+				<code class="block">&#123;&#123;.Include "path/to/file.html"&#125;&#125;  // no arguments
+&#123;&#123;.Include "path/to/file.html" "arg1" 2 "value 3"&#125;&#125;  // with arguments</code>
+
+				<h5>Get argument within included file:</h5>
+
+				<code class="block">&#123;&#123;index .Args 0&#125;&#125; // 0 is first argument, and so on</code>
+
+				<h5>Include and render a Markdown file: (not needed in <a href="/docs/markdown">markdown</a> middleware)</h5>
+
+				<code class="block">&#123;&#123;.Markdown "path/to/file.md"&#125;&#125;</code>
+
+				<h5>Show current timestamp: (<a href="https://github.com/golang/go/blob/f06795d9b742cf3292a0f254646c23603fc6419b/src/time/format.go#L9-L41">format</a>)</h5>
+
+				<code class="block">&#123;&#123;.Now "Monday, 2 Jan 2006"&#125;&#125;</code>
+
+				<h5>Cookie value:</h5>
+
+				<code class="block">&#123;&#123;.Cookie "name"&#125;&#125;</code>
+
+				<h5>Header field value:</h5>
+
+				<code class="block">&#123;&#123;.Header "name"&#125;&#125;</code>
+
+				<h5>Visitor's IP:</h5>
+
+				<code class="block">&#123;&#123;.IP&#125;&#125;</code>
+
+				<h5>Request URI:</h5>
+
+				<code class="block">&#123;&#123;.URI&#125;&#125;</code>
+
+				<h5>Host portion of request:</h5>
+
+				<code class="block">&#123;&#123;.Host&#125;&#125;</code>
+
+				<h5>Port portion of request:</h5>
+
+				<code class="block">&#123;&#123;.Port&#125;&#125;</code>
+
+				<h5>Request method:</h5>
+
+				<code class="block">&#123;&#123;.Method&#125;&#125;</code>
+
+				<h5>Whether request path matches another path:</h5>
+
+				<code class="block">&#123;&#123;.PathMatches "/some/path"&#125;&#125;</code>
+
+				<h5>A part of the URL:</h5>
+
+				<code class="block">&#123;&#123;.URL.RawQuery&#125;&#125;</code>
+
+				<p>RawQuery returns the query string. You can replace RawQuery with Host, Scheme, Fragment, String, or Query.Get "parameter".</p>
+
+				<h5>Environment variables:</h5>
+
+				<code class="block">&#123;&#123;.Env.ENV_VAR_NAME&#125;&#125;</code>
+
+				<h5>Truncate value to certain length: (from beginning, or from end)</h5>
+
+				<code class="block">&#123;&#123;.Truncate "value" 3&#125;&#125;  // "val"</code>
+
+				<code class="block">&#123;&#123;.Truncate "value" -3&#125;&#125; // "lue"</code>
+
+				<h5>String replacement:</h5>
+
+				<code class="block">&#123;&#123;.Replace "haystack" "needle" "replacement"&#125;&#125;</code>
+
+				<h5>Current date/time object: (useful in date-related functions)</h5>
+
+				<code class="block">&#123;&#123;.NowDate&#125;&#125;</code>
+
+				<h5>Get extension from file path:</h5>
+
+				<code class="block">&#123;&#123;.Ext "path/filename.ext"&#125;&#125;</code>
+
+				<h5>Strip extension from file path:</h5>
+
+				<code class="block">&#123;&#123;.StripExt "filename.ext"&#125;&#125;</code>
+
+				<h5>Strip HTML, leaving only the plain text:</h5>
+
+				<code class="block">&#123;&#123;.StripHTML "Shows &lt;b&gt;only&lt;/b&gt; text content"&#125;&#125;</code>
+
+				<h5>Lower-case a string:</h5>
+
+				<code class="block">&#123;&#123;.ToLower "Makes Me ONLY lowercase"&#125;&#125;</code>
+
+				<h5>Upper-case a string:</h5>
+
+				<code class="block">&#123;&#123;.ToUpper "Makes me only UPPERCASE"&#125;&#125;</code>
+
+				<h5>Split a string by separator:</h5>
+
+				<code class="block">&#123;&#123;.Split "123-456-7890" "-"&#125;&#125;</code>
+
+				<h5>Convert list of values to a slice (array):</h5>
+
+				<code class="block">&#123;&#123;.Slice "a" "b" "c"&#125;&#125;</code>
+
+				<h5>Map keys to values: (useful in advanced cases, with subtemplates, etc.)</h5>
+
+				<code class="block">&#123;&#123;.Map "key1" "value1" "key2" "value2"&#125;&#125;</code>
+
+				<h5>List files in a directory:</h5>
+
+				<code class="block">&#123;&#123;.Files "sub/directory"&#125;&#125;</code>
+
+				<h5>Whether <a href="/docs/mitm-detection">HTTPS interception</a> is likely:</h5>
+
+				<code class="block">&#123;&#123;.IsMITM&#125;&#125;</code>
+
+				<h3 id="sanitization">Built-in Sanitization Functions</h3>
+
+				<p>These functions are built into text/template but you may find them helpful.</p>
+
+				<h5>Make HTML-safe (escape special characters):</h5>
+
+				<code class="block">&#123;&#123;html "Makes it &lt;i&gt;safe&lt;/i&gt; to render as HTML"&#125;&#125;</code>
+
+				<h5>Make JavaScript-safe:</h5>
+
+				<code class="block">&#123;&#123;js "Makes content safe for use in JS"&#125;&#125;</code>
+
+				<h5>URL-escape (query-encode):</h5>
+
+				<code class="block">&#123;&#123;urlquery "Makes safe for URL query strings"&#125;&#125;</code>
+
+				<h3 id="control-statements">Control Statements</h3>
+
+				<h5>If:</h5>
+
+				<code class="block">&#123;&#123;if .PathMatches "/secret/sauce"&#125;&#125;
+	Only for secret sauce pages
+&#123;&#123;end&#125;&#125;</code>
+
+				<h5>If-else:</h5>
+
+				<code class="block">&#123;&#123;if .PathMatches "/secret/sauce"&#125;&#125;
+	Only for secret sauce pages
+&#123;&#123;else&#125;&#125;
+	No secret sauce for you
+&#123;&#123;end&#125;&#125;</code>
+
+				<h5>If-elseif-else:</h5>
+
+				<code class="block">&#123;&#123;if .PathMatches "/secret/sauce"&#125;&#125;
+	Only for secret sauce pages
+&#123;&#123;else if eq .URL "/banana.html"&#125;&#125;
+	You're on the banana page
+&#123;&#123;else&#125;&#125;
+	No bananas or secret sauce
+&#123;&#123;end&#125;&#125;</code>
+
+				<h5>Range: (iterate data; this example dumps request headers)</h5>
+
+				<code class="block">&#123;&#123;range $field, $val := .Req.Header&#125;&#125;
+    &#123;&#123;$field&#125;&#125;: &#123;&#123;$val&#125;&#125;
+&#123;&#123;end&#125;&#125;</code>
+
+				<h5>Server-side comments:</h5>
+
+				<code class="block">&#123;&#123;/* This isn't sent to the client */&#125;&#125;</code>
+
+				<h3 id="comparison-functions">Comparison Functions</h3>
+
+				<p>Useful in "if" statements, you can use comparison functions:</p>
+
+				<ul>
+				<li><code>eq</code> Equal</li>
+				<li><code>ne</code> Not equal</li>
+				<li><code>lt</code> Less than</li>
+				<li><code>le</code> Less than or equal</li>
+				<li><code>gt</code> Greater than</li>
+				<li><code>ge</code> Greater than or equal</li>
+				</ul>
+
+				<p>Or these logic functions:</p>
+
+				<ul>
+				<li><code>not</code> Reverses the if condition</li>
+				<li><code>or</code> Returns first non-empty argument or the last argument</li>
+				<li><code>and</code> Returns first empty argument or the last argument</li>
+				</ul>
+
+				<h3 id="further-reading">Further Reading</h3>
+
+				<p>These are just a few examples of what you can do. If you need even more template power, read the description of the <a href="http://golang.org/pkg/text/template/">text/template</a> package which goes into much more detail.</p>
+
+
+
+			</article>
+		</div>
+
+		{{.Include "/includes/footer.html"}}
+	</body>
+</head>

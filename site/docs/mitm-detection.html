@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<head>
+	<head>
+		<title>Detecting HTTPS Interception - Caddy</title>
+		{{.Include "/includes/head.html"}}
+		<link rel="stylesheet" href="/resources/css/docs.css">
+	</head>
+	<body>
+		{{.Include "/includes/docs-nav.html"}}
+
+		<div class="content-container">
+			{{.Include "/includes/docs-nav-side.html"}}
+
+			<article>
+				<h2>Detecting HTTPS Interception</h2>
+
+				<p>Caddy has the ability to detect certain Man-in-the-Middle (MITM) attacks on HTTPS connections that may otherwise be invisible to the browser and the end user. This means Caddy can determine whether it is &quot;likely&quot; or &quot;unlikely&quot; that a TLS proxy is actively intercepting an HTTPS connection.</p>
+
+				<p>All incoming HTTPS connections are automatically checked for tampering using techniques described by Durumeric, Halderman, et. al. in their <a href="https://jhalderm.com/pub/papers/interception-ndss17.pdf">NDSS '17 paper</a>. The results of the inspection are exposed in various ways throughout Caddy so you can choose how to handle a suspected MITM attack on your clients. (Keep in mind that many TLS proxies take the form of &quot;benevolent&quot; antivirus or firewall products.)</p>
+
+				<p>TLS connections that are being intercepted are NOT secure, despite software vendor advertisements to the contrary. The degree to which you respond to a suspected MITM attack is up to you and depends on the nature of your site, your audience, and political circumstances. You might respond to suspected HTTPS interception in any of these ways (in order of increasing ostentatiousness):</p>
+
+				<ul>
+				<li><a href="/docs/log">Log</a> that it happened using the <code>{mitm}</code> <a href="/docs/placeholders">placeholder</a> and a custom log format.</li>
+				<li>If you're using <a href="/docs/templates">templates</a>, display a warning to the user on your website using the <code>{{"{{"}}.IsMITM{{"}}"}}</code> <a href="/docs/template-actions">template action</a>.</li>
+				<li>Perform an <a href="/docs/rewrite">internal rewrite</a> of the URI to a dedicated warning, error, or informational page.</li>
+				<li><a href="/docs/redir">Redirect</a> the user to another page or site.</li>
+				<li>Close the connection immediately with an empty response (coming soon, maybe).</li>
+				</ul>
+
+				<p>Please read this entire page before implementing any measures that might be considered extreme.</p>
+
+				<h3 id="disclaimer">Disclaimer</h3>
+
+				<p>The Caddy authors, maintainers, and contributors will make a good-faith attempt to keep this feature working correctly with commonly-used versions of mainstream browsers, but cannot guarantee perfect accuracy. This feature relies on hard-coded heuristics that attempt to identify browsers from the TLS handshake. Browser and OS updates may render the heuristics obsolete at any time. The Caddy developers are not responsible for any damages, costs, miscommunications, or misunderstandings, or other consequences that may result from using this feature. Use with wisdom and at your own risk.</p>
+
+				<h3 id="supported-clients">Supported Clients</h3>
+
+				<p>Caddy is programmed to protect recent versions of Chrome, Firefox, IE/Edge, and Safari.</p>
+
+				<h3 id="false-positives">False Positives</h3>
+
+				<p>Caddy may, on occasion, incorrectly flag a connection as &quot;likely&quot; intercepted even if it is not. This usually happens when clients spoof their User-Agent string. For the best possible protection, we recommend that users do not change their User-Agent header and that site owners keep Caddy updated.</p>
+
+				<p>It is also possible that there is a browser/platform combination that is not yet considered. To report a false positive, please <a href="https://github.com/mholt/caddy/issues/new">file an issue</a> with your real, unmodified User-Agent string, browser version, OS/platform details, the raw ClientHello bytes, and any other relevant build information. You must also be certain that your connection was made on a trusted network that is NOT being firewalled or proxied and that all OS &quot;security&quot; products are completely disabled on your machine and the local network. (You <em>must</em> convince us that the connection was actually secure, and we have to be able to reproduce your report.)</p>
+
+				<h3 id="false-negatives">False Negatives</h3>
+
+				<p>When HTTPS interception is occurring but Caddy is not able to detect it (an &quot;unlikely&quot; classification), there could be a number of reasons. From least to most ominous:</p>
+
+				<ul>
+					<li>It could simply be that Caddy's detection heuristics are not comprehensive enough. Please <a href="https://github.com/mholt/caddy/issues/new">file an issue</a> as long as you can provide enough information to catch the interception, including the ClientHello bytes and as many details about the MITM software that are known.</li>
+					<li>The client is not sending a recognized User-Agent header. Except for a few limited exceptions, Caddy only checks for MITM with major browsers.</li>
+					<li>The TLS proxy is preserving the original properties of the TLS handshake between the client and the server. This scenario is not the worst false negative because at least the browser will be able to show a warning if the TLS connection is weak.</li>
+					<li>A TLS proxy is modifying or stripping the User-Agent header, perhaps in an attempt to hide. However, any TLS proxy that modifies HTTP requests runs the risk of breaking HTTP, which would expose its presence (similar to how gravity exposes black holes).</li>
+				</ul>
+
+				<p>Caddy's MITM detection features work mainly because TLS proxies are implemented carelessly, documented poorly, and updated sparingly.</p>
+
+
+			</article>
+		</div>
+
+		{{.Include "/includes/footer.html"}}
+	</body>
+</head>

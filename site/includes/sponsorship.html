@@ -1,0 +1,27 @@
+<link rel="stylesheet" href="/resources/css/sweetalert2.min.css">
+<script src="/resources/js/sweetalert2.min.js"></script>
+<script src="https://checkout.stripe.com/checkout.js"></script>
+<script src="/resources/js/purchase.js"></script>
+<div class="purchase">
+	<label class="price monthly">
+		<span class="radio-container label-value-container">
+			<input type="radio" name="sponsorship-plan" value="monthly">
+		</span>
+		<span class="label-value-container">
+			<span class="price-value">$500/mo.</span>
+		</span>
+	</label>
+	<label class="price yearly checked">
+		<span class="radio-container label-value-container">
+			<input type="radio" name="sponsorship-plan" value="yearly" checked>
+		</span>
+		<span class="label-value-container">
+			<span class="price-value">$5000/yr.</span>
+			<br>(2 months free)
+		</span>
+	</label>
+	<div class="buy-button-container">
+		<button class="sponsorship-blue">Sponsor</button>
+		<div class="request-invoice tooltip-bottom" data-tooltip-stored="Invoicing available with yearly sponsorship">or <a href="#">request invoice</a></div>
+	</div>
+</div>

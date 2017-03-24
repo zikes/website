@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{{index .Args 0}}</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="/resources/css/sweetalert2.min.css">
+		<link rel="stylesheet" href="/resources/css/account/common.css">
+		<script src="/resources/js/jquery-3.1.1.min.js"></script>
+		<script src="/resources/js/sweetalert2.min.js"></script>
+		<script src="/resources/js/common.js"></script>
+		<script src="/resources/js/account/common.js"></script>
+	</head>
+	<body>
+		<header>
+			<a href="/"><img src="/resources/images/caddy-black.png" class="logo"></a>
+			<div class="subtitle">Developer Portal</div>
+			<nav>
+				{{.Account.Email}}
+				<a href="/account/logout" class="logout">Log Out</a>
+			</nav>
+		</header>
+
+		<nav>
+			<ul>
+				<li><a href="/account/dashboard">Dashboard</a></li>
+				<li><a href="/account/register-plugin">Register Plugin</a></li>
+				{{$unread := .Notifications.UnreadCount}}
+				<li><a href="/account/notifications">Notifications{{if gt $unread 0}} <span class="notif-badge" title="Unread notifications">{{$unread}}</span>{{end}}</a></li>
+			</ul>
+		</nav>
+		

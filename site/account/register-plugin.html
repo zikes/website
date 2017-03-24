@@ -1,0 +1,191 @@
+{{ $title := "Register Plugin" }}
+{{.Include "/account/includes/header.html" $title}}
+<script src="/resources/js/account/register-plugin.js"></script>
+<script src="/resources/js/account/plugin-common.js"></script>
+<link rel="stylesheet" href="/resources/css/account/plugin-common.css">
+<link rel="stylesheet" href="/resources/css/account/register-plugin.css">
+
+<main>
+	<h1>{{$title}}</h1>
+
+	<div class="part1">
+		<p>
+			Use this form to add your plugin to the Caddy download page.
+		</p>
+
+		<mark class="block">
+			<b>If your plugin registers a directive to the Caddyfile:</b> You must first add your directive to the list of directives for its server type before submitting it to this site. Submit a pull request to the repo for your plugin's server type to add the directive in the proper order, then wait for it to be released. Otherwise, your plugin will not work when people download it.
+		</mark>
+
+		<form method="POST" action="/api/repo-plugins">
+			<table class="form">
+				<tr>
+					<td class="field">
+						<h2>Package Import Path</h2>
+						<p>
+							The fully-qualified package name used in Go source code to import your plugin.
+							<br>For example: <code>github.com/user/repo/myplugin</code>
+						</p>
+						<input type="text" name="import_path">
+					</td>
+				</tr>
+				<tr>
+					<td class="field">
+						<h2>Clone URL</h2>
+						<p>
+							The URL from which to clone the Git repository hosting your plugin. Must use the https:// form.
+							<br>For example: <code>https://github.com/user/repo.git</code>
+						</p>
+						<p>
+							<b>Generally, you should submit only one plugin per repository.</b>
+						</p>
+						<input type="text" name="clone_url">
+					</td>
+				</tr>
+				<tr>
+					<td class="field">
+						<h2>Version</h2>
+						<p>
+							The full commit SHA, tag, or name of the branch of the version to release right now. Default is master.
+							<br>For example: <code>v1.0.2</code>
+						</p>
+						<input type="text" name="version" placeholder="master" class="max-width-100">
+					</td>
+				</tr>
+				<tr>
+					<td class="field">
+						<p>
+							Next, we'll analyze your plugin's repository. It will only take a moment. Then you'll choose which plugin to publish.
+						</p>
+						<button class="submit wide">Next &rsaquo;</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
+
+
+	<div class="part2">
+		<p>
+			Great, almost done!
+		</p>
+
+		<form method="POST" action="/api/register-plugin">
+			<input type="hidden" name="clone_url">
+			<input type="hidden" name="version">
+			<input type="hidden" name="import_path">
+			<input type="hidden" name="plugin_type">
+			<table class="form">
+				<tr>
+					<td class="field">
+						<h2>Choose Plugin</h2>
+						<p>
+							We found these plugins in the repository you specified. Which one are you publishing?
+						</p>
+						<table id="plugin-list" class="data-table row-selectable">
+							<tr>
+								<th width="35"></th>
+								<th>Name</th>
+								<th>Type</th>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td class="field">
+						<h2>Description</h2>
+						<p>
+							Please provide a few sentences that clearly describe what your plugin does. The first sentence should be sufficient as a summary, but feel free to use one or two paragraphs. This will be the primary content of your plugin's page on the Caddy website. Do not cram the entire documentation here.
+							<br><br>First sentence example: <i>The gizmo directive adds custom sprocket headers to the response.</i>
+						</p>
+						<textarea rows="5" name="description"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td class="field">
+						<h2>Examples</h2>
+						<p>
+							Provide minimal, instructive examples for users to start using your plugin quickly. They should be able to glance at the examples and immediately get an idea how to begin using it. Each example should contain a short, one-line title, the code/content of the example, and a very concise explanation (no more than a few sentences) of precisely what it does.
+						</p>
+						<div id="example-list">
+							<table id="example-1" class="example">
+								<tr>
+									<th></th>
+									<td><h3>Example <span class="example-num">1</span></h3></td>
+								</tr>
+								<tr>
+									<th>Title:</th>
+									<td><input type="text" name="example_title"></td>
+								</tr>
+								<tr>
+									<th>Code:</th>
+									<td><textarea rows="3" name="example_code" class="code"></textarea></td>
+								</tr>
+								<tr>
+									<th>Explanation:</th>
+									<td><textarea rows="3" name="example_explanation"></textarea></td>
+								</tr>
+								<tr>
+									<th></th>
+									<td>
+										<a href="javascript:" class="delete-example">Delete example</a>
+									</td>
+								</tr>
+							</table>
+							<a href="javascript:" class="add-example">Add an example</a>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="field">
+						<h2>Project Homepage</h2>
+						<p>
+							Full HTTPS link to the project's homepage or website, like a GitHub project page.
+							<br>For example: <code>https://github.com/me/project</code>
+						</p>
+						<input type="text" name="website">
+					</td>
+				</tr>
+				<tr>
+					<td class="field">
+						<h2>Documentation Link</h2>
+						<p>
+							Direct link to the full documentation (user guide or README) for your plugin. After clicking this link, the instructions should be immediately available to the user without further clicking.
+							<br>For example: <code>https://github.com/me/project/blob/master/README.md</code>
+						</p>
+						<input type="text" name="docs_link">
+					</td>
+				</tr>
+				<tr>
+					<td class="field">
+						<h2>Support Link</h2>
+						<p>
+							Where users can go to get help from the developer or report bugs. This should be a direct link to issues or a forum (or something interactive).
+							<br>For example: <code>https://github.com/me/project/issues</code>
+						</p>
+						<input type="text" name="support_link">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<button class="goback">&laquo; Go Back</button>
+						<button class="submit">Publish</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
+	<div class="part3">
+		<p>
+			Excellent. Your plugin is being analyzed and tested. Please allow a few minutes.
+			You will get a notification when it is done.
+		</p>
+		<p>
+			<a href="/account/dashboard">Go to dashboard</a>
+		</p>
+	</div>
+
+</main>
+{{.Include "/account/includes/footer.html"}}

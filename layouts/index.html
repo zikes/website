@@ -1,0 +1,58 @@
+{{ $pag := (.Paginator 5) }}
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>The Caddy Blog</title>
+		{{"{{"}}.Include "/includes/head.html"{{"}}"}}
+		<link rel="stylesheet" href="/resources/css/blog.css">
+		{{if .RSSLink}}
+		<link href="{{.RSSLink}}" rel="alternate" type="application/rss+xml" title="{{.Site.Title}}">
+		<link href="{{.RSSLink}}" rel="feed" type="application/rss+xml" title="{{.Site.Title}}">
+		{{end}}
+	</head>
+	<body>
+		<header>
+			{{"{{"}}.Include "/includes/header-nav.html"{{"}}"}}
+		</header>
+
+		<main class="index">
+			<h1>The Caddy Blog</h1>
+
+			<div class="pagenum">
+				{{if $pag.HasPrev}}
+					<a href="{{.Site.BaseURL}}{{replace $pag.Prev.URL ".html" ""}}">&laquo;</a>
+				{{end}}
+				Page {{$pag.PageNumber}}
+				{{if $pag.HasNext}}
+					<a href="{{.Site.BaseURL}}{{replace $pag.Next.URL ".html" ""}}">&raquo;</a>
+				{{end}}
+			</div>
+
+			{{range $pag.Pages}}
+			<a href="{{replace .Permalink ".html" ""}}" class="post-link">
+				<h2>{{.Title}}</h2>
+				<div class="timestamp">{{.Date.Format "January 2, 2006"}}</div>
+				{{if isset .Params "summary"}}{{.Params.summary}}{{else}}{{.Summary}}{{end}}
+			</a>
+			{{end }}
+
+			<div class="pages">
+				{{if $pag.HasPrev}}
+					<a href="{{.Site.BaseURL}}{{replace $pag.Prev.URL ".html" ""}}">&lsaquo; Previous Page</a>
+				{{end}}
+				<span class="page-number">{{$pag.PageNumber}}</span>
+				{{if $pag.HasNext}}
+					<a href="{{.Site.BaseURL}}{{replace $pag.Next.URL ".html" ""}}">Next Page &rsaquo;</a>
+				{{end}}
+			</div>
+
+			{{if .RSSLink}}
+			<div class="text-center">
+				<a href="{{.RSSLink}}" class="rss-link" type="application/rss+xml" target="_blank">RSS</a>
+			</div>
+			{{end}}
+		</main>
+
+		{{"{{"}}.Include "/includes/footer.html"{{"}}"}}
+	</body>
+</html>

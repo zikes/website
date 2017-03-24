@@ -1,0 +1,225 @@
+header {
+	background-image: linear-gradient(0deg, #2AABEE 0%, #39AF43 100%);
+	color: #FFF;
+}
+
+.main-features {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	padding-top: 2rem;
+}
+
+.main-feature {
+	text-align: center;
+	padding: 0 2rem;
+	margin: 3rem 0;
+	width: 25%;
+}
+
+.main-feature img {
+	height: 130px;
+	margin-bottom: 1rem;
+}
+
+.main-feature .title {
+	font-size: 24px;
+	font-weight: bold;
+	margin-bottom: 1rem;
+}
+
+.main-feature p {
+	text-align: left;
+	color: #FFF;
+	margin: 0;
+}
+
+.feature-highlights {
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+	font-size: 28px;
+}
+
+.feature-highlight {
+	width: 33.333%;
+	min-width: 300px;
+	padding: 1rem 3rem;
+}
+
+header h1 {
+	font-size: 6rem;
+	text-align: center;
+}
+
+h2 {
+	border-bottom: 3px solid #2BABED;
+	font-family: inherit;
+	font-weight: normal;
+	font-size: 40px;
+	padding: .5rem 1rem;
+}
+
+h3 {
+	text-align: center;
+	padding-top: 4rem;
+	padding-bottom: 1rem;
+}
+
+h4 {
+	font-size: 16px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+.section-heading {
+	font-style: italic;
+	font-size: 20px;
+	line-height: 2rem;
+	color: #000;
+	max-width: 550px;
+	text-align: center;
+	margin: 2rem auto 0;
+}
+
+.features {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.feature {
+	width: 33.333%;
+	padding: 1rem;
+}
+
+.feature p {
+	margin: 5px 0;
+}
+
+.feature ul {
+	list-style: none;
+	margin: 1rem 0;
+}
+
+.feature ul li {
+	padding: .15rem 0;
+}
+
+.feature li.has,
+.feature li.hasnot {
+	margin-left: 1.5rem;
+}
+
+.feature li.has,
+.feature li.has:before {
+	color: #18b318;
+}
+
+.feature li.hasnot,
+.feature li.hasnot:before {
+	color: #888;
+}
+
+.feature li.has:before,
+.feature li.hasnot:before {
+	display: inline-block;
+	margin-left: -1.75rem;
+	width: 1.75rem;
+	text-align: center;
+	font-weight: bold;
+}
+
+.feature li.has:before    { content: "\2713"; }
+.feature li.hasnot:before { content: "\24E7"; }
+
+.feature .subscribe {
+	margin-bottom: 1rem;
+}
+
+.sponsor-heading {
+
+	padding: 1rem 4rem;
+	margin: 4rem auto 0;
+	background: #0c84ff;
+	color: #FFF;
+}
+
+.sales {
+	font-size: 20px;
+	text-align: center;
+	max-width: 800px;
+	margin: 1rem auto 0;
+}
+
+.pitch-container {
+	padding-top: 0;
+}
+
+.pitch-container .section-heading {
+	margin-top: 0;
+}
+
+.pitch {
+	width: 33.333%;
+	padding: 0 1rem;
+	margin-top: 2rem;
+	text-align: center;
+	border-right: 1px solid #CCC;
+	align-content: center;
+}
+
+.pitch:last-child {
+	border-right: none;
+}
+
+.pitch p {
+	font-size: 18px;
+	margin-bottom: 2rem;
+}
+
+
+@media (max-width: 900px) {
+	.main-feature {
+		width: 50%;
+		margin: 3rem 0;
+		padding: 0 1rem;
+	}
+
+	header h1 {
+		font-size: 4rem;
+		top: 1.5rem;
+	}
+
+	.feature {
+		width: 50%;
+	}
+}
+
+@media (max-width: 700px) {
+	.pitch {
+		width: 100%;
+		border-right: none;
+	}
+
+	.pitch p {
+		text-align: left;
+	}
+
+	.feature-highlight {
+		padding: 1rem;
+	}
+}
+
+@media (max-width: 500px) {
+	.main-feature {
+		width: 100%;
+	}
+
+	header h1 {
+		font-size: 3rem;
+	}
+
+	.feature {
+		width: 100%;
+	}
+}

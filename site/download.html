@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<head>
+	<head>
+		<title>Download Caddy</title>
+		{{.Include "/includes/head.html"}}
+		<link rel="stylesheet" href="/resources/css/sweetalert2.min.css">
+		<link rel="stylesheet" href="/resources/css/download.css">
+		<script src="https://checkout.stripe.com/checkout.js"></script>
+		<script src="/resources/js/sweetalert2.min.js"></script>
+		<script src="/resources/js/marked.min.js"></script>
+		<script src="/resources/js/purchase.js"></script>
+		<script src="/resources/js/download.js"></script>
+	</head>
+	<body>
+		<header>
+			{{.Include "/includes/header-nav.html"}}
+		</header>
+		<div class="download-header">
+			<div class="content">
+				<div class="download-panel download-controls">
+					<div class="panel-content" id="downloads-unavailable">
+						<div class="holder">
+							Sorry, our download page is unavailable at the moment. The build server is undergoing maintenance.
+							<br><br>
+							You could try again in a few minutes, or <b><a href="https://github.com/mholt/caddy/releases/latest">download Caddy from GitHub</a></b> without waiting.
+							<br><br>
+							<small>Normally, this page allows you to customize your Caddy build by choosing plugins. It's cool. Check back later!</small>
+						</div>
+					</div>
+					<div class="panel-content" id="download-controls">
+						<div class="holder">
+							<h2>Platform</h2>
+							<div id="platform">
+								(Loading)
+							</div>
+						</div>
+
+						<!--
+						Someday, if we allow choosing a different version...
+						<div class="holder">
+							<h2>Version</h2>
+							<span id="version">(latest)</span>
+						</div>
+						-->
+
+						<div class="holder">
+							<h2>Plugins</h2>
+							<div id="plugins">
+								Add plugins
+							</div>
+						</div>
+
+						<div class="holder" id="purchase-holder">
+							<h2>Recommended</h2>
+							<div class="option">
+								<label>
+									<input type="checkbox" id="sponsor">
+									Sponsor the project for just <b>$500/mo.</b>
+								</label>
+								<ul>
+									<li>Help make the Web better</li>
+									<li>Promote your brand</li>
+									<li><a href="/pricing" target="_blank">Learn more &rsaquo;</a></li>
+								</ul>
+							</div>
+							<div class="option">
+								<label>
+									<input type="checkbox" id="engpkg">
+									Purchase private support for just <b>$950/mo.</b>
+								</label>
+								<ul>
+									<li>Unlimited instances</li>
+									<li>Guaranteed development</li>
+									<li><a href="/pricing" target="_blank">Learn more &rsaquo;</a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="text-center" id="download-button-container">
+							<a id="download" class="button">Download</button>
+							<a id="signature" href="javascript:">Download PGP Signature</a>
+						</div>
+					</div>
+				</div>
+				<div class="download-panel download-info">
+					<div id="instructions" class="holder">
+						<div id="pointer">&laquo;</div>
+						<h2>Customize<br>your build</h2>
+					</div>
+					<div id="platform-chooser-holder" class="holder">
+						<div class="platform-chooser">
+							<div class="close">X</div>
+							<h2>Choose platform</h2>
+							<div id="platform-lists">
+								<!-- Populated by JavaScript -->
+							</div>
+						</div>
+					</div>
+					<div id="plugin-chooser-holder" class="holder">
+						<div class="plugin-chooser">
+							<div class="plugin-list-container">
+								<div id="plugin-list">
+									<!-- Populated by JavaScript -->
+								</div>
+								<div id="plugin-warning">
+									<b class="warning">!</b> Only choose plugins you trust
+								</div>
+								<div id="plugin-done">
+									Done
+								</div>
+							</div>
+							<!-- Populated by JavaScript -->
+							<div id="plugin-howto">
+								<h2>&laquo; Choose your plugins</h2>
+								<p>
+									Plugins add features to Caddy. Select the ones you want on the left. Click the "i" icon that appears to get more information.
+								</p>
+							</div>
+							<div id="plugin-info">
+								<h2 id="plugin-name"></h2>
+								<div id="plugin-type" class="plugin-subtitle"></div>
+
+								<div id="plugin-description"></div>
+
+								<table>
+									<tr>
+										<td><b>Owner:</b> <span id="plugin-owner"></span></td>
+										<td><b>Last Updated:</b> <span id="plugin-updated"></span></td>
+									</tr>
+									<tr>
+										<td colspan="2"><b>Version:</b> <span id="plugin-version"></span></td>
+									</tr>
+									<tr>
+										<td colspan="2">
+											<b>Links:</b>
+											<a href="javascript:" id="plugin-docs">Documentation</a> &middot;
+											<a href="javascript:" id="plugin-support">Support</a> &middot;
+											<a href="javascript:" id="plugin-website">Website</a>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<section class="version-container content caddy-extras">
+			Caddy <span id="version">(latest)</span>
+		</section>
+
+		<section class="content caddy-extras">
+			<table class="shortcut-table">
+				<tr>
+					<td>
+						Direct link to download:
+						<a href="javascript:" id="about-direct-link" class="help" title="Learn more">?</a>
+					</td>
+					<td>
+						<input type="text" class="shortcut" id="direct-link" value="https://caddyserver.com/download/os/arch" readonly>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						One-step installer script (bash):
+						<a href="javascript:" id="about-getcaddy" class="help" title="Learn more">?</a>
+					</td>
+					<td>
+						<input type="text" class="shortcut" id="getcaddy-bash" value="curl https://getcaddy.com | bash" readonly>
+					</td>
+				</tr>
+			</table>
+		</section>
+
+		{{.Include "/includes/footer.html"}}
+	</body>
+</html>

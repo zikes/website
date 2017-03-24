@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<head>
+	<head>
+		<title>Caddy User Guide</title>
+		{{.Include "/includes/head.html"}}
+		<link rel="stylesheet" href="/resources/css/docs.css">
+	</head>
+	<body>
+		{{.Include "/includes/docs-nav.html"}}
+
+		<div class="content-container">
+			{{.Include "/includes/docs-nav-side.html"}}
+
+			<div>
+				<section class="content no-bottom-padding">
+					<div class="ref-header">
+						<div class="text-center">
+							<img src="/resources/images/reference.png">
+						</div>
+						<div class="ref-intro">
+							<h2>Reference</h2>
+							<p>
+								These documents describe how to use and configure Caddy.
+							</p>
+							<p>
+								If you're new to Caddy, try the <a href="#">Getting Started</a> tutorial.
+							</p>
+							<p>
+								Once you know how to run Caddy, be sure check out the <a href="/docs/caddyfile">Caddyfile</a> so you can configure your site.
+							</p>
+						</div>
+					</div>
+				</section>
+
+				<div class="card-container content">
+					<a href="/tutorial" class="card">
+						<aside>
+							<img src="/resources/images/tutorial.png">
+						</aside>
+						<div>
+							<div class="title">Tutorials</div>
+							<p>
+								Getting started with Caddy. Learn how to install Caddy, get it running, and make config changes.
+							</p>
+						</div>
+					</a>
+					<a href="https://github.com/caddyserver/examples" class="card">
+						<aside>
+							<img src="/resources/images/examples.png">
+						</aside>
+						<div>
+							<div class="title external-link">Examples</div>
+							<p>
+								Browse our directory of minimal Caddyfile examples to learn how to use Caddy in common ways.
+							</p>
+						</div>
+					</a>
+				</div>
+
+				<section class="content directive-help">
+					<div>
+						<b>&larr; Use the links on the left as a page index.</b> Most pages are organized by directive name. Directives are typically the first word on a line of the Caddyfile.
+					</div>
+					<div>
+						<img src="/resources/images/docs-directives.png" alt="First line of the Caddyfile is the directive">
+					</div>
+				</section>
+
+				<section class="bg-gray">
+					<div class="other-help-container content">
+						<div class="other-help">
+							<a href="https://forum.caddyserver.com">
+								<img src="/resources/images/forum.png">
+								<h3 class="clr-teal">The Caddy Forum</h3>
+							</a>
+							<p>
+								Give and get help with the fine members of our community. Discuss using Caddy at home or in production.
+							</p>
+							<div class="text-center">
+								<a href="https://forum.caddyserver.com" class="button teal">Forum &rsaquo;</a>
+							</div>
+						</div>
+						<div class="other-help">
+							<a href="https://github.com/mholt/caddy/issues">
+								<img src="/resources/images/bug.png">
+								<h3 class="clr-coral">Report a Bug</h3>
+							</a>
+							<p>
+								Found something wrong with Caddy? It happens. Search for similar bug reports or make a new one!
+							</p>
+							<div class="text-center">
+								<a href="https://github.com/mholt/caddy/issues" class="button coral">Issues &rsaquo;</a>
+							</div>
+						</div>
+						<div class="other-help">
+							<a href="https://github.com/mholt/caddy/wiki">
+								<img src="/resources/images/wiki.png">
+								<h3 class="clr-blue">Developer Wiki</h3>
+							</a>
+							<p>
+								Learn how to write plugins for Caddy and publish them to this website, or hack on Caddy in new ways.
+							</p>
+							<div class="text-center">
+								<a href="https://github.com/mholt/caddy/wiki" class="button blue">Wiki &rsaquo;</a>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+		{{.Include "/includes/footer.html"}}
+	</body>
+</head>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<head>
+	<head>
+		<title>Caddy Pricing</title>
+		{{.Include "/includes/head.html"}}
+		<link rel="stylesheet" href="/resources/css/pricing.css">
+	</head>
+	<body>
+		<header>
+			{{.Include "/includes/header-nav.html"}}
+
+			<div class="content cards-container">
+				<div class="card caddy-free">
+					<h2>Caddy<span class="small">is</span>Free to Use</h2>
+					<hr class="product">
+					<ul>
+						<li>Automatic privacy features</li>
+						<li>Same for everyone</li>
+						<li>Community help</li>
+						<li>No guarantees</li>
+						<li>No private support</li>
+					</ul>
+					<div class="text-center">
+						<span class="purchase">
+							<a href="/download" class="button">Download</a>
+						</span>
+					</div>
+				</div>
+				<div class="card">
+					<table class="product-table">
+						<tr>
+							<th></th>
+							<th>
+								<h2 class="sponsorship-blue">Sponsorship</h2>
+								<hr class="product sponsorship-blue">
+							</th>
+							<th>
+								<h2 class="engineering-red">Engineering Package</h2>
+								<hr class="product engineering-red">
+							</th>
+						</tr>
+						<tr class="subheader">
+							<td></td>
+							<td>Help the project grow</td>
+							<td>Use Caddy with guarantees</td>
+						</tr>
+						<tr>
+							<td>Featured logo &amp; link</td>
+							<td class="sponsorship-blue">&#10004;</td>
+							<td class="engineering-red"><span class="excluded">&mdash;</span></td>
+						</tr>
+						<tr>
+							<td>Mentions on social media</td>
+							<td class="sponsorship-blue">&#10004;</td>
+							<td class="engineering-red"><span class="excluded">&mdash;</span></td>
+						</tr>
+						<tr>
+							<td>Placement in release announcements</td>
+							<td class="sponsorship-blue">&#10004;</td>
+							<td class="engineering-red"><span class="excluded">&mdash;</span></td>
+						</tr>
+						<tr>
+							<td>Exclusive access to <a href="https://caddyserver.slack.com">private community</a></td>
+							<td class="sponsorship-blue">&#10004;</td>
+							<td class="engineering-red">&#10004;</td>
+						</tr>
+						<tr>
+							<td>Guaranteed continued development by the authors</td>
+							<td class="sponsorship-blue"><span class="excluded">&mdash;</span></td>
+							<td class="engineering-red">&#10004;</td>
+						</tr>
+						<tr>
+							<td>Private, dedicated technical support</td>
+							<td class="sponsorship-blue"><span class="excluded">&mdash;</span></td>
+							<td class="engineering-red">&#10004;</td>
+						</tr>
+						<tr>
+							<td>Prioritized bug fixes</td>
+							<td class="sponsorship-blue"><span class="excluded">&mdash;</span></td>
+							<td class="engineering-red">&#10004;</td>
+						</tr>
+						<tr>
+							<td>Priority feature consideration</td>
+							<td class="sponsorship-blue"><span class="excluded">&mdash;</span></td>
+							<td class="engineering-red">&#10004;</td>
+						</tr>
+						<tr class="no-bottom-border">
+							<td>Number of instances</td>
+							<td class="text-center">Unlimited</td>
+							<td class="text-center"><span data-tooltip="Other commercial web servers cost thousands per instance">Unlimited</span></td>
+						</tr>
+						<tr class="last-row no-bottom-border">
+							<td></td>
+							<td class="text-center">
+								{{.Include "/includes/sponsorship.html"}}
+							</td>
+							<td class="text-center">
+								{{.Include "/includes/engineering-package.html"}}
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3">
+								<div class="sales">
+									Questions? Email
+									<b><a href="mailto:sales@lightcodelabs.com">sales@lightcodelabs.com</a></b>
+									or call <b>+1-435-612-0494</b>.
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</header>
+
+		<section class="content" id="sponsorship">
+			<h2 class="product sponsorship-blue">Sponsorship</h2>
+			<hr class="product sponsorship-blue">
+			<div class="boxes boxes-center">
+				<div class="box-50">
+					<p>
+						Our sponsors do amazing things, and the open source community around Caddy would not be possible without you! <b>Our sponsors make the difference.</b> In return, your own business and customers benefit from the proliferation of Caddy's technology and usability.
+					</p>
+				</div>
+			</div>
+			<div class="boxes">
+				<div class="box-33">
+					<p>
+						<b>Be a part</b> of making the Web better! Caddy delivers security and privacy to millions of users across the world, makes web development more enjoyable, and brings out the best in web sites.
+					</p>
+					<p>
+						Show your support of these values by sponsoring the Caddy open source project! Sponsors help the project grow and progress, which benefits your own business: Caddy serves many popular web applications and services. Your customers will appreciate your involvement with Caddy.
+					</p>
+				</div>
+				<div class="box-33">
+					<p>
+						<b>What you get:</b> We'll shout your name from the rooftops! You'll be mentioned in social media and release announcements, and we'll put your logo on every page of this site with a link directly to yours.
+					</p>
+					<p>
+						Being a Caddy sponsor puts you in good company. You'll be given access to our exclusive premium community, where you can have high-quality, private discussions with others who value what you do.
+					</p>
+				</div>
+				<div class="box-33">
+					<p>
+						<b>How it works:</b> After purchasing, we'll contact you within 1 day at the email address you used for payment to get your logo and link information, which we'll proudly display on this site.
+					</p>
+					<!-- <p>
+						While your sponsorship is active, we'll promote your brand in release announcements and on social media, and you'll have access to our exclusive sponsors community.
+					</p> -->
+					<div class="text-center">
+						{{.Include "/includes/sponsorship.html"}}
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="content" id="engineering-package">
+			<h2 class="product engineering-red">Engineering Package</h2>
+			<hr class="product engineering-red">
+			<div class="boxes boxes-center">
+				<div class="box-50">
+					<p>
+						The Caddy Engineering Package <b>guarantees continued development</b> on the areas of Caddy that matter most to businesses. Your bug reports and feature requests <b>receive priority</b>. We'll also be able to offer <b>private, dedicated support</b>.
+					</p>
+				</div>
+			</div>
+			<div class="boxes">
+				<div class="box-33">
+					<h3>Caddy saves businesses time and money</h3>
+					<p>
+						Companies love using Caddy because it's so easy to configure and takes care of regular TLS maintenance for you, including obtaining, installing, and renewing certificates. Some companies are saving tens of thousands of dollars per year with Caddy.
+					</p>
+				</div>
+				<div class="box-33">
+					<h3>Caddy makes sites more reliable and secure</h3>
+					<p>
+						Caddy is the web server of choice for many companies because its default TLS configuration is PCI-compliant, its core is easily extended with plugins written in Go, and so little time needs to be spent managing it. This reduces error surface, making your site more reliable and secure.
+					</p>
+				</div>
+				<div class="box-33">
+					<h3>Caddy at the heart of your business</h3>
+					<p>
+						Your website is vital to your company: give it the best treatment available with the Caddy Engineering Package. Your bug reports and feature requests get addressed before other open source issues, and you get private support so Caddy runs your company's site smoothly.
+					</p>
+				</div>
+			</div>
+			<div class="boxes">
+				<div class="box-33">
+					<h3>Focused on development</h3>
+					<p>
+						If the highest-quality, bug-free code is important to your business, purchase the Engineering Package to ensure you receive the best open source code available for your site.
+					</p>
+				</div>
+				<div class="box-33">
+					<h3>Unlimited instances</h3>
+					<p>
+						While other production-grade web servers charge thousands of dollars per instance, the Engineering Package covers all your Caddy instances for one flat rate.
+					</p>
+				</div>
+				<div class="box-33 text-center">
+					<br>
+					{{.Include "/includes/engineering-package.html"}}
+				</div>
+			</div>
+		</section>
+
+		<section class="content">
+			<h2>FAQ</h2>
+			<div class="boxes">
+				<div class="box-50">
+					<h3>Are payments refundable?</h3>
+					<p>
+						Yes, prorated refunds are available upon request.
+					</p>
+
+					<h3>How do I get private support?</h3>
+					<p>
+						Engineering Package subscribers may contact us via email, reach out in our <a href="https://caddyserver.slack.com">exclusive Slack community</a>, or direct message us in the <a href="https://forum.caddyserver.com">Caddy Forum</a> for private support. This information, including our support email, is sent to you when you sign up!
+					</p>
+
+					<h3>What happens after I pay?</h3>
+					<p>
+						You'll get an automated email that you can reply to. It has instructions for how you can use your product.
+					</p>
+
+					<h3>What if I need enterprise-scale support?</h3>
+					<p>
+						The Engineering Package is sufficient for most customers, but feel free to <a href="mailto:sales@lightcodelabs.com">email us</a> if you need support at a large scale or custom/proprietary development work. If we can't do it, we probably know someone who can.
+					</p>
+
+					<h3>How does invoicing work?</h3>
+					<p>
+						For annual subscriptions, we can send you an invoice which you may pay with credit/debit card or ACH transfer. We can also discuss other payment methods if absolutely needed; please talk to us about your requirements!
+					</p>
+				</div>
+				<div class="box-50">
+					<h3>Can I purchase both?</h3>
+					<p>
+						Yes! You can be a sponsor and subscribe to the Engineering Package at the same time. Simply purchase both on this page, or <a href="mailto:sales@lightcodelabs.com">contact us</a> and we'll set you up in a jiffy.
+					</p>
+
+					<h3>How many support hours do I get?</h3>
+					<p>
+						Engineering Package subscribers are entitled to support from the authors. We don't count hours because it's tedious and makes billing complicated. We know you don't like being tied up in troubleshooting (we don't either!) so we'll do our best to get it resolved as quickly as possible. If your support needs go beyond what our team can offer, we'll let you know and we can discuss enterprise options.
+					</p>
+
+					<h3>This is an open source project. Who am I doing business with?</h3>
+					<p>
+						You'll do business with <a href="https://www.lightcodelabs.com">Light Code Labs, LLC</a>, the steward company of the Caddy project.
+					</p>
+
+					<h3>Are these payments recurring?</h3>
+					<p>
+						Yep! Caddy is an ongoing project, and your web server is constantly running. It requires continuous effort from us to maintain that. When you purchase, you will be billed monthly or annually. You can cancel your subscription at any time.
+					</p>
+				</div>
+			</div>
+
+			<div class="sales">
+				More questions? Email
+				<b><a href="mailto:sales@lightcodelabs.com">sales@lightcodelabs.com</a></b>
+				or call <b>+1-435-612-0494</b>.
+			</div>
+		</section>
+
+		{{.Include "/includes/footer.html"}}
+	</body>
+</html>

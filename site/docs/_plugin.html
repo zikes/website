@@ -1,0 +1,75 @@
+{{$plugin := .Context "plugin"}}
+{{$owner := (.LoadAccount $plugin.OwnerAccountID)}}
+<!DOCTYPE html>
+<head>
+	<head>
+		<title>{{html $plugin.Name}} - Caddy User Guide</title>
+		{{.Include "/includes/head.html"}}
+		<link rel="stylesheet" href="/resources/css/docs.css">
+	</head>
+	<body>
+		{{.Include "/includes/docs-nav.html"}}
+
+		<div class="content-container">
+			{{.Include "/includes/docs-nav-side.html"}}
+			<article>
+				<h2>{{html $plugin.Name}} <div class="plugin-tag tooltip-right" data-tooltip="This feature extends Caddy's standard functionality.">Plugin</div></h2>
+
+				<aside class="plugin-message">
+					This feature does not come with Caddy by default. To get it, select the <b>{{html $plugin.Name}}</b> plugin when you <a href="/download">download</a> Caddy.
+				</aside>
+
+				{{.Markdown (html $plugin.Description)}}
+
+				{{if gt (len $plugin.Examples) 0}}
+					<h3>Examples</h3>
+					<div class="examples">
+					{{- range $plugin.Examples}}
+						<div class="example">
+							<div class="example-title">{{html .Title}}</div>
+							<code class="block">{{html .Code}}</code>
+							{{$.Markdown (html .Explanation)}}
+						</div>
+					{{- end}}
+					</div>
+				{{end}}
+
+				<div class="springboard-header">
+					Related Links
+				</div>
+				<div class="springboard">
+					<div class="springboard-point">
+						<b>Documentation</b>
+						<p>Access the full documentation for this plugin off-site:</p>
+						<a href="{{html $plugin.Docs}}" class="button external-link">Docs</a>
+					</div>
+					<div class="springboard-point">
+						<b>Plugin Help</b>
+						<p>Get help from the maintainers of the {{html $plugin.Name}} plugin:</p>
+						<a href="{{html $plugin.Support}}" class="button external-link">Support</a>
+					</div>
+					<div class="springboard-point">
+						<b>Plugin Website</b>
+						<p>Visit {{html $plugin.Name}}'s website for more information:</p>
+						<a href="{{html $plugin.Website}}" class="button external-link">Website</a>
+					</div>
+				</div>
+
+				<div class="plugin-meta">
+					<div class="meta-left">
+						<b>Plugin Author:</b> {{html $owner.Name}}
+					</div>
+					<div class="meta-right">
+						<b>Last Updated:</b> {{$plugin.Updated.Format "2 Jan 2006, 3:04 PM"}}
+					</div>
+				</div>
+
+				<div class="plugin-notice">
+					This plugin is independent of the Caddy project and is not endorsed or maintained by Caddy developers. Use at your own risk. Do not file issues for this plugin on Caddy's bug tracker.
+				</div>
+
+			</article>
+		</div>
+		{{.Include "/includes/footer.html"}}
+	</body>
+</head>

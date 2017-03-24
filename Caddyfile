@@ -1,21 +1,41 @@
-localhost
+:2015
+
+root site/
 
 ext .html
 templates
-errors visible
+errors error.log {
+	404 site/404.html
+	502 site/502.html
+}
+log
 
 redir 307 {
 	/account /account/dashboard
 	/login   /account/login
 }
+redir /blog.html /blog/
+status 404 {
+	/includes
+	/docs/_plugin.html
+	/404.html
+	/502.html
+}
 
+proxy /docs      localhost:2016
 proxy /api       localhost:2016
 proxy /account   localhost:2016
 proxy /download/ localhost:2016
-proxy /stripe    localhost:5051
+proxy /tx        localhost:5051
 
 header / {
-	Content-Security-Policy "style-src 'self'; script-src https://www.google-analytics 'self' data: blob: https:; img-src 'self' data: https:; font-src 'self' https: data: blob:; media-src 'self' https: data: blob:; connect-src 'self' https:; object-src 'none';"
+	Content-Security-Policy "style-src   'self' https://fonts.googleapis.com;
+	                         script-src  'self' data: https://www.google-analytics.com https://checkout.stripe.com;
+	                         img-src     'self' data: https:;
+	                         font-src    'self' data: https: blob:;
+	                         media-src   'self' https:;
+	                         connect-src 'self' https:;
+	                         object-src  'none';"
 	X-Frame-Options        SAMEORIGIN
 	X-Content-Type-Options nosniff
 	X-XSS-Protection       "1; mode=block"

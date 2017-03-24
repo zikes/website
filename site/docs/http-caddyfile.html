@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<head>
+	<head>
+		<title>The HTTP Caddyfile</title>
+		{{.Include "/includes/head.html"}}
+		<link rel="stylesheet" href="/resources/css/docs.css">
+	</head>
+	<body>
+		{{.Include "/includes/docs-nav.html"}}
+
+		<div class="content-container">
+			{{.Include "/includes/docs-nav-side.html"}}
+
+			<article>
+				<h2>The HTTP Caddyfile</h2>
+
+				<p>
+					This page documents how the HTTP server uses the Caddyfile. If you haven't already, take the <a href="/tutorial/caddyfile">Caddyfile tutorial</a> or read up on the <a href="/docs/caddyfile">Caddyfile syntax</a> first.
+				</p>
+
+				<h4>Topics</h4>
+				<ol>
+					<li><a href="#addresses">Addresses</a></li>
+					<li><a href="#path-matching">Path Matching</a></li>
+					<li><a href="#directives">Directives</a></li>
+					<li><a href="#placeholders">Placeholders</a></li>
+				</ol>
+
+				<h3 id="addresses">Addresses</h3>
+				<p>
+					The HTTP server uses site addresses for <a href="/docs/caddyfile#structure">labels</a>. Addresses are specified in the form <code><span class="cf-addr">scheme</span>://<span class="cf-addr">host</span>:<span class="cf-addr">port</span>/<span class="cf-addr">path</span></code>, where all but one are optional.
+				</p>
+				<p>
+					The host portion is usually localhost or the domain name. The default port is 2015 (unless the site qualifies for <a href="/docs/automatic-https">automatic HTTPS</a>, in which case it's 443). The scheme portion is another way to specify a port. Valid schemes are &quot;http&quot; or &quot;https&quot; which represent, respectively, ports 80 and 443. If both a scheme and port are specified, the port will override the scheme. For example (this table assumes automatic HTTPS is applied where it qualifies):</p>
+
+<p><code class="block"><span class="cf-addr">:2015</span>                    <span class="cf-comment"># Host: (any), Port: 2015</span>
+<span class="cf-addr">localhost</span>                <span class="cf-comment"># Host: localhost; Port: 2015</span>
+<span class="cf-addr">localhost:8080</span>           <span class="cf-comment"># Host: localhost; Port: 8080</span>
+<span class="cf-addr">example.com</span>              <span class="cf-comment"># Host: example.com; Ports: 80, 443</span>
+<span class="cf-addr">http://example.com</span>       <span class="cf-comment"># Host: example.com; Port: 80</span>
+<span class="cf-addr">https://example.com</span>      <span class="cf-comment"># Host: example.com; Port: 443</span>
+<span class="cf-addr">http://example.com:1234</span>  <span class="cf-comment"># Host: example.com; Port: 1234</span>
+<span class="cf-addr">https://example.com:80</span>   <span class="cf-comment"># Error! HTTPS on port 80</span>
+<span class="cf-addr">*.example.com</span>            <span class="cf-comment"># Hosts: *.example.com; Port: 2015</span>
+<span class="cf-addr">example.com/foo/</span>         <span class="cf-comment"># Host: example.com; Ports: 80, 443; Path: /foo/</span>
+<span class="cf-addr">/foo/</span>                    <span class="cf-comment"># Host: (any), Port: 2015, Path: /foo/</span>
+</code></p>
+				<p>
+					Site addresses must be unique; all configuration for a site must be grouped in the same definition.
+				</p>
+
+				<h3 id="path-matching">Path Matching</h3>
+
+				<p>
+					Some directives accept an argument that specifies a <i>base path</i> to match. A base path is a prefix. If the URL starts with the base path, it will be a match. For example, a base path of <code>/foo</code> will match requests to <code>/foo</code>, <code>/foo.html</code>, <code>/foobar</code>, and <code>/foo/bar.html</code>. If you want to limit a base path to match a specific directory only, then suffix it with a forward slash like <code>/foo/</code>, which will <i>not</i> match <code>/foobar</code>.
+				</p>
+
+
+				<h3 id="directives">Directives</h3>
+				<p>
+					Most directives invoke a layer of middleware. Middleware is a small layer in the application that handles HTTP requests and does one thing really well. Middleware are chained together (pre-compiled, if you will) at startup. Only middleware handlers which are invoked from the Caddyfile will be chained in, so small Caddyfiles are very fast and efficient.
+				</p>
+				<p>
+					The syntax of arguments varies from directive to directive. Some have required arguments, others don't. Consult the documentation of each directive for their signatures.
+				</p>
+				<p>
+					For directives which are registered as plugins, the documentation pages will show the directive name prefixed with the server type, for example, "http.realip" or "dns.dnssec". When using them in the Caddyfile, drop the prefix ("http."). The prefix is just to assure unique naming, but is not used in the Caddyfile.
+				</p>
+
+				<h3 id="placeholders">Placeholders</h3>
+				<p>
+					In some cases, directives will accept <a href="/docs/placeholders">placeholders</a> (replaceable values). These are words that are enclosed by curly braces <code>{ }</code> and interpreted by the HTTP server at request-time. For example, <code>{query}</code> or <code>{>Referer}</code>. Think of them like variables. These placeholders have no relationship to the environment variables you can use in Caddyfiles, except we borrowed the syntax for familiarity. 
+				</p>
+
+
+
+
+			</article>
+		</div>
+
+		{{.Include "/includes/footer.html"}}
+	</body>
+</head>
