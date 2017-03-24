@@ -25,7 +25,7 @@ $(function() {
 	});
 
 	var email = caddy.queryString["email"];
-	var acct = caddy.queryString["id"];
+	var acct = caddy.queryString["code"];
 	$('input[name=email]').val(email);
 	$('input[name=acct]').val(acct);
 	if (email && acct) {
