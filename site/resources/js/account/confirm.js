@@ -30,7 +30,5 @@ $(function() {
 	$('input[name=acct]').val(acct);
 	if (email && acct) {
 		$('form').submit();
-	} else {
-		$('form input, form button').prop('disabled', false);
 	}
 });
