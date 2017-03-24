@@ -152,6 +152,7 @@ if (!purchaseIncludedOnce) {
 
 			swal.setDefaults({
 				input: 'text',
+				animation: false,
 				confirmButtonText: 'Next &rarr;',
 				showCancelButton: true,
 				progressSteps: ['1', '2', '3', '4']

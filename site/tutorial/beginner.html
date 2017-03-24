@@ -175,7 +175,7 @@
 					</div>
 					<div class="tab-box-body tab-linux">
 						On a real server, you would consider using <a href="https://linux.die.net/man/8/setcap">setcap</a> like this:
-						<code class="block cmd bash">sudo setcap cap_net_bind_service=+ep caddy
+						<code class="block cmd bash">sudo setcap cap_net_bind_service=+ep $(which caddy)
 $ caddy -host example.com</code>
 						But for your own computer, running Caddy with sudo probably fine:
 						<code class="block cmd bash">sudo caddy -host example.com</code>
