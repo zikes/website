@@ -249,6 +249,10 @@ form.fullpage button:hover {
 	background-color: #2287a9;
 }
 
+#reset-password-step2 {
+	display: none;
+}
+
 table {
 	border-collapse: collapse;
 	margin: 1em 0 2em;
