@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<head>
+	<head>
+		<title>http.browse - Caddy User Guide</title>
+		{{.Include "/includes/head.html"}}
+		<link rel="stylesheet" href="/resources/css/docs.css">
+	</head>
+	<body>
+		{{.Include "/includes/docs-nav.html"}}
+
+		<div class="content-container">
+			{{.Include "/includes/docs-nav-side.html"}}
+			
+			<article>
+				<h2>browse</h2>
+
+				<p>browse enables directory browsing within the specified base path. It displays a file listing for directories which don't have an index file in them. In other server software, this is often called indexing.</p>
+
+				<p>By default, file listings are disabled and a request to a directory path (where no index file is present) will result in a 404 for obscurity reasons.</p>
+
+				<p>This middleware may set cookies to preserve UI preferences if the user changes them.</p>
+
+				<h3 id="syntax">Syntax</h3>
+
+				<p><code class="block"><span class="hl-directive">browse</span> <span class="hl-arg">[<i>path</i> [<i>tplfile</i>]]</span></code></p>
+
+				<ul>
+				<li><strong>path</strong> is the base path to match. Any directories in this base path become browsable.</li>
+				<li><strong>tplfile</strong> is the location of a template file to use.</li>
+				</ul>
+
+				<p>A default template will be used if no template file is specified. Without any arguments, browsing is enabled on the entire site (path=/).</p>
+
+				<h3 id="template-format">Template Format</h3>
+
+				<p>A template is simply an HTML file with <em>actions</em> in it. The actions are parsed and executed to display dynamic content. This directive supports <a href="/docs/template-actions">Caddy's template actions</a> as well as some additional actions specific to the browse directive. You may use template actions that render <a href="https://github.com/mholt/caddy/blob/060ab92d295ba9dd8e34115c92557d5eff5896ff/middleware/browse/browse.go#L41-L118">this struct type</a> (notice that some helper methods are available).</p>
+
+				<p>Here is a very simple example template:</p>
+
+				<pre><code class="language-html">&lt;html&gt;
+	&lt;head&gt;
+		&lt;title&gt;&#123;&#123;html .Name&#125;&#125;&lt;/title&gt;
+	&lt;/head&gt;
+	&lt;body&gt;
+		&#123;&#123;if .CanGoUp&#125;&#125;&lt;a href=&quot;..&quot;&gt;Up one level&lt;/a&gt;&lt;br&gt;&#123;&#123;end&#125;&#125;
+		&lt;h1&gt;&#123;&#123;.Path&#125;&#125;&lt;/h1&gt;
+		&#123;&#123;range .Items&#125;&#125;
+		&lt;a href=&quot;&#123;&#123;html .URL&#125;&#125;&quot;&gt;&#123;&#123;html .Name&#125;&#125;&lt;/a&gt;&lt;br&gt;
+		&#123;&#123;end&#125;&#125;
+	&lt;/body&gt;
+&lt;/html&gt; </code></pre>
+
+				<p>... but the default template is nicer.</p>
+
+				<p>Notice that the name and URL are sanitized for safe rendering in a browser. Templates are presumed trusted, so if your file names are not trusted, be sure they are escaped for use in HTML documents.</p>
+
+				<h3 id="json-response">JSON Response</h3>
+
+				<p>You can ask for a JSON representation instead of a browse page by having <strong>application/json</strong> in your <strong>Accept</strong> header:</p>
+
+				<pre><code>$ curl -H &quot;Accept: application/json&quot; 'localhost:2015/?limit=1'
+[{&quot;IsDir&quot;:true,&quot;Name&quot;:&quot;.git&quot;,&quot;Size&quot;:476,&quot;URL&quot;:&quot;.git/&quot;,&quot;ModTime&quot;:&quot;2015-09-11T03:20:09+03:00&quot;,&quot;Mode&quot;:2147484141}]</code></pre>
+
+				<p>The above example demonstrates how to ask for JSON, as well as how to limit the number of entries that we want via a query called <strong>limit</strong>. To yield the whole listing, omit the limit query.</p>
+
+				<h3 id="examples">Examples</h3>
+
+				<p>Allow directory listings in all folders that don't have an index file:</p>
+
+				<p><code class="block"><span class="hl-directive">browse</span></code></p>
+
+				<p>Show photo album contents (in /photos) via a custom template:</p>
+
+				<p><code class="block"><span class="hl-directive">browse</span> <span class="hl-arg">/photos ../photo_album.tpl</span></code></p>
+
+
+				{{.Include "/includes/docs-helpbox.html"}}
+			</article>
+		</div>
+		{{.Include "/includes/footer.html"}}
+	</body>
+</head>
