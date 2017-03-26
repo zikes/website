@@ -46,6 +46,7 @@ $(function() {
 			copyFormValue("clone_url");
 			copyFormValue("version");
 			copyFormValue("import_path");
+			$('#pkg-name').text($('.part1 input[name=import_path]').val());
 
 			// if we recognize the source control provider, we can pre-fill a few fields
 			var repoPath = $('.part1 input[name=clone_url]').val();
