@@ -12,11 +12,12 @@ $(function() {
 			}).then(function() {
 				window.location = "/account/verify";
 			});
-		}).fail(function(jqxhr, msg, error)
+		}).fail(function(jqxhr, status, error)
 		{
 			swal({
 				type: "error",
-				titleText: error
+				titleText: "Error",
+				text: "Sorry, there was something wrong: "+jqxhr.responseText
 			});
 			$('#submit').prop('disabled', false);
 		});
