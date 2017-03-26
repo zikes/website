@@ -280,16 +280,16 @@ header {
 
 #plugin-list {
 	border-right: 1px solid #e0e0e0;
+	flex-grow: 1;
+	max-height: 400px;
+	overflow-y: auto;
+	padding-bottom: 20px;
 }
 
 .plugin-type > div,
 .plugin-type > label {
 	padding: 10px 15px;
 	display: block;
-}
-
-#plugin-list {
-	flex-grow: 1;
 }
 
 #plugin-list .plugin-type-header {
@@ -308,7 +308,8 @@ header {
 #plugin-list .plugin {
 	cursor: pointer;
 	font-size: 16px;
-	background: whitesmoke;
+	/*background: whitesmoke;*/
+	background: rgba(0, 0, 0, .05);
 }
 
 #plugin-list .plugin:hover {
@@ -360,6 +361,7 @@ header {
 	padding: .5rem 1rem;
 	background: #ffdc5c;
 	color: #af4300;
+	box-shadow: 0 -2px 15px 2px rgba(0, 0, 0, .25);
 }
 
 #plugin-warning .warning {
