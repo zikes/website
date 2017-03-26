@@ -30,7 +30,7 @@
 		To release a tag, make sure your tag has already been created and pushed. To release a commit, ensure the commit is pushed, then paste the full SHA.
 	</p>
 	<p>
-		If releasing at a branch name, your plugin will be deployed now as it currently is on the given branch. However, if your plugin's package is a dependency of any other plugin, it's possible that it will be updated to the latest on the branch without warning. In other words, deploying from a branch name may not stay at the same commit as it is right now. It's always recommended to release a tag or commit instead.
+		If releasing at a branch name, your plugin will be deployed now as it currently is on the given branch. There are two ways to deploy a branch. 1) Prefix with "origin/" will cause the latest commits on that branch to be pulled in when your plugin <i>or another that depends on it</i> is deployed again. 2) If you specify only the branch name (without the "origin/" prefix), this causes git to checkout only the local branch sans remote changes. (We don't do a separate git pull.) <b>It's always recommended to release a tag or commit instead.</b>
 	</p>
 
 	<form method="POST" action="/api/deploy-plugin">

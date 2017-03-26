@@ -46,10 +46,10 @@
 					<td class="field">
 						<h2>Version</h2>
 						<p>
-							The full commit SHA, tag, or name of the branch of the version to release right now. Default is master.
+							The full commit SHA, tag, or name of the branch of the version to release right now. Default is "origin/master". (We advise against deploying at a branch, but if you do, prefix it with "origin/" if you want it to be updated with newer changes on occasion.) We recommend deploying at tags or specific commits!
 							<br>For example: <code>v1.0.2</code>
 						</p>
-						<input type="text" name="version" placeholder="master" class="max-width-100">
+						<input type="text" name="version" placeholder="origin/master" class="max-width-100">
 					</td>
 				</tr>
 				<tr>
@@ -179,7 +179,7 @@
 
 	<div class="part3">
 		<p>
-			Excellent. Your plugin is being analyzed and tested. Please allow a few minutes.
+			Excellent. Your plugin is being analyzed and tested. Please allow several minutes.
 			You will get a notification when it is done.
 		</p>
 		<p>
