@@ -40,7 +40,7 @@ $(function() {
 			}
 
 			if (data.length == 1) {
-				$('#plugin-list input[type=radio]').first().click();//prop('checked', true);
+				$('#plugin-list input[type=radio]').first().click();
 			}
 
 			copyFormValue("clone_url");
@@ -62,7 +62,8 @@ $(function() {
 		}).fail(function(jqxhr, msg, error) {
 			swal({
 				type: "error",
-				titleText: error
+				titleText: "Error",
+				text: jqxhr.responseText
 			});
 		}).always(function() {
 			$('.part1 .submit').prop('disabled', false).html("Next &rsaquo;");

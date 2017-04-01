@@ -15,7 +15,8 @@ $(function() {
 		}).fail(function(jqxhr, msg, error) {
 			swal({
 				type: "error",
-				titleText: error
+				titleText: "Error",
+				text: jqxhr.responseText
 			});
 		}).always(function() {
 			$('.submit').prop('disabled', false).html("Save Changes");
