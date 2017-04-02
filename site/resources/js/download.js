@@ -65,7 +65,7 @@ $(function() {
 			}
 			for (pluginTypeID in pluginTypes) {
 				var pt = pluginTypes[pluginTypeID];
-				pt.PluginList.sort(function(a, b) { return a.Name > b.Name });
+				pt.PluginList.sort(function(a, b) { return a.Name > b.Name ? 1 : -1 });
 				var $pt = $('<div class="plugin-type"></div>')
 				$pt.append('<div class="plugin-type-header">'
 					+ '<b>'+pt.CategoryTitle+'</b>'
