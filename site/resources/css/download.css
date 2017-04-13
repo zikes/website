@@ -17,6 +17,10 @@ header {
 	color: #FFF;
 }
 
+.recommended {
+	color: #5ef930;
+}
+
 .download-header a {
 	color: #FFF;
 	text-decoration: underline;

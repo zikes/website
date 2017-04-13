@@ -165,7 +165,16 @@ if (!purchaseIncludedOnce) {
 				animation: false,
 				confirmButtonText: 'Next &rarr;',
 				showCancelButton: true,
-				progressSteps: ['1', '2', '3', '4']
+				progressSteps: ['1', '2', '3', '4'],
+				preConfirm: function(val) {
+					return new Promise(function(resolve, reject) {
+						if (!val.trim()) {
+							reject("This field is required. :)");
+						} else {
+							resolve();
+						}
+					});
+				},
 			});
 			swal.queue([
 				{ html: "Hi! We'll email you an invoice. First, what is <b>your name</b>?" },
