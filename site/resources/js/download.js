@@ -65,7 +65,7 @@ $(function() {
 			}
 			for (pluginTypeID in pluginTypes) {
 				var pt = pluginTypes[pluginTypeID];
-				pt.PluginList.sort(function(a, b) { return a.Name > b.Name });
+				pt.PluginList.sort(function(a, b) { return a.Name > b.Name ? 1 : -1 });
 				var $pt = $('<div class="plugin-type"></div>')
 				$pt.append('<div class="plugin-type-header">'
 					+ '<b>'+pt.CategoryTitle+'</b>'
@@ -194,6 +194,22 @@ $(function() {
 		return suppress(event);
 	});
 
+	function handleBuildError(jqxhr, status, error) {
+		if (jqxhr.status == 502) {
+			swal({
+				type: "error",
+				title: "Maintenance",
+				html: 'Sorry about this, but it seems the build server is undergoing maintenance. You can try again later or <a href="https://github.com/mholt/caddy/releases/latest">download Caddy from GitHub</a> right now!'
+			});
+		} else {
+			swal({
+				type: "error",
+				title: "Error: " + error,
+				html: 'Oops. Maybe one of the plugins is temporarily broken. Try adjusting which plugins you\'ve selected, or <a href="https://github.com/mholt/caddy/releases/latest">download Caddy from GitHub</a> without any plugins (it will always work!).'
+			});
+		}
+	}
+
 	// download link
 	$('#download').click(function(event) {
 		$this = $(this);
@@ -208,22 +224,6 @@ $(function() {
 		}
 		if ($('#engpkg').is(':checked')) {
 			cart.push("engpkg");
-		}
-
-		function handleBuildError(jqxhr, status, error) {
-			if (jqxhr.status == 502) {
-				swal({
-					type: "error",
-					title: "Maintenance",
-					html: 'Sorry about this, but it seems the build server is undergoing maintenance. You can try again later or <a href="https://github.com/mholt/caddy/releases/latest">download Caddy from GitHub</a> right now!'
-				});
-			} else {
-				swal({
-					type: "error",
-					title: "Error: " + error,
-					html: 'Oops. Maybe one of the plugins is temporarily broken. Try adjusting which plugins you\'ve selected, or <a href="https://github.com/mholt/caddy/releases/latest">download Caddy from GitHub</a> without any plugins (it will always work!).'
-				});
-			}
 		}
 
 		function initDownload() {

@@ -20,25 +20,25 @@
 
 				<h4>Topics</h4>
 				<ol>
-					<li><a href="#addresses">Addresses</a></li>
+					<li><a href="#addresses">Site Addresses</a></li>
 					<li><a href="#path-matching">Path Matching</a></li>
 					<li><a href="#directives">Directives</a></li>
 					<li><a href="#placeholders">Placeholders</a></li>
 				</ol>
 
-				<h3 id="addresses">Addresses</h3>
+				<h3 id="addresses">Site Addresses</h3>
 				<p>
 					The HTTP server uses site addresses for <a href="/docs/caddyfile#structure">labels</a>. Addresses are specified in the form <code><span class="cf-addr">scheme</span>://<span class="cf-addr">host</span>:<span class="cf-addr">port</span>/<span class="cf-addr">path</span></code>, where all but one are optional.
 				</p>
 				<p>
-					The host portion is usually localhost or the domain name. The default port is 2015 (unless the site qualifies for <a href="/docs/automatic-https">automatic HTTPS</a>, in which case it's 443). The scheme portion is another way to specify a port. Valid schemes are &quot;http&quot; or &quot;https&quot; which represent, respectively, ports 80 and 443. If both a scheme and port are specified, the port will override the scheme. For example (this table assumes automatic HTTPS is applied where it qualifies):</p>
+					The host portion is usually localhost or the domain name. The default port is 2015 (unless the site qualifies for <a href="/docs/automatic-https">automatic HTTPS</a>, in which case it's changed to 443). The scheme portion is another way to specify a port. Valid schemes are &quot;http&quot; or &quot;https&quot; which represent, respectively, ports 80 and 443. If both a scheme and port are specified, the port takes precedence. For example (this table assumes automatic HTTPS is applied where it qualifies):</p>
 
 <p><code class="block"><span class="cf-addr">:2015</span>                    <span class="cf-comment"># Host: (any), Port: 2015</span>
 <span class="cf-addr">localhost</span>                <span class="cf-comment"># Host: localhost; Port: 2015</span>
 <span class="cf-addr">localhost:8080</span>           <span class="cf-comment"># Host: localhost; Port: 8080</span>
-<span class="cf-addr">example.com</span>              <span class="cf-comment"># Host: example.com; Ports: 80, 443</span>
+<span class="cf-addr">example.com</span>              <span class="cf-comment"># Host: example.com; Ports: 80-&gt;443</span>
 <span class="cf-addr">http://example.com</span>       <span class="cf-comment"># Host: example.com; Port: 80</span>
-<span class="cf-addr">https://example.com</span>      <span class="cf-comment"># Host: example.com; Port: 443</span>
+<span class="cf-addr">https://example.com</span>      <span class="cf-comment"># Host: example.com; Ports: 80-&gt;443</span>
 <span class="cf-addr">http://example.com:1234</span>  <span class="cf-comment"># Host: example.com; Port: 1234</span>
 <span class="cf-addr">https://example.com:80</span>   <span class="cf-comment"># Error! HTTPS on port 80</span>
 <span class="cf-addr">*.example.com</span>            <span class="cf-comment"># Hosts: *.example.com; Port: 2015</span>
@@ -48,6 +48,7 @@
 				<p>
 					Site addresses must be unique; all configuration for a site must be grouped in the same definition.
 				</p>
+
 
 				<h3 id="path-matching">Path Matching</h3>
 

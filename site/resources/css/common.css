@@ -402,7 +402,10 @@ footer .copyright {
 .swal2-modal .swal2-title {
 	font-family: inherit;
 }
-
+.swal2-modal .swal2-content,
+.swal2-modal .swal2-validationerror {
+	font-weight: normal !important;
+}
 
 
 

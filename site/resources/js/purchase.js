@@ -46,7 +46,6 @@ if (!purchaseIncludedOnce) {
 		});
 
 		// Stripe Checkout
-		var product, cycle;
 		var stripeCheckout = StripeCheckout.configure({
 			key: stripePublishableKey,
 			image: "/resources/images/favicon.png",
@@ -104,7 +103,7 @@ if (!purchaseIncludedOnce) {
 					}
 				},
 				token: function(token) {
-					$.post("/stripe/purchase", {
+					$.post("/tx/purchase", {
 						token_id: token.id,
 						email: token.email,
 						product: product,
@@ -122,7 +121,7 @@ if (!purchaseIncludedOnce) {
 						swal({
 							type: "error",
 							title: "Error: " + error,
-							html: 'Sorry. Your card was not charged. We\'ll look into this. In the meantime, try a different card?<br><br><small><b>Error message:</b> '+jqxhr.responseText+'</small>'
+							text: "Sorry. Your card was not charged. We'll look into this. In the meantime, try a different card? Error message: "+jqxhr.responseText
 						});
 
 						if (callbacks && typeof callbacks.fail === 'function') {
@@ -133,13 +132,21 @@ if (!purchaseIncludedOnce) {
 			});
 		}
 
-		// Show Checkout when user clicks Pay
+		// Show Checkout when user clicks Pay for any of the products
 		$('.buy-button-container button').click(function(event) {
 			var inputName = $(this).data('input-name');
 			var period = $('input[name='+inputName+']:checked').val();
-			product = inputName.indexOf("sponsor") != -1 ? "sponsor" : "engpkg";
+			var product = inputName.indexOf("sponsor") != -1 ? "sponsor" : "engpkg";
 			cycle = period;
-			caddy.showCheckout(product, cycle);
+			caddy.showCheckout(product, cycle, {
+				success: function(product, cycle, dollars) {
+					swal({
+							type: "success",
+							title: "Thank You",
+							text: "Great news - your subscription was successful! We've dispatched a welcome email to you. If you have any questions, you can reply to the welcome email; otherwise, we'll personally send you a greeting very soon."
+						});
+				}
+			});
 			return suppress(event);
 		});
 
@@ -150,42 +157,67 @@ if (!purchaseIncludedOnce) {
 				return suppress(event);
 			}
 
+			var product = $(this).data('product');
+
 			swal.setDefaults({
+				title: "Request an Invoice",
 				input: 'text',
 				animation: false,
 				confirmButtonText: 'Next &rarr;',
 				showCancelButton: true,
-				progressSteps: ['1', '2', '3', '4']
-			});
-
-			var steps = [
-				{
-					title: "Request an Invoice",
-					text: "First we just need your name, email address, and company name and address.",
-					input: false
+				progressSteps: ['1', '2', '3', '4'],
+				preConfirm: function(val) {
+					return new Promise(function(resolve, reject) {
+						if (!val.trim()) {
+							reject("This field is required. :)");
+						} else {
+							resolve();
+						}
+					});
 				},
-				"Your Name",
-				"Email Address",
+			});
+			swal.queue([
+				{ html: "Hi! We'll email you an invoice. First, what is <b>your name</b>?" },
+				{ html: "What is the <b>email address</b> we should send the invoice to?", input: "email" },
+				{ html: "What is the <b>name</b> to whom the invoice should be addressed?" },
 				{
-					title: "Company Name and Address",
-					text: "Last step! Please provide the name and address of the company or individual being invoiced:",
-					input: 'textarea',
-					confirmButtonText: "Request Invoice"
+					html: "What is the <b>physical mailing address</b> to put on the invoice?",
+					input: "textarea",
+					confirmButtonText: "Submit"
 				}
-			];
-
-			swal.queue(steps).then(function(result) {
+			]).then(function(result) {
 				swal.resetDefaults();
 
-				// TODO. post to backend, including product & cycle information
+				// collect results
+				var name = result[0],
+					email = result[1],
+					recip = result[2],
+					addr = result[3];
 
-				swal({
-					title: 'All done!',
-					html: 'Your answers: <pre>' +
-							JSON.stringify(result) +
-							'</pre>',
-					confirmButtonText: 'Lovely!',
-					showCancelButton: false
+				// submit invoice request to backend
+				$.post({
+					url: "/tx/invoice",
+					contentType: "application/json",
+					data: JSON.stringify({
+						"product": product,
+						"cycle": "yearly",
+						"person_name": name,
+						"invoice_email": email,
+						"invoice_name": recip,
+						"invoice_addr": addr
+					})
+				}).done(function(data, status, jqxhr) {
+					swal({
+						type: "success",
+						title: "Invoice Requested",
+						text: "We got your request, thanks! You'll hear back from us shortly. We look forward to doing business with you!"
+					});
+				}).fail(function(jqxhr, msg, error) {
+					swal({
+						type: "error",
+						titleText: "Oops",
+						text: jqxhr.responseText
+					});
 				});
 			}, function() {
 				swal.resetDefaults();
