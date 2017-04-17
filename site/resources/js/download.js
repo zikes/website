@@ -194,12 +194,18 @@ $(function() {
 		return suppress(event);
 	});
 
-	function handleBuildError(jqxhr, status, error) {
+	function handleBuildError(jqxhr, status, error, isSignature) {
 		if (jqxhr.status == 502) {
 			swal({
 				type: "error",
 				title: "Maintenance",
 				html: 'Sorry about this, but it seems the build server is undergoing maintenance. You can try again later or <a href="https://github.com/mholt/caddy/releases/latest">download Caddy from GitHub</a> right now!'
+			});
+		} else if (jqxhr.status == 404 && isSignature) {
+			swal({
+				type: "error",
+				title: "Signature Unavailable",
+				text: "Sorry, but there is not a signature available for this build."
 			});
 		} else {
 			swal({
@@ -233,7 +239,7 @@ $(function() {
 			$.ajax($this.attr('href'), { method: "HEAD" }).done(function(data, status, jqxhr) {
 				window.location = jqxhr.getResponseHeader("Location");
 			}).fail(function(jqxhr, status, error) {
-				handleBuildError(jqxhr, status, error);
+				handleBuildError(jqxhr, status, error, false);
 			}).always(function() {
 				enableFields();
 			});
@@ -296,7 +302,7 @@ $(function() {
 		$.ajax($this.attr('href'), { method: "HEAD" }).done(function(data, status, jqxhr) {
 			window.location = jqxhr.getResponseHeader("Location");
 		}).fail(function(jqxhr, status, error) {
-			handleBuildError(jqxhr, status, error);
+			handleBuildError(jqxhr, status, error, true);
 		}).always(function() {
 			enableFields();
 		});
