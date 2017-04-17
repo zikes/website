@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<head>
+
+    <head>
+        <title>shutdown - Caddy User Guide</title>
+        {{.Include "/includes/head.html"}}
+        <link rel="stylesheet" href="/resources/css/docs.css">
+    </head>
+
+    <body>
+        {{.Include "/includes/docs-nav.html"}}
+
+        <div class="content-container">
+            {{.Include "/includes/docs-nav-side.html"}}
+
+            <article>
+                <h2>shutdown</h2>
+
+                <p>shutdown executes a command when the server exits. This is useful for performing cleanup or stopping a background
+                    process like php-fpm. (Also see <a href="/docs/startup">startup</a>.)</p>
+
+                <p>Each command that is executed at shutdown is blocking. The output and error of the command go to stdout and
+                    stderr, respectively. There is no stdin.</p>
+
+                <p>Note that shutdown commands will not execute if Caddy is force-terminated, for example, by using a &quot;Force
+                    Quit&quot; feature provided by your operating system. However, a typical SIGINT (Ctrl+C) will allow the
+                    shutdown commands to execute.</p>
+
+                <p>Even if this directive is shared by more than one host, the command will only execute once.</p>
+
+                <h3 id="syntax">Syntax</h3>
+
+                <p><code class="block"><span class="cf-dir">shutdown</span> <span class="cf-arg"><i>command</i></span></code></p>
+
+                <ul>
+                    <li><strong>command</strong> is the command to execute; it may be followed by arguments</li>
+                </ul>
+
+                <h3 id="examples">Examples</h3>
+
+                <p>Stop php-fpm when the server quits:</p>
+
+                <p><code class="block"><span class="cf-dir">shutdown</span> <span class="cf-arg">/etc/init.d/php-fpm stop</span></code></p>
+
+                {{.Include "/includes/docs-helpbox.html"}}
+            </article>
+        </div>
+        {{.Include "/includes/footer.html"}}
+    </body>
+</head>

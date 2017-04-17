@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<head>
+
+	<head>
+		<title>websocket - Caddy User Guide</title>
+		{{.Include "/includes/head.html"}}
+		<link rel="stylesheet" href="/resources/css/docs.css">
+	</head>
+
+	<body>
+		{{.Include "/includes/docs-nav.html"}}
+
+		<div class="content-container">
+			{{.Include "/includes/docs-nav-side.html"}}
+
+			<article>
+				<h2>websocket</h2>
+
+
+				<p>websocket facilitates a <a href="https://developer.mozilla.org/en-US/docs/WebSockets">WebSocket</a> server/proxy. A command
+					is executed when a new <a href="https://developer.mozilla.org/en-US/docs/WebSockets/Writing_WebSocket_client_applications">WebSocket connection</a>					is made and Caddy relays the client's connection to the command.</p>
+
+				<p>Any command can be executed as long as it takes input from stdin and writes to stdout, as this is how it will communicate
+					with the WebSocket client. The command does not need to know that it is talking to a Web Socket client; just use stdin
+					and stdout.</p>
+
+				<p>Caddy will not make any effort to keep the backend process alive while a client is connected. It is the developer's responsibility
+					to ensure the program does not terminate until the client is ready to close the connection or would be ready for it
+					to terminate.</p>
+
+				<p>
+					<mark class="block">Note that HTTP/2 does not support protocol upgrade, so you may have to disable HTTP/2 in order to use this directive
+						successfully on secure connections.</mark>
+				</p>
+
+				<h3 id="syntax">Syntax</h3>
+
+				<p><code class="block"><span class="cf-dir">websocket</span> <span class="cf-arg">[<i>path</i>] <i>command</i></span></code></p>
+
+				<ul>
+					<li><strong>path</strong> is the base path to match with the request URL</li>
+					<li><strong>command</strong> is the command to execute</li>
+				</ul>
+
+				<p>If path is omitted, a default path of / is assumed (meaning all requests).</p>
+
+				<h3 id="examples">Examples</h3>
+
+				<p>Simple WebSockets echo server:</p>
+
+				<p><code class="block"><span class="cf-dir">websocket</span> <span class="cf-arg">/echo cat</span></code></p>
+
+
+				{{.Include "/includes/docs-helpbox.html"}}
+			</article>
+		</div>
+		{{.Include "/includes/footer.html"}}
+	</body>
+</head>

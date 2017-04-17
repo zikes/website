@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<head>
+
+    <head>
+        <title>http.basicauth - Caddy User Guide</title>
+        {{.Include "/includes/head.html"}}
+        <link rel="stylesheet" href="/resources/css/docs.css">
+    </head>
+
+    <body>
+        {{.Include "/includes/docs-nav.html"}}
+
+        <div class="content-container">
+            {{.Include "/includes/docs-nav-side.html"}}
+
+            <article>
+                <h2>ext </h2>
+
+
+                <p>ext allows your site to have clean URLs by assuming a file extension when the path of the URL does not end
+                    with one.</p>
+
+                <p>An extension in the URL is detected by checking the last element of the path for a dot (<code>.</code>).</p>
+
+                <h3 id="syntax">Syntax</h3>
+
+                <p><code class="block"><span class="cf-dir">ext</span> <span class="cf-arg"><i>extensions...</i></span></code></p>
+
+                <ul>
+                    <li><strong>extensions...</strong> is a list of space-separated extensions (including the dot) to try. Extensions
+                        will be tried in the order listed. At least one extension is required.</li>
+                </ul>
+
+                <h3 id="examples">Examples</h3>
+
+                <p>Suppose you have a file called /contact.html. You could serve that file at /contact by having Caddy try .html
+                    files.
+                </p>
+
+                <p>To try .html, .htm, and .php in order:</p>
+
+                <p><code class="block"><span class="cf-dir">ext</span> <span class="cf-arg">.html .htm .php</span></code></p>
+
+                {{.Include "/includes/docs-helpbox.html"}}
+            </article>
+        </div>
+        {{.Include "/includes/footer.html"}}
+    </body>
+</head>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<head>
+
+    <head>
+        <title>import - Caddy User Guide</title>
+        {{.Include "/includes/head.html"}}
+        <link rel="stylesheet" href="/resources/css/docs.css">
+    </head>
+
+    <body>
+        {{.Include "/includes/docs-nav.html"}}
+
+        <div class="content-container">
+            {{.Include "/includes/docs-nav-side.html"}}
+
+            <article>
+                <h2>import</h2>
+
+
+                <p>import allows you to use configuration from another file. It gets replaced with the contents of that file.</p>
+
+                <p>This is a unique directive in that <code>import</code> can appear outside of a server block. In other words,
+                    it can appear at the top of a Caddyfile where an address would normally be. Like other directives, however,
+                    it cannot be used inside of other directives.</p>
+
+                <p>Note that the the import path is relative to the Caddyfile, not the current working directory.</p>
+
+                <h3 id="syntax">Syntax</h3>
+
+                <p><code class="block"><span class="cf-dir">import</span> <span class="cf-arg"><i>pattern</i></span></code></p>
+
+                <ul>
+                    <li><strong>pattern</strong> is the file or glob pattern (<code>*</code>) to include. Its contents will replace
+                        this line, as if that file's contents appeared here to begin with. This value is relative to the
+                        file's location. It is an error if a specific file cannot be found, but an empty glob pattern is
+                        not an error.</li>
+                </ul>
+
+                <h3 id="examples">Examples</h3>
+
+                <p>Import a shared configuration:</p>
+
+                <p><code class="block"><span class="cf-dir">import</span> <span class="cf-arg">config/common.conf</span></code></p>
+
+                <p>Imports any files found in the vhosts folder:</p>
+
+                <p><code class="block"><span class="cf-dir">import</span> <span class="cf-arg">../vhosts/*</span></code></p>
+
+                {{.Include "/includes/docs-helpbox.html"}}
+            </article>
+        </div>
+        {{.Include "/includes/footer.html"}}
+    </body>
+</head>

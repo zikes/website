@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<head>
+
+    <head>
+        <title>log - Caddy User Guide</title>
+        {{.Include "/includes/head.html"}}
+        <link rel="stylesheet" href="/resources/css/docs.css">
+    </head>
+
+    <body>
+        {{.Include "/includes/docs-nav.html"}}
+
+        <div class="content-container">
+            {{.Include "/includes/docs-nav-side.html"}}
+
+            <article>
+                <h2>log</h2>
+
+
+                <p>log enables request logging. The request log is also known from some vernaculars as an access log.</p>
+
+                <h3 id="syntax">Syntax</h3>
+
+                <p><code class="block"><span class="cf-dir">log</span></code></p>
+
+                <ul>
+                    <li>With no arguments, an access log is written to access.log in the common log format for all requests (base
+                        path = /).</li>
+                </ul>
+
+                <p><code class="block"><span class="cf-dir">log</span> <span class="cf-arg"><i>file</i></span></code></p>
+
+                <ul>
+                    <li><strong>file</strong> is the log file to create (or append to). The base path is assumed to be /.</li>
+                </ul>
+
+                <p><code class="block"><span class="cf-dir">log</span> <span class="cf-arg"><i>path file </i>[<i>format</i>]</span></code></p>
+
+                <ul>
+                    <li><strong>path</strong> is the base path to match in order to be logged</li>
+                    <li><strong>file</strong> is the log file to create (or append to), relative to current working directory</li>
+                    <li><strong>format</strong> is the log format to use (default is Common Log Format)</li>
+                </ul>
+
+                <h3 id="log-file">Log File</h3>
+
+                <p>The log file can be any filename. It could also be <code>stdout</code> or <code>stderr</code> to write the
+                    log to the console, or <code>syslog</code> to write to the system log (except on Windows). If the log
+                    file does not exist beforehand, Caddy will create it before appending to it.</p>
+
+                <h3 id="log-format">Log Format</h3>
+
+                <p>You can specify a custom log format with any <a href="/docs/placeholders">placeholder</a> values. Log supports
+                    both request and response placeholders.</p>
+
+                <p>Currently there are two predefined formats.</p>
+
+                <ul>
+                    <li><strong>{common}</strong> (default) - <code>{remote} - [{when}] &quot;{method} {uri} {proto}&quot; {status} {size}</code></li>
+                    <li><strong>{combined}</strong> - {common} appended with <code>&quot;{&gt;Referer}&quot; &quot;{&gt;User-Agent}&quot;</code></li>
+                </ul>
+
+                <h3 id="log-rotation">Log Rotation</h3>
+
+                <p>If you enable log rotation, log files will be automatically maintained when they get large or old. You can
+                    use rotation by opening a block on your first line, which can be any of the variations described above:</p>
+
+                <p><code class="block"><span class="cf-dir">log</span> <span class="cf-arg">...</span> {
+    <span class="cf-subdir">rotate</span> {
+        <span class="cf-subdir">size</span> <i>maxsize</i>
+        <span class="cf-subdir">age</span>  <i>maxage</i>
+        <span class="cf-subdir">keep</span> <i>maxkeep</i>
+    }
+}</code></p>
+
+                <ul>
+                    <li><strong>maxsize</strong> is the maximum size of a log file in megabytes (MB) before it gets rotated.
+                        Default is 100 MB.</li>
+                    <li><strong>maxage</strong> is the maximum age of a rotated log file in days, after which it will be deleted.
+                        Default is to never delete old files because of age.</li>
+                    <li><strong>maxkeep</strong> is the maximum number of rotated log files to keep. Default is to retain all
+                        old log files.</li>
+                </ul>
+
+                <h3 id="examples">Examples</h3>
+
+                <p>Log all requests to a file:</p>
+
+                <p><code class="block"><span class="cf-dir">log</span> <span class="cf-arg">/var/log/access.log</span></code></p>
+
+                <p>Custom log format:</p>
+
+                <p><code class="block"><span class="cf-dir">log</span> <span class="cf-arg">/ ../access.log &quot;{proto} Request: {method} {path}&quot;</span></code></p>
+
+                <p>Predefined format:</p>
+
+                <p><code class="block"><span class="cf-dir">log</span> <span class="cf-arg">/ stdout &quot;{combined}&quot;</span></code></p>
+
+                <p>With rotation:</p>
+
+                <p><code class="block"><span class="cf-dir">log</span> <span class="cf-arg">access.log</span> {
+    <span class="cf-subdir">rotate</span> {
+        <span class="cf-subdir">size</span> 100 <span class="hl-comment"># Rotate after 100 MB</span>
+        <span class="cf-subdir">age</span>  14  <span class="hl-comment"># Keep log files for 14 days</span>
+        <span class="cf-subdir">keep</span> 10  <span class="hl-comment"># Keep at most 10 log files</span>
+    }
+}</code></p>
+
+                {{.Include "/includes/docs-helpbox.html"}}
+            </article>
+        </div>
+        {{.Include "/includes/footer.html"}}
+    </body>
+</head>

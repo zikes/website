@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<head>
+
+	<head>
+		<title>templates - Caddy User Guide</title>
+		{{.Include "/includes/head.html"}}
+		<link rel="stylesheet" href="/resources/css/docs.css">
+	</head>
+
+	<body>
+		{{.Include "/includes/docs-nav.html"}}
+
+		<div class="content-container">
+			{{.Include "/includes/docs-nav-side.html"}}
+
+			<article>
+				<h2>templates</h2>
+
+
+				<p>templates allows you to add template actions to your pages. Templates can be a convenient way to render the current timestamp,
+					request URL, visitor's IP address, and more. You also get basic control statements like <code>if</code> and <code>range</code>.
+					See <a href="/docs/template-actions">Template Actions</a> for instructions on how to use templates.</p>
+
+				<p>Some common uses of templates are to include the content of other files, show the current date or time, and hide or show
+					certain parts of a page depending on the request path, cookies, or headers.</p>
+
+				<p>Note that <a href="/docs/errors">custom error pages</a> do not get executed as templates, even if this directive is enabled.
+					Error pages are served by a separate middleware.</p>
+
+				<h3 id="syntax">Syntax</h3>
+
+				<p><code class="block"><span class="cf-dir">templates</span> <span class="cf-arg">[<i>path</i> [<i>extensions...</i>]]</span></code></p>
+
+				<ul>
+					<li><strong>path</strong> is the path to match before templates will be invoked</li>
+					<li><strong>extensions...</strong> is a list of space-separated file extensions that will have templates</li>
+				</ul>
+
+				<p>To specify certain extensions, a path must also be provided. The default path is / and the default extensions that will
+					be executed as templates are .html, .htm, .tpl, .tmpl, and .txt.</p>
+
+				<h3 id="template-format">Template Format</h3>
+
+				<p>See <a href="/docs/template-actions">Template Actions</a>.</p>
+
+				<h3 id="example-template-file">Example Template File</h3>
+
+				<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+	&lt;head&gt;
+		&lt;title&gt;Example Templated File&lt;/title&gt;
+	&lt;/head&gt;
+	&lt;body&gt;
+		&#123;&#123;.Include &quot;/includes/header.html&quot;&#125;&#125;
+		&lt;p&gt;
+			Welcome &#123;&#123;.IP&#125;&#125;! You're visiting &#123;&#123;.URI&#125;&#125;.
+		&lt;/p&gt;
+		&#123;&#123;.Include &quot;/includes/footer.html&quot;&#125;&#125;
+	&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+				<h3 id="examples">Examples</h3>
+
+				<p>Enable templates for all .html, .htm, .tpl, .tmpl, and .txt files:</p>
+
+				<p><code class="block"><span class="cf-dir">templates</span></code></p>
+
+				<p>Templates for the same file extensions but only under /portfolio:</p>
+
+				<p><code class="block"><span class="cf-dir">templates</span> <span class="cf-arg">/portfolio</span></code></p>
+
+				<p>Enable templates only on .html and .txt files in /portfolio:</p>
+
+				<p><code class="block"><span class="cf-dir">templates</span> <span class="cf-arg">/portfolio .html .txt</span></code></p>
+
+
+				{{.Include "/includes/docs-helpbox.html"}}
+			</article>
+		</div>
+		{{.Include "/includes/footer.html"}}
+	</body>
+</head>

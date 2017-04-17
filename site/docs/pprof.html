@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<head>
+
+    <head>
+        <title>pprof - Caddy User Guide</title>
+        {{.Include "/includes/head.html"}}
+        <link rel="stylesheet" href="/resources/css/docs.css">
+    </head>
+
+    <body>
+        {{.Include "/includes/docs-nav.html"}}
+
+        <div class="content-container">
+            {{.Include "/includes/docs-nav-side.html"}}
+
+            <article>
+                <h2>pprof</h2>
+
+                <p>pprof publishes runtime profiling data at endpoints under /debug/pprof. You can visit /debug/pprof on your
+                    site for an index of the available endpoints.</p>
+
+                <p>
+                    <mark class="block">This is a debugging tool. Certain requests (such as collecting execution traces) can be slow. If you
+                        use pprof on a live site, consider restricting access or enabling it only temporarily.</mark>
+                </p>
+
+                <p>For more information, please see <a href="https://golang.org/pkg/net/http/pprof/">Go's pprof documentation</a>                    and read <a href="https://blog.golang.org/profiling-go-programs">Profiling Go Programs</a>.</p>
+
+                <h3 id="syntax">Syntax</h3>
+
+                <p><code class="block"><span class="cf-dir">pprof</span></code></p>
+
+                <h3 id="examples">Examples</h3>
+
+                <p>Enable pprof endpoints:</p>
+
+                <p><code class="block"><span class="cf-dir">pprof</span></code></p>
+
+                {{.Include "/includes/docs-helpbox.html"}}
+            </article>
+        </div>
+        {{.Include "/includes/footer.html"}}
+    </body>
+</head>

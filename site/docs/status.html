@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<head>
+
+	<head>
+		<title>status - Caddy User Guide</title>
+		{{.Include "/includes/head.html"}}
+		<link rel="stylesheet" href="/resources/css/docs.css">
+	</head>
+
+	<body>
+		{{.Include "/includes/docs-nav.html"}}
+
+		<div class="content-container">
+			{{.Include "/includes/docs-nav-side.html"}}
+
+			<article>
+				<h2>status</h2>
+
+
+				<p>status writes a status code to the response. It does not write a response body.</p>
+
+				<h3 id="syntax">Syntax</h3>
+
+				<p><code class="block"><span class="cf-dir">status</span> <span class="cf-arg"><i>code path</i></span></code></p>
+
+				<ul>
+					<li><strong>code</strong> is the HTTP status code to respond with (must be numeric).</li>
+					<li><strong>path</strong> is the base request path to match.</li>
+				</ul>
+
+				<p>If you have a lot of status rewrites to group, share a status code by making a table:</p>
+
+				<p><code class="block"><span class="cf-dir">status</span> <span class="cf-arg"><i>code</i></span> {
+    <span class="cf-subdir"><i>path</i></span>
+}
+</code></p>
+
+				<p>Each line describes a base path which should have that status code written.</p>
+
+				<h3 id="examples">Examples</h3>
+
+				<p>For a catch-all status:</p>
+
+				<p><code class="block"><span class="cf-dir">status</span> <span class="cf-arg">404 /</span></code></p>
+
+				<p>To hide the existence of a secret folder:</p>
+
+				<p><code class="block"><span class="cf-dir">status</span> <span class="cf-arg">404 /secrets</span></code></p>
+
+				<p>To hide the existence of multiple folders:</p>
+
+				<p><code class="block"><span class="cf-dir">status</span> <span class="cf-arg">404</span> {
+    <span class="cf-subdir">/hidden</span>
+    <span class="cf-subdir">/secrets</span>
+}</code></p>
+
+
+				{{.Include "/includes/docs-helpbox.html"}}
+			</article>
+		</div>
+		{{.Include "/includes/footer.html"}}
+	</body>
+</head>
