@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-
 <head>
-
 	<head>
 		<title>tls - Caddy User Guide</title>
 		{{.Include "/includes/head.html"}}
@@ -17,48 +15,46 @@
 			<article>
 				<h2>tls</h2>
 
+				<p>
+					tls configures HTTPS connections. Since HTTPS is <a href="/docs/automatic-https">enabled automatically</a>, this directive should only be used to deliberately override default settings. Use with care, if at all.
+				</p>
 
-				<p>tls configures HTTPS connections. Since HTTPS is <a href="/docs/automatic-https">enabled automatically</a>, this directive
-					is mainly used to explicitly override default settings; use with care.</p>
+				<p>
+					Caddy supports SNI (Server Name Indication), so you can serve multiple HTTPS sites from the same port on your machine. In addition, Caddy implements OCSP stapling for all qualifying certificates. Caddy also automatically rotates all TLS session ticket keys periodically.
+				</p>
 
-				<p>Because this directive configures a network listener shared by all the sites bound to the same address, the settings
-					for each site have to be combined into a single configuration. Caddy goes with the widest range of protocol versions,
-					unions cipher suites and curves, and chooses the strictest type of client authentication. All other TLS properties for
-					each site must be agreeable, or Caddy will throw an error.</p>
+				<p>
+					The tls directive will ignore sites that are explicitly defined to be http:// or are on port 80. This allows you to use the tls directive in a server block that is shared with both HTTP and HTTPS sites.
+				</p>
 
-				<p>Caddy supports SNI (Server Name Indication), so you can serve multiple HTTPS sites from the same port on your machine.
-					In addition, Caddy implements OCSP stapling for all qualifying certificates.</p>
+				<p>
+					If not all the hostnames are not known when starting the server, you can use the <a href="/docs/automatic-https#on-demand">On-Demand TLS</a> feature, which issues certificates during the TLS handshake rather than at startup.
+				</p>
 
-				<p>The tls directive will ignore sites that are explicitly defined to be http:// or are on port 80. This allows you to use
-					the tls directive in a server block that is shared with both HTTP and HTTPS sites.</p>
-
-				<p>If not all the hostnames are not known when starting the server, you can use the <a href="/docs/automatic-https#on-demand-tls">On-Demand TLS</a>					feature, which issues certificates during the TLS handshake rather than at startup.</p>
+				<mark class="block">
+					<b>Caddy ships with sane defaults for cipher suites, curves, key types, and protocols.</b> Their exact selection and ordering may change at any time with new releases. You probably do not need to change them yourself. Adjust the TLS configuration at your own risk.
+				</mark>
 
 				<h3 id="syntax">Syntax</h3>
 
-				<p><code class="block"><span class="cf-dir">tls</span> <span class="cf-arg">off</span></code></p>
+				<code class="block"><span class="cf-dir">tls</span> <span class="cf-arg">off</span></code>
 
-				<p>Disables TLS for the site. Not recommended unless you have a good reason. With TLS off, automatic HTTPS is also disabled,
-					so the default port (2015) will not be changed.</p>
+				<p>Disables TLS for the site. Not recommended unless you have a good reason. With TLS off, automatic HTTPS is also disabled, so the default port (2015) will not be changed.</p>
 
-				<p><code class="block"><span class="cf-dir">tls</span> <span class="cf-arg"><i>email</i></span></code></p>
+				<code class="block"><span class="cf-dir">tls</span> <span class="cf-arg"><i>email</i></span></code>
 
 				<ul>
-					<li><strong>email</strong> is the email address to use with which to generate a certificate with a trusted CA. By providing
-						an email here you will not be prompted when you run Caddy.</li>
+					<li><strong>email</strong> is the email address to use with which to generate a certificate with a trusted CA. By providing an email here you will not be prompted when you run Caddy.</li>
 				</ul>
 
-				<p>Although the above syntax is not needed to enable TLS, it allows you to specify the email address used for your CA account,
-					instead of prompting for one or using another one from a previous run.</p>
+				<p>Although the above syntax is not needed to enable TLS, it allows you to specify the email address used for your CA account, instead of prompting for one or using another one from a previous run.</p>
 
 				<p>To use Caddy with your own certificate and key:</p>
 
-				<p><code class="block"><span class="cf-dir">tls</span> <span class="cf-arg"><i>cert key</i></span></code></p>
+				<code class="block"><span class="cf-dir">tls</span> <span class="cf-arg"><i>cert key</i></span></code>
 
 				<ul>
-					<li><strong>cert</strong> is the certificate file. If the certificate is signed by a CA, this certificate file should be
-						a bundle: a concatenation of the server's certificate followed by the CA's certificate (root certificate usually not
-						necessary).</li>
+					<li><strong>cert</strong> is the certificate file. If the certificate is signed by a CA, this certificate file should be a bundle: a concatenation of the server's certificate followed by the CA's certificate (root certificate usually not necessary).</li>
 					<li><strong>key</strong> is the server's private key file which matches the certificate file.</li>
 				</ul>
 
@@ -66,14 +62,13 @@
 
 				<p>Or to have Caddy generate and use an untrusted, self-signed certificate in memory:</p>
 
-				<p><code class="block"><span class="cf-dir">tls</span> <span class="cf-arg">self_signed</span></code></p>
+				<code class="block"><span class="cf-dir">tls</span> <span class="cf-arg">self_signed</span></code>
 
-				<p>The above syntaxes use Caddy's default TLS settings with your own certificate and key or a self-signed certificate, which
-					should be sufficient in most cases.</p>
+				<p>The above syntaxes use Caddy's default TLS settings with your own certificate and key or a self-signed certificate, which should be sufficient in most cases.</p>
 
 				<p>Advanced users may open a settings block for more control, optionally specifying their own certificate and key:</p>
 
-				<p><code class="block"><span class="cf-dir">tls</span> <span class="cf-arg">[<i>cert key</i>]</span> {
+				<code class="block"><span class="cf-dir">tls</span> <span class="cf-arg">[<i>cert key</i>]</span> {
     <span class="cf-subdir">protocols</span> <i>min max</i>
     <span class="cf-subdir">ciphers</span>   <i>ciphers...</i>
     <span class="cf-subdir">curves</span>    <i>curves...</i>
@@ -82,43 +77,30 @@
     <span class="cf-subdir">max_certs</span> <i>limit</i>
     <span class="cf-subdir">key_type</span>  <i>type</i>
     <span class="cf-subdir">dns</span>       <i>provider</i>
-    <span class="cf-subdir">muststaple</span>
-}</code></p>
+    <span class="cf-subdir">alpn</span>      <i>protos...</i>
+    <span class="cf-subdir">must_staple</span>
+}</code>
 
 				<ul>
-					<li><strong>cert</strong> and <strong>key</strong> are the same as above.</li>
-					<li><strong>min</strong> and <strong>max</strong> are the minimum and maximum protocol versions to support, respectively.
-						See below for valid values. If min and max are the same, it need only be specified once.</li>
-					<li><strong>ciphers...</strong> is a list of space-separated ciphers that will be supported, overriding the defaults. If
-						you list any, only the ones you specify will be allowed and preferred in the order you specify. See below for valid
-						values.</li>
-					<li><strong>curves...</strong> is a list of space-separated curves that will be supported in the given order, overriding
-						the defaults. Valid curves are listed below.</li>
-					<li><strong>clientcas...</strong> is a list of space-separated client root CAs used for verification during TLS client authentication.
-						If used, clients will be asked to present their certificate by their browser, which will be verified against this list
-						of client certificate authorities. A client will not be allowed to connect if their certificate was not signed by one
-						of these root CAs. Note that this setting applies to the entire listener, not just a single site. You may modify the
-						strictness of client authentication using one of the keywords before the list of client CAs:
-
+					<li><b>cert</b> and <b>key</b> are the same as above.</li>
+					<li><b>protocols</b> specifies the minimum and maximum protocol versions to support. See below for valid values. If min and max are the same, it need only be specified once.</li>
+					<li><b>ciphers</b> is a list of space-separated ciphers that will be supported, overriding the defaults. If you list any, only the ones you specify will be allowed and preferred in the order given. See below for valid values.</li>
+					<li><b>curves</b> is a list of space-separated curves that will be supported in the given order, overriding the defaults. Valid curves are listed below.</li>
+					<li>
+						<b>clients</b> is a list of space-separated client root CAs used for verification during TLS client authentication. If used, clients will be asked to present their certificate by their browser, which will be verified against this list of client certificate authorities. A client will not be allowed to connect if their certificate was not signed by one of these root CAs. Note that this setting applies to the entire listener, not just a single site. You may modify the strictness of client authentication using one of the keywords before the list of client CAs:
 						<ul>
-							<li><strong>request</strong> merely asks a client to provide a certificate, but will not fail if none is given or if an
-								invalid one is presented.</li>
-							<li><strong>require</strong> requires a client certificate, but will not verify it.</li>
-							<li><strong>verify_if_given</strong> will not fail if none is presented, but reject all that do not pass verification.</li>
+							<li><b>request</b> merely asks a client to provide a certificate, but will not fail if none is given or if an invalid one is presented.</li>
+							<li><b>require</b> requires a client certificate, but will not verify it.</li>
+							<li><b>verify_if_given</b> will not fail if none is presented, but reject all that do not pass verification.</li>
 							<li>The default, if no flag is set but a CA file found, is to do both: to require client certificates and validate them.</li>
 						</ul>
 					</li>
-					<li><strong>dir</strong> is a directory from which to load certificates and keys. The entire directory and its subfolders
-						will be walked in search of .pem files. Each .pem file must contain the PEM-encoded certificate (chain) and key blocks,
-						concatenated together.</li>
-					<li><strong>limit</strong> puts a limit on the number of certificates allowed to be issued on demand (during TLS handshake)
-						for this site. Specifying this value enables <a href="/docs/automatic-https#on-demand">On-Demand TLS</a>. It must be
-						a positive integer. This value gets reset after the process exits (but is preserved through reloads).</li>
-					<li><strong>type</strong> is the type of key to use when generating keys for certificates (only applies to managed orTLS
-						or self-signed certificates). Valid values are rsa2048, rsa4096, rsa8192, p256, and p384. Default is currently rsa2048.</li>
-					<li><strong>provider</strong> is the name of a DNS provider; specifying it enables the <a href="/docs/automatic-https#dns-challenge">DNS challenge</a>.
-						Note that you need to give credentials for it to work.</li>
-					<li><strong>muststaple</strong> enables <a href="https://blog.mozilla.org/security/2015/11/23/improving-revocation-ocsp-must-staple-and-short-lived-certificates/">Must-Staple</a>						for managed certificates. Use with care.</li>
+					<li><b>load</b> is a directory from which to load certificates and keys. The entire directory and its subfolders will be walked in search of .pem files. Each .pem file must contain the PEM-encoded certificate (chain) and key blocks, concatenated together.</li>
+					<li><b>max_certs</b> enables <a href="/docs/automatic-https#on-demand">On-Demand TLS</a>, which obtains certificates during the first handshake requiring it rather than at startup. This is NOT recommended if the full hostname is given in the Caddyfile and known at startup! The limit value restricts the number of certificates allowed to be issued on demand (during TLS handshake) for this site. It must be a positive integer. This value gets reset after the process exits (but is preserved through reloads).</li>
+					<li><b>key_type</b> is the type of key to use when generating keys for certificates (only applies to managed or TLS or self-signed certificates). Valid values are rsa2048, rsa4096, rsa8192, p256, and p384. Default is currently rsa2048.</li>
+					<li><b>dns</b> is the name of a DNS provider; specifying it enables the <a href="/docs/automatic-https#dns-challenge">DNS challenge</a>. Note that you need to give credentials for it to work.</li>
+					<li><b>alpn</b> is a list of space-separated protocols to use for Application-Layer Protocol Negotiation (ALPN). For HTTPS servers, HTTP versions can be enabled/disabled with this setting. Default is <code>h2 http/1.1</code>.</li>
+					<li><b>must_staple</b> enables <a href="https://blog.mozilla.org/security/2015/11/23/improving-revocation-ocsp-must-staple-and-short-lived-certificates/">Must-Staple</a> for managed certificates. Use with care.</li>
 				</ul>
 
 				<h3 id="protocols">Protocols</h3>
@@ -126,8 +108,8 @@
 				<p>The following protocols are supported, in descending order of preference:</p>
 
 				<ul>
-					<li>tls1.2 (default <strong>max</strong>)</li>
-					<li>tls1.1 (default <strong>min</strong>)</li>
+					<li>tls1.2 (default max)</li>
+					<li>tls1.1 (default min)</li>
 					<li>tls1.0</li>
 				</ul>
 
@@ -138,13 +120,15 @@
 
 				<h3 id="cipher-suites">Cipher Suites</h3>
 
-				<p>The following cipher suites are currently supported, in descending order of preference:</p>
-
+				<p>The following cipher suites are currently supported:</p>
+           
 				<ul>
 					<li>ECDHE-ECDSA-AES256-GCM-SHA384</li>
 					<li>ECDHE-RSA-AES256-GCM-SHA384</li>
 					<li>ECDHE-ECDSA-AES128-GCM-SHA256</li>
 					<li>ECDHE-RSA-AES128-GCM-SHA256</li>
+					<li>ECDHE-ECDSA-WITH-CHACHA20-POLY1305</li>
+					<li>ECDHE-RSA-WITH-CHACHA20-POLY1305</li>
 					<li>ECDHE-RSA-AES256-CBC-SHA</li>
 					<li>ECDHE-RSA-AES128-CBC-SHA</li>
 					<li>ECDHE-ECDSA-AES256-CBC-SHA</li>
@@ -156,8 +140,7 @@
 				</ul>
 
 				<p>
-					<mark class="block">Note: The HTTP/2 spec blacklists over 275 cipher suites for security reasons. Unless you know what you're doing, it's
-						best to accept the default cipher suite settings.</mark>
+					<mark class="block">Note: The HTTP/2 spec blacklists over 275 cipher suites for security reasons. Unless you know what you're doing, it's best to accept the default cipher suite settings.</mark>
 				</p>
 
 				<p>Cipher suites may be added to or removed from Caddy at any time. Similarly, the default cipher suites may be changed
@@ -168,6 +151,7 @@
 				<p>The following curves are supported for EC cipher suites:</p>
 
 				<ul>
+					<li>X25519</li>
 					<li>p256</li>
 					<li>p384</li>
 					<li>p521</li>
@@ -175,28 +159,27 @@
 
 				<h3 id="examples">Examples</h3>
 
-				<p>Remember, TLS is enabled by default, and this directive is not usually needed! These examples are for advanced users
-					who manage certificates manually or need custom settings.</p>
+				<p>Remember, TLS is enabled by default, and this directive is not usually needed! These examples are for advanced users who manage certificates manually or need custom settings.</p>
 
 				<p>Serve with HTTPS using a certificate and private key located one folder up:</p>
 
-				<p><code class="block"><span class="cf-dir">tls</span> <span class="cf-arg">../cert.pem ../key.pem</span></code></p>
+				<code class="block"><span class="cf-dir">tls</span> <span class="cf-arg">../cert.pem ../key.pem</span></code>
 
 				<p>Obtain certificates during TLS handshakes as needed, with a hard limit of 10 new certificates:</p>
 
-				<p><code class="block"><span class="cf-dir">tls</span> {
+				<code class="block"><span class="cf-dir">tls</span> {
     <span class="cf-subdir">max_certs</span> 10
-}</code></p>
+}</code>
 
 				<p>Load all certificates and keys from .pem files found in /www/certificates:</p>
 
-				<p><code class="block"><span class="cf-dir">tls</span> {
+				<code class="block"><span class="cf-dir">tls</span> {
     <span class="cf-subdir">load</span> /www/certificates
-}</code></p>
+}</code>
 
-				<p>Serve a site with a self-signed certificate (untrusted by browsers, but convenient for local development):</p>
+				<p>Serve a site with a self-signed certificate in memory (untrusted by browsers, but convenient for local development):</p>
 
-				<p><code class="block"><span class="cf-dir">tls</span> <span class="cf-arg">self_signed</span></code></p>
+				<code class="block"><span class="cf-dir">tls</span> <span class="cf-arg">self_signed</span></code>
 
 
 				{{.Include "/includes/docs-helpbox.html"}}

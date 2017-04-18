@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<head>
+	<head>
+		<title>http.push - Caddy User Guide</title>
+		{{.Include "/includes/head.html"}}
+		<link rel="stylesheet" href="/resources/css/docs.css">
+	</head>
+
+	<body>
+		{{.Include "/includes/docs-nav.html"}}
+
+		<div class="content-container">
+			{{.Include "/includes/docs-nav-side.html"}}
+
+			<article>
+				<h2>http.push</h2>
+
+				<p>
+					push enables and configures HTTP/2 server push.
+				</p>
+
+				<p>
+					Server push can accelerate page loads by sending resources that the server knows the client will need, but has not yet asked for. It is <i>not</i> a replacement for WebSockets. It must also be configured carefully, especially with regards for client-side caching, or pushing can actually decrease performance. If a client caches a resource after the first time it is pushed, subsequent pushes of the same resource are unnecessary.
+				</p>
+
+				<p>
+					Caddy knows which resources to push either from rules you provide in the Caddyfile or from <a href="https://w3c.github.io/preload/#server-push-http-2">Link headers</a> coming from some upstream.
+				</p>
+
+				<h3 id="syntax">Syntax</h3>
+
+				<code class="block"><span class="cf-dir">push</span></code>
+				<p>
+					Enables server push for any request by reading the Link HTTP header of the response. Useful if you're proxying to a backend app with <a href="/docs/proxy">proxy</a> or <a href="/docs/fastcgi">fastcgi</a>, for example, that sets the Link headers for preload purposes.
+				</p>
+				<p>
+					To configure a basic push rule:
+				</p>
+
+				<code class="block"><span class="cf-dir">push</span> <span class="cf-arg"><i>path</i> [<i>resources...</i>]</span></code>
+
+				<ul>
+					<li><b>path</b> is the base path of requests which to apply this rule.</li>
+					<li><b>resources...</b> is a space-separated list of resources to push. If no resources are specified, then only Link headers will be used to know push assets.</li>
+				</ul>
+
+				<p>
+					To push many resources that won't fit on a single line or to change the method or headers of the synthetic request used to initiate the pushes, open a block:
+				</p>
+
+				<code class="block"><span class="cf-dir">push</span> <span class="cf-arg"><i>path</i> [<i>resources...</i>]</span> {
+    <span class="cf-subdir">method</span> <i>method</i>
+    <span class="cf-subdir">header</span> <i>name value</i>
+    <span class="cf-subdir"><i>resources</i></span>
+}</code>
+
+				<ul>
+					<li><b>path</b> and <b>resources</b> are the same as above, except when specifying resources inside the block, only list one resource per line.</li>
+					<li><b>method</b> specifies the method for the synthetic request that is made to initiate the push; can be GET or HEAD. Default is GET.</li>
+					<li><b>header</b> adds a header to the synthetic request that is made to initiate the push; can be specified multiple times. It consists of a field name and a value. Pseudo-header fields are not allowed.</li>
+				</ul>
+
+				
+
+				<h3 id="examples">Examples</h3>
+
+				<p>Enable server push for all requests using Link headers:</p>
+
+				<code class="block"><span class="cf-dir">push</span></code>
+
+				<p>Push Google Analytics script for all requests (not cache-aware):</p>
+
+				<code class="block"><span class="cf-dir">push</span> <span class="cf-arg">/ /ga.js</span></code>
+
+				<p>Push a couple CSS files for requests to the home page:</p>
+
+				<code class="block"><span class="cf-dir">push</span> <span class="cf-arg">/index.html /common.css /home.css</span></code>
+
+				<p>Push many resources to the home page:</p>
+
+				<code class="block"><span class="cf-dir">push</span> <span class="cf-arg">/index.html</span> {
+    <span class="cf-subdir">/resources/css/common.css</span>
+    <span class="cf-subdir">/resources/css/home.css</span>
+    <span class="cf-subdir">/resources/css/compiled.css</span>
+    <span class="cf-subdir">/resources/js/main.js</span>
+    <span class="cf-subdir">/resources/js/jquery.min.js</span>
+    <span class="cf-subdir">/resources/images/logo.png</span>
+    <span class="cf-subdir">/resources/images/background.jpg</span>
+}</code>
+
+				<p>Specify a method and header for all push requests:</p>
+
+				<code class="block"><span class="cf-dir">push</span> {
+    <span class="cf-subdir">method</span> HEAD
+    <span class="cf-subdir">header</span> MyHeader "The value"
+}</code>
+
+				{{.Include "/includes/docs-helpbox.html"}}
+			</article>
+		</div>
+		{{.Include "/includes/footer.html"}}
+	</body>
+</head>

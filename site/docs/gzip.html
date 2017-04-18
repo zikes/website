@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-
 <head>
-
 	<head>
-		<title>gzip - Caddy User Guide</title>
+		<title>http.gzip - Caddy User Guide</title>
 		{{.Include "/includes/head.html"}}
 		<link rel="stylesheet" href="/resources/css/docs.css">
 	</head>
@@ -15,7 +13,7 @@
 			{{.Include "/includes/docs-nav-side.html"}}
 
 			<article>
-				<h2>gzip</h2>
+				<h2>http.gzip</h2>
 
 				<p>gzip enables gzip compression if the client supports it. By default, responses are not gzipped. If enabled, the default
 					settings will ensure that images, videos, and archives (already compressed) are not gzipped.</p>

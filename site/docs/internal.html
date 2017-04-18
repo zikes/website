@@ -1,13 +1,10 @@
 <!DOCTYPE html>
-
 <head>
-
 	<head>
-		<title>internal - Caddy User Guide</title>
+		<title>http.internal - Caddy User Guide</title>
 		{{.Include "/includes/head.html"}}
 		<link rel="stylesheet" href="/resources/css/docs.css">
 	</head>
-
 	<body>
 		{{.Include "/includes/docs-nav.html"}}
 
@@ -15,8 +12,7 @@
 			{{.Include "/includes/docs-nav-side.html"}}
 
 			<article>
-				<h2>internal</h2>
-
+				<h2>http.internal</h2>
 
 				<p>internal protects all resources in the specified directory from external requests. Browsers (or any client) that directly
 					requests a resource in the protected directory will receive a 404 Not Found status.</p>

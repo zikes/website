@@ -1,131 +1,126 @@
 <!DOCTYPE html>
-
 <head>
+	<head>
+		<title>http.rewrite - Caddy User Guide</title>
+		{{.Include "/includes/head.html"}}
+		<link rel="stylesheet" href="/resources/css/docs.css">
+	</head>
+	<body>
+		{{.Include "/includes/docs-nav.html"}}
 
-    <head>
-        <title>rewrite - Caddy User Guide</title>
-        {{.Include "/includes/head.html"}}
-        <link rel="stylesheet" href="/resources/css/docs.css">
-    </head>
+		<div class="content-container">
+			{{.Include "/includes/docs-nav-side.html"}}
 
-    <body>
-        {{.Include "/includes/docs-nav.html"}}
+			<article>
+				<h2>http.rewrite</h2>
 
-        <div class="content-container">
-            {{.Include "/includes/docs-nav-side.html"}}
+				<p>rewrite performs internal URL rewriting. This allows the client to request one resource but actually be served another without an HTTP redirect. Rewrites are invisible to the client.</p>
 
-            <article>
-                <h2>rewrite</h2>
+				<p>There are simple rewrites (fast) and complex rewrites (slower), but they're powerful enough to accommodate most dynamic back-end applications.</p>
 
-                <p>rewrite performs internal URL rewriting. This allows the client to request one resource but actually be served
-                    another without an HTTP redirect. Rewrites are invisible to the client.</p>
+				<h3 id="syntax">Syntax</h3>
 
-                <p>There are simple rewrites (fast) and complex rewrites (slower), but they're powerful enough to accommodate
-                    most dynamic back-end applications.</p>
+				<p><code class="block"><span class="cf-dir">rewrite</span> <span class="cf-arg"><i>from to</i></span></code></p>
 
-                <h3 id="syntax">Syntax</h3>
+				<ul>
+					<li><strong>from</strong> is the exact path to match</li>
+					<li><strong>to</strong> is the destination path to rewrite to (the resource to respond with)</li>
+				</ul>
 
-                <p><code class="block"><span class="cf-dir">rewrite</span> <span class="cf-arg"><i>from to</i></span></code></p>
+				<p>Advanced users may open a block and make a complex rewrite rule:</p>
 
-                <ul>
-                    <li><strong>from</strong> is the exact path to match</li>
-                    <li><strong>to</strong> is the destination path to rewrite to (the resource to respond with)</li>
-                </ul>
-
-                <p>Advanced users may open a block and make a complex rewrite rule:</p>
-
-                <p><code class="block"><span class="cf-dir">rewrite</span> <span class="cf-arg">[<i>basepath</i>]</span> {
-    <span class="cf-subdir">regexp</span> <i>pattern</i>
-    <span class="cf-subdir">ext</span>    <i>extensions...</i>
-    <span class="cf-subdir">if</span>     <i>a cond b</i>
-    <span class="cf-subdir">if_op</span>  <i>[</i>and|or<i>]</i>
-    <span class="cf-subdir">to</span>     <i>destinations...</i>
+				<p><code class="block"><span class="cf-dir">rewrite</span> <span class="cf-arg">[<i>basepath</i>]</span> {
+	<span class="cf-subdir">regexp</span> <i>pattern</i>
+	<span class="cf-subdir">ext</span>    <i>extensions...</i>
+	<span class="cf-subdir">if</span>     <i>a cond b</i>
+	<span class="cf-subdir">if_op</span>  <i>[</i>and|or<i>]</i>
+	<span class="cf-subdir">to</span>     <i>destinations...</i>
 }</code></p>
 
-                <ul>
-                    <li><strong>basepath</strong> is the base path to match before rewriting with regular expression. Default
-                        is /.</li>
-                    <li><strong>regexp</strong> (shorthand: <strong>r</strong>) will match the path with the given regular expression
-                        <strong>pattern</strong>.
-                        <mark>Extremely high-load servers should avoid using regular expressions.</mark>
-                    </li>
-                    <li><strong>extensions...</strong> is a space-separated list of file extensions (prepended with a dot) to
-                        include or ignore. Prefix an extension with <code>!</code> to exclude an extension. The forward slash
-                        <code>/</code> symbol matches paths without file extensions.</li>
-                    <li><strong>if</strong> specifies a rewrite condition. Multiple ifs are AND-ed together. <strong>a</strong>                        and <strong>b</strong> are any string and may use <a href="/docs/placeholders">request placeholders</a>.
-                        <strong>cond</strong> is the condition, with possible values explained below.</li>
-                    <li><strong>if_op</strong> specifies how the ifs are evaluated; the default is <code>and</code>.</li>
-                    <li><strong>destinations...</strong> is one or more space-separated paths to rewrite to, with support for
-                        <a href="/docs/placeholders">request placeholders</a> as well as numbered regular expression captures
-                        such as {1}, {2}, etc. Rewrite will check each destination in order and rewrite to the first destination
-                        that exists. Each one is checked as a file or, if ends with /, as a directory. The last destination
-                        will act as default if no other destination exists.</li>
-                </ul>
+				<ul>
+					<li><strong>basepath</strong> is the base path to match before rewriting with regular expression. Default
+						is /.</li>
+					<li><strong>regexp</strong> (shorthand: <strong>r</strong>) will match the path with the given regular expression
+						<strong>pattern</strong>.
+						<mark>Extremely high-load servers should avoid using regular expressions.</mark>
+					</li>
+					<li><strong>extensions...</strong> is a space-separated list of file extensions (prepended with a dot) to
+						include or ignore. Prefix an extension with <code>!</code> to exclude an extension. The forward slash
+						<code>/</code> symbol matches paths without file extensions.</li>
+					<li><strong>if</strong> specifies a rewrite condition. Multiple ifs are AND-ed together. <strong>a</strong>                        and <strong>b</strong> are any string and may use <a href="/docs/placeholders">request placeholders</a>.
+						<strong>cond</strong> is the condition, with possible values explained below.</li>
+					<li><strong>if_op</strong> specifies how the ifs are evaluated; the default is <code>and</code>.</li>
+					<li><strong>destinations...</strong> is one or more space-separated paths to rewrite to, with support for
+						<a href="/docs/placeholders">request placeholders</a> as well as numbered regular expression captures
+						such as {1}, {2}, etc. Rewrite will check each destination in order and rewrite to the first destination
+						that exists. Each one is checked as a file or, if ends with /, as a directory. The last destination
+						will act as default if no other destination exists.</li>
+				</ul>
 
-                <h3 id="if-conditions">&quot;if&quot; conditions</h3>
+				<h3 id="if-conditions">&quot;if&quot; conditions</h3>
 
-                <p>The if keyword is a powerful way to describe your rule. It takes the format <code>a cond b</code>, where
-                    the values <code>a</code> and <code>b</code> are separated by <code>cond</code>, a condition. The condition
-                    can be any of these:</p>
+				<p>The if keyword is a powerful way to describe your rule. It takes the format <code>a cond b</code>, where
+					the values <code>a</code> and <code>b</code> are separated by <code>cond</code>, a condition. The condition
+					can be any of these:</p>
 
-                <ul>
-                    <li><code>is</code> = a equals b</li>
-                    <li><code>not</code> = a does NOT equal b</li>
-                    <li><code>has</code> = a has b as a substring (b is a substring of a)</li>
-                    <li><code>not_has</code> = b is NOT a substring of a</li>
-                    <li><code>starts_with</code> = b is a prefix of a</li>
-                    <li><code>ends_with</code> = b is a suffix of a</li>
-                    <li><code>match</code> = a matches b, where b is a regular expression</li>
-                    <li><code>not_match</code> = a does NOT match b, where b is a regular expression</li>
-                </ul>
+				<ul>
+					<li><code>is</code> = a equals b</li>
+					<li><code>not</code> = a does NOT equal b</li>
+					<li><code>has</code> = a has b as a substring (b is a substring of a)</li>
+					<li><code>not_has</code> = b is NOT a substring of a</li>
+					<li><code>starts_with</code> = b is a prefix of a</li>
+					<li><code>ends_with</code> = b is a suffix of a</li>
+					<li><code>match</code> = a matches b, where b is a regular expression</li>
+					<li><code>not_match</code> = a does NOT match b, where b is a regular expression</li>
+				</ul>
 
-                <h3 id="examples">Examples</h3>
+				<h3 id="examples">Examples</h3>
 
-                <p>Rewrite everything to /index.php. (<code>rewrite / /index.php{uri}</code> will only match /)</p>
+				<p>Rewrite everything to /index.php. (<code>rewrite / /index.php{uri}</code> will only match /)</p>
 
-                <p><code class="block"><span class="cf-dir">rewrite</span> / {
-    <span class="cf-subdir">regexp</span> .*
-    <span class="cf-subdir">to</span> /index.php{uri}
+				<p><code class="block"><span class="cf-dir">rewrite</span> / {
+	<span class="cf-subdir">regexp</span> .*
+	<span class="cf-subdir">to</span> /index.php{uri}
 }</code></p>
 
-                <p>When requests come in for /mobile, actually serve /mobile/index.</p>
+				<p>When requests come in for /mobile, actually serve /mobile/index.</p>
 
-                <p><code class="block"><span class="cf-dir">rewrite</span> <span class="cf-arg">/mobile /mobile/index</span></code></p>
+				<p><code class="block"><span class="cf-dir">rewrite</span> <span class="cf-arg">/mobile /mobile/index</span></code></p>
 
-                <p>If the file is not favicon.ico and it is not a valid file or directory, serve the maintenance page if present,
-                    or finally, rewrite to index.php.</p>
+				<p>If the file is not favicon.ico and it is not a valid file or directory, serve the maintenance page if present,
+					or finally, rewrite to index.php.</p>
 
-                <p><code class="block"><span class="cf-dir">rewrite</span> {
-    <span class="cf-subdir">if</span> {file} not favicon.ico
-    <span class="cf-subdir">to</span> {path} {path}/ /maintenance.html /index.php
+				<p><code class="block"><span class="cf-dir">rewrite</span> {
+	<span class="cf-subdir">if</span> {file} not favicon.ico
+	<span class="cf-subdir">to</span> {path} {path}/ /maintenance.html /index.php
 }</code></p>
 
-                <p>If user agent includes &quot;mobile&quot; and path is not a valid file/directory, rewrite to the mobile index
-                    page.</p>
+				<p>If user agent includes &quot;mobile&quot; and path is not a valid file/directory, rewrite to the mobile index
+					page.</p>
 
-                <p><code class="block"><span class="cf-dir">rewrite</span> {
-    <span class="cf-subdir">if</span> {&gt;User-agent} has mobile
-    <span class="cf-subdir">to</span> {path} {path}/ /mobile/index.php
+				<p><code class="block"><span class="cf-dir">rewrite</span> {
+	<span class="cf-subdir">if</span> {&gt;User-agent} has mobile
+	<span class="cf-subdir">to</span> {path} {path}/ /mobile/index.php
 }</code></p>
 
-                <p>Rewrite /app to /index with a query string. <code>{1}</code> is the matched group <code>(.*)</code>.</p>
+				<p>Rewrite /app to /index with a query string. <code>{1}</code> is the matched group <code>(.*)</code>.</p>
 
-                <p><code class="block"><span class="cf-dir">rewrite</span> <span class="cf-arg">/app</span> {
-    <span class="cf-subdir">r</span>  (.*)
-    <span class="cf-subdir">to</span> /index?path={1}
+				<p><code class="block"><span class="cf-dir">rewrite</span> <span class="cf-arg">/app</span> {
+	<span class="cf-subdir">r</span>  (.*)
+	<span class="cf-subdir">to</span> /index?path={1}
 }</code></p>
 
-                <p>Rewrite requests for /app/example to /index.php?category=example.</p>
+				<p>Rewrite requests for /app/example to /index.php?category=example.</p>
 
-                <p><code class="block"><span class="cf-dir">rewrite</span> <span class="cf-arg">/app</span> {
-    <span class="cf-subdir">r</span>  ^/(\w+)/?$
-    <span class="cf-subdir">to</span> /index?category={1}
+				<p><code class="block"><span class="cf-dir">rewrite</span> <span class="cf-arg">/app</span> {
+	<span class="cf-subdir">r</span>  ^/(\w+)/?$
+	<span class="cf-subdir">to</span> /index?category={1}
 }</code></p>
 
 
-                {{.Include "/includes/docs-helpbox.html"}}
-            </article>
-        </div>
-        {{.Include "/includes/footer.html"}}
-    </body>
+				{{.Include "/includes/docs-helpbox.html"}}
+			</article>
+		</div>
+		{{.Include "/includes/footer.html"}}
+	</body>
 </head>

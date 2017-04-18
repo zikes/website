@@ -76,11 +76,11 @@ The `errors` and `log` directives now support log rolling, so as your log files 
 
 Configuring log rolling is fairly straightforward:
 
-<code class="block"><span class="hl-directive">log</span> <span class="hl-arg">access.log</span> {
-	<span class="hl-subdirective">rotate</span> {
-		<span class="hl-subdirective">size</span> 100 <span class="hl-comment"># Rotate after 100 MB</span>
-		<span class="hl-subdirective">age</span>  14  <span class="hl-comment"># Keep log files for 14 days</span>
-		<span class="hl-subdirective">keep</span> 10  <span class="hl-comment"># Keep at most 10 log files</span>
+<code class="block"><span class="cf-dir">log</span> <span class="cf-arg">access.log</span> {
+	<span class="cf-subdir">rotate</span> {
+		<span class="cf-subdir">size</span> 100 <span class="cf-comment"># Rotate after 100 MB</span>
+		<span class="cf-subdir">age</span>  14  <span class="cf-comment"># Keep log files for 14 days</span>
+		<span class="cf-subdir">keep</span> 10  <span class="cf-comment"># Keep at most 10 log files</span>
 	}
 }</code>
 

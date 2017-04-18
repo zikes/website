@@ -1,47 +1,42 @@
 <!DOCTYPE html>
-
 <head>
+	<head>
+		<title>http.root - Caddy User Guide</title>
+		{{.Include "/includes/head.html"}}
+		<link rel="stylesheet" href="/resources/css/docs.css">
+	</head>
 
-    <head>
-        <title>root - Caddy User Guide</title>
-        {{.Include "/includes/head.html"}}
-        <link rel="stylesheet" href="/resources/css/docs.css">
-    </head>
+	<body>
+		{{.Include "/includes/docs-nav.html"}}
 
-    <body>
-        {{.Include "/includes/docs-nav.html"}}
+		<div class="content-container">
+			{{.Include "/includes/docs-nav-side.html"}}
 
-        <div class="content-container">
-            {{.Include "/includes/docs-nav-side.html"}}
+			<article>
+				<h2>http.root</h2>
 
-            <article>
-                <h2>root</h2>
+				<p>root simply specifies the root of the site. This is very useful, in fact required, if the root (/) directory of the website is not the same as where Caddy is being executed from.</p>
 
+				<p>The default root is the current working directory. A relative root path is relative to the current working directory.</p>
 
-                <p>root simply specifies the root of the site. This is very useful, in fact required, if the root (/) directory
-                    of the website is not the same as where Caddy is being executed from.</p>
+				<h3 id="syntax">Syntax</h3>
 
-                <p>The default root is the current working directory. A relative root path is relative to the current working
-                    directory.</p>
+				<p><code class="block"><span class="cf-dir">root</span> <span class="cf-arg"><i>path</i></span></code></p>
 
-                <h3 id="syntax">Syntax</h3>
+				<ul>
+					<li><strong>path</strong> is the directory to set as the site root</li>
+				</ul>
 
-                <p><code class="block"><span class="cf-dir">root</span> <span class="cf-arg"><i>path</i></span></code></p>
+				<h3 id="examples">Examples</h3>
 
-                <ul>
-                    <li><strong>path</strong> is the directory to set as the site root</li>
-                </ul>
+				<p>Serve the website out of Jake's public_html folder instead of the current working directory:</p>
 
-                <h3 id="examples">Examples</h3>
-
-                <p>Serve the website out of Jake's public_html folder instead of the current working directory:</p>
-
-                <p><code class="block"><span class="cf-dir">root</span> <span class="cf-arg">/home/jake/public_html</span></code></p>
+				<p><code class="block"><span class="cf-dir">root</span> <span class="cf-arg">/home/jake/public_html</span></code></p>
 
 
-                {{.Include "/includes/docs-helpbox.html"}}
-            </article>
-        </div>
-        {{.Include "/includes/footer.html"}}
-    </body>
+				{{.Include "/includes/docs-helpbox.html"}}
+			</article>
+		</div>
+		{{.Include "/includes/footer.html"}}
+	</body>
 </head>

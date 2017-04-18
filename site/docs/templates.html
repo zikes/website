@@ -1,13 +1,10 @@
 <!DOCTYPE html>
-
 <head>
-
 	<head>
-		<title>templates - Caddy User Guide</title>
+		<title>http.templates - Caddy User Guide</title>
 		{{.Include "/includes/head.html"}}
 		<link rel="stylesheet" href="/resources/css/docs.css">
 	</head>
-
 	<body>
 		{{.Include "/includes/docs-nav.html"}}
 
@@ -15,18 +12,13 @@
 			{{.Include "/includes/docs-nav-side.html"}}
 
 			<article>
-				<h2>templates</h2>
+				<h2>http.templates</h2>
 
+				<p>templates allows you to add template actions to your pages. Templates can be a convenient way to render the current timestamp, request URL, visitor's IP address, and more. You also get basic control statements like <code>if</code> and <code>range</code>. See <a href="/docs/template-actions">Template Actions</a> for instructions on how to use templates.</p>
 
-				<p>templates allows you to add template actions to your pages. Templates can be a convenient way to render the current timestamp,
-					request URL, visitor's IP address, and more. You also get basic control statements like <code>if</code> and <code>range</code>.
-					See <a href="/docs/template-actions">Template Actions</a> for instructions on how to use templates.</p>
+				<p>Some common uses of templates are to include the content of other files, show the current date or time, and hide or show certain parts of a page depending on the request path, cookies, or headers.</p>
 
-				<p>Some common uses of templates are to include the content of other files, show the current date or time, and hide or show
-					certain parts of a page depending on the request path, cookies, or headers.</p>
-
-				<p>Note that <a href="/docs/errors">custom error pages</a> do not get executed as templates, even if this directive is enabled.
-					Error pages are served by a separate middleware.</p>
+				<p>Note that <a href="/docs/errors">custom error pages</a> do not get executed as templates, even if this directive is enabled. Error pages are served by a separate middleware.</p>
 
 				<h3 id="syntax">Syntax</h3>
 

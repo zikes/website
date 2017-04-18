@@ -34,14 +34,14 @@ I'm also trying to make the entire Caddy configuration serializable as JSON. Thi
 The Caddyfile syntax documentation will be updated with more well-defined terminology and should be easier to pick up on and follow. Each "block" in the Caddyfile will be a "site" and sites will be able to have paths, not just host and port. We'll also allow limited use of wildcard matching. For example, this will be valid:
 
 <code class="block"><span class="hl-vhost">example.com/foo</span> {
-	<span class="hl-directive">root</span> <span class="hl-arg">/www/site1</span>
+	<span class="cf-dir">root</span> <span class="cf-arg">/www/site1</span>
 }<br>
 <span class="hl-vhost">example.com/bar</span> {
-	<span class="hl-directive">root</span> <span class="hl-arg">/www/site2</span>
+	<span class="cf-dir">root</span> <span class="cf-arg">/www/site2</span>
 }<br>
 <span class="hl-vhost">*.example.com</span> {
-	<span class="hl-directive">tls</span> {
-		<span class="hl-subdirective">max_certs</span> 100
+	<span class="cf-dir">tls</span> {
+		<span class="cf-subdir">max_certs</span> 100
 	}
 }</code>
 

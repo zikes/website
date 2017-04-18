@@ -1,103 +1,99 @@
 <!DOCTYPE html>
-
 <head>
+	<head>
+		<title>http.redir - Caddy User Guide</title>
+		{{.Include "/includes/head.html"}}
+		<link rel="stylesheet" href="/resources/css/docs.css">
+	</head>
+	<body>
+		{{.Include "/includes/docs-nav.html"}}
 
-    <head>
-        <title>redir - Caddy User Guide</title>
-        {{.Include "/includes/head.html"}}
-        <link rel="stylesheet" href="/resources/css/docs.css">
-    </head>
+		<div class="content-container">
+			{{.Include "/includes/docs-nav-side.html"}}
 
-    <body>
-        {{.Include "/includes/docs-nav.html"}}
+			<article>
+				<h2>http.redir</h2>
 
-        <div class="content-container">
-            {{.Include "/includes/docs-nav-side.html"}}
+				<p>redir sends the client an HTTP redirect status code if the URL matches the specified pattern. It is also
+					possible to make a redirect conditional.</p>
 
-            <article>
-                <h2>redir</h2>
+				<h3 id="syntax">Syntax</h3>
 
+				<p><code class="block"><span class="cf-dir">redir</span> <span class="cf-arg"><i>from to </i>[<i>code</i>]</span></code></p>
 
-                <p>redir sends the client an HTTP redirect status code if the URL matches the specified pattern. It is also
-                    possible to make a redirect conditional.</p>
+				<ul>
+					<li><strong>from</strong> is the request path to match (it must match exactly, except for <code>/</code>,
+						which is a catch-all).</li>
+					<li><strong>to</strong> is the path to redirect to (may use <a href="/docs/placeholders">request placeholders</a>).</li>
+					<li><strong>code</strong> is the HTTP status code to respond with; must be in the range [300-308] excluding
+						306. May also be <code>meta</code> to issue meta tag redirect for browsers. The default status code
+						is 301 Moved Permanently.</li>
+				</ul>
 
-                <h3 id="syntax">Syntax</h3>
+				<p>To create a permanent, &quot;catch-all&quot; redirect, omit the <em>from</em> value:</p>
 
-                <p><code class="block"><span class="cf-dir">redir</span> <span class="cf-arg"><i>from to </i>[<i>code</i>]</span></code></p>
+				<p><code class="block"><span class="cf-dir">redir</span> <span class="cf-arg"><i>to</i></span></code></p>
 
-                <ul>
-                    <li><strong>from</strong> is the request path to match (it must match exactly, except for <code>/</code>,
-                        which is a catch-all).</li>
-                    <li><strong>to</strong> is the path to redirect to (may use <a href="/docs/placeholders">request placeholders</a>).</li>
-                    <li><strong>code</strong> is the HTTP status code to respond with; must be in the range [300-308] excluding
-                        306. May also be <code>meta</code> to issue meta tag redirect for browsers. The default status code
-                        is 301 Moved Permanently.</li>
-                </ul>
+				<p>If you have a lot of redirects, share a redirect code by making a table:</p>
 
-                <p>To create a permanent, &quot;catch-all&quot; redirect, omit the <em>from</em> value:</p>
-
-                <p><code class="block"><span class="cf-dir">redir</span> <span class="cf-arg"><i>to</i></span></code></p>
-
-                <p>If you have a lot of redirects, share a redirect code by making a table:</p>
-
-                <p><code class="block"><span class="cf-dir">redir</span> <span class="cf-arg">[<i>code</i>]</span> {
-    <span class="cf-subdir"><i>from</i></span> <i>to</i> [<i>code</i>]
+				<p><code class="block"><span class="cf-dir">redir</span> <span class="cf-arg">[<i>code</i>]</span> {
+	<span class="cf-subdir"><i>from</i></span> <i>to</i> [<i>code</i>]
 }
 </code></p>
 
-                <p>Each line defines a redirect and may optionally overwrite the redirect code defined at the top of the table.
-                    If no redirect code is specified, the default is used.</p>
+				<p>Each line defines a redirect and may optionally overwrite the redirect code defined at the top of the table.
+					If no redirect code is specified, the default is used.</p>
 
-                <p>A group of redirects can also be conditional:</p>
+				<p>A group of redirects can also be conditional:</p>
 
-                <p><code class="block"><span class="cf-dir">redir</span> <span class="cf-arg">[<i>code</i>]</span> {
-    <span class="cf-subdir">if</span>    <i>a cond b</i>
-    <span class="cf-subdir">if_op</span> <i>[</i>and|or<i>]</i>
-    ...
+				<p><code class="block"><span class="cf-dir">redir</span> <span class="cf-arg">[<i>code</i>]</span> {
+	<span class="cf-subdir">if</span>    <i>a cond b</i>
+	<span class="cf-subdir">if_op</span> <i>[</i>and|or<i>]</i>
+	...
 }
 </code></p>
 
-                <ul>
-                    <li><strong>if</strong> specifies a rewrite condition. Multiple ifs are AND-ed together by default. <strong>a</strong>                        and <strong>b</strong> are any string and may use <a href="/docs/placeholders">request placeholders</a>.
-                        <strong>cond</strong> is the condition, with possible values explained in <a href="/docs/rewrite#if">rewrite</a>                        (which also has an <code>if</code> statement).</li>
-                    <li><strong>if_op</strong> specifies how the ifs are evaluated; the default is <code>and</code>.</li>
-                </ul>
+				<ul>
+					<li><strong>if</strong> specifies a rewrite condition. Multiple ifs are AND-ed together by default. <strong>a</strong>                        and <strong>b</strong> are any string and may use <a href="/docs/placeholders">request placeholders</a>.
+						<strong>cond</strong> is the condition, with possible values explained in <a href="/docs/rewrite#if">rewrite</a>                        (which also has an <code>if</code> statement).</li>
+					<li><strong>if_op</strong> specifies how the ifs are evaluated; the default is <code>and</code>.</li>
+				</ul>
 
-                <h3 id="preserving-path">Preserving Path</h3>
+				<h3 id="preserving-path">Preserving Path</h3>
 
-                <p>By default, redirects are from precisely matching paths to the precise location you've defined. You can preserve
-                    the path or other portions of the request URL by using <a href="/docs/placeholders">replaceable values</a>,
-                    such as {uri} or {path}, in any &quot;to&quot; argument. Only request placeholders are supported.</p>
+				<p>By default, redirects are from precisely matching paths to the precise location you've defined. You can preserve
+					the path or other portions of the request URL by using <a href="/docs/placeholders">replaceable values</a>,
+					such as {uri} or {path}, in any &quot;to&quot; argument. Only request placeholders are supported.</p>
 
-                <h3 id="examples">Examples</h3>
+				<h3 id="examples">Examples</h3>
 
-                <p>When a request comes in for /resources/images/photo.jpg, redirect to /resources/images/drawing.jpg with HTTP
-                    307 (Temporary Redirect) status code:</p>
+				<p>When a request comes in for /resources/images/photo.jpg, redirect to /resources/images/drawing.jpg with HTTP
+					307 (Temporary Redirect) status code:</p>
 
-                <p><code class="block"><span class="cf-dir">redir</span> <span class="cf-arg">/resources/images/photo.jpg /resources/images/drawing.jpg 307</span></code></p>
+				<p><code class="block"><span class="cf-dir">redir</span> <span class="cf-arg">/resources/images/photo.jpg /resources/images/drawing.jpg 307</span></code></p>
 
-                <p>Redirect all requests to https://newsite.com while preserving the request URI:</p>
+				<p>Redirect all requests to https://newsite.com while preserving the request URI:</p>
 
-                <p><code class="block"><span class="cf-dir">redir</span> <span class="cf-arg">https://newsite.com{uri}</span></code></p>
+				<p><code class="block"><span class="cf-dir">redir</span> <span class="cf-arg">https://newsite.com{uri}</span></code></p>
 
-                <p>Defining multiple redirections that share a 307 status code, except the last one:</p>
+				<p>Defining multiple redirections that share a 307 status code, except the last one:</p>
 
-                <p><code class="block"><span class="cf-dir">redir</span> <span class="cf-arg">307</span> {
-    <span class="cf-subdir">/foo</span>     /info/foo
-    <span class="cf-subdir">/todo</span>    /notes
-    <span class="cf-subdir">/api-dev</span> /api       meta
+				<p><code class="block"><span class="cf-dir">redir</span> <span class="cf-arg">307</span> {
+	<span class="cf-subdir">/foo</span>     /info/foo
+	<span class="cf-subdir">/todo</span>    /notes
+	<span class="cf-subdir">/api-dev</span> /api       meta
 }</code></p>
 
-                <p>Redirect only if the forwarded protocol is HTTP:</p>
+				<p>Redirect only if the forwarded protocol is HTTP:</p>
 
-                <p><code class="block"><span class="cf-dir">redir</span> <span class="cf-arg">301</span> {
-    <span class="cf-subdir">if</span> {&gt;X-Forwarded-Proto} is http
-    <span class="cf-subdir">/</span>  https://{host}{uri}
+				<p><code class="block"><span class="cf-dir">redir</span> <span class="cf-arg">301</span> {
+	<span class="cf-subdir">if</span> {&gt;X-Forwarded-Proto} is http
+	<span class="cf-subdir">/</span>  https://{host}{uri}
 }</code></p>
 
-                {{.Include "/includes/docs-helpbox.html"}}
-            </article>
-        </div>
-        {{.Include "/includes/footer.html"}}
-    </body>
+				{{.Include "/includes/docs-helpbox.html"}}
+			</article>
+		</div>
+		{{.Include "/includes/footer.html"}}
+	</body>
 </head>

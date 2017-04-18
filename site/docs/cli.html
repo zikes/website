@@ -40,6 +40,14 @@
 
 				<p>CPU cap. Can be a percentage (e.g. &quot;75%&quot;) or a number indicating how many cores to use (e.g. 3).</p>
 
+				<h5 id="disable-http-challenge">-disable-http-challenge</h5>
+
+				<p>Disables the ACME HTTP challenge used for obtaining certificates.</p>
+
+				<h5 id="disable-tls-sni-challenge">-disable-tls-sni-challenge</h5>
+
+				<p>Disables the ACME TLS-SNI challenge used for obtaining certificates.</p>
+
 				<h5 id="email">-email</h5>
 
 				<p>Email address to use for TLS certificate generation if not <a href="/docs/tls">specified for a site in the Caddyfile</a>. It is not required, but is strongly recommended so you can recover your account if you lose your private key. If an email is not available, Caddy may prompt you for an email address during runtime. This option is recommended in automated environments if not <a href="/docs/tls">specified in the Caddyfile</a>.</p>
@@ -56,9 +64,17 @@
 
 				<p>The default hostname or IP address to listen on.</p>
 
+				<h5 id="http-port">-http-port</h5>
+
+				<p>The port to use for HTTP (default 80). Changing this can have unintended consequences, be careful. The ACME HTTP challenge requires port 80.</p>
+
+				<h5 id="https-port">-https-port</h5>
+
+				<p>The port to use for HTTPS (default 443). Changing this can have unintended consequences, be careful. The ACME TLS-SNI challenge requires port 443.</p>
+
 				<h5 id="http2">-http2</h5>
 
-				<p>HTTP/2 support. Disable it by setting to false. Necessary to use WebSockets on secure connections.</p>
+				<p>HTTP/2 support. Disable it for the whole process by setting to false. To disable for specific sites, use the <a href="/docs/tls">tls</a> directive's "alpn" setting.</p>
 
 				<h5 id="log">-log</h5>
 

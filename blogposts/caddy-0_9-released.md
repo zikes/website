@@ -130,7 +130,7 @@ In the case of overlap, the most specific matching hostname will be chosen. And 
 
 Ever wanted to develop a site locally with HTTPS just for testing? Instead of generating your own self-signed certificates, Caddy can do it for you easily:
 
-<code class="block"><span class="hl-directive">tls</span> <span class="hl-arg">self_signed</span></code>
+<code class="block"><span class="cf-dir">tls</span> <span class="cf-arg">self_signed</span></code>
 
 This enables HTTPS for the site using a self-signed certificate that is kept only in memory. You will have to bypass certificate warnings in your browser, of course, but you can also set a Chrome flag to ignore certificate warnings for localhost.
 

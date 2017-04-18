@@ -1,55 +1,54 @@
 <!DOCTYPE html>
-
 <head>
+	<head>
+		<title>startup - Caddy User Guide</title>
+		{{.Include "/includes/head.html"}}
+		<link rel="stylesheet" href="/resources/css/docs.css">
+	</head>
+	<body>
+		{{.Include "/includes/docs-nav.html"}}
 
-    <head>
-        <title>startup - Caddy User Guide</title>
-        {{.Include "/includes/head.html"}}
-        <link rel="stylesheet" href="/resources/css/docs.css">
-    </head>
+		<div class="content-container">
+			{{.Include "/includes/docs-nav-side.html"}}
 
-    <body>
-        {{.Include "/includes/docs-nav.html"}}
+			<article>
+				<h2>startup</h2>
 
-        <div class="content-container">
-            {{.Include "/includes/docs-nav-side.html"}}
+				<p>
+					startup executes a command when the server begins. This is useful for preparing to serve a site by running a script or starting a background process like php-fpm. (Also see <a href="/docs/shutdown">shutdown</a>.)
+				</p>
 
-            <article>
-                <h2>startup</h2>
+				<p>
+					Each command that is executed at startup is blocking, unless you suffix the command with a space and <code>&amp;</code>, which will cause the command to be run in the background. The output and error of the command go to stdout and stderr, respectively. There is no stdin.
+				</p>
 
+				<p>
+					A command will only be executed once for each time it appears in the Caddyfile.
+				</p>
 
-                <p>startup executes a command when the server begins. This is useful for preparing to serve a site by running
-                    a script or starting a background process like php-fpm. (Also see <a href="/docs/shutdown">shutdown</a>.)</p>
+				<h3 id="syntax">Syntax</h3>
 
-                <p>Each command that is executed at startup is blocking, unless you suffix the command with a space and <code>&amp;</code>,
-                    which will cause the command to be run in the background. The output and error of the command go to stdout
-                    and stderr, respectively. There is no stdin.</p>
+				<p><code class="block"><span class="cf-dir">startup</span> <span class="cf-arg"><i>command</i></span></code></p>
 
-                <p>A command will only be executed once for each time it appears in the Caddyfile.</p>
+				<ul>
+					<li><strong>command</strong> is the command to execute; it may be followed by arguments</li>
+				</ul>
 
-                <h3 id="syntax">Syntax</h3>
+				<h3 id="examples">Examples</h3>
 
-                <p><code class="block"><span class="cf-dir">startup</span> <span class="cf-arg"><i>command</i></span></code></p>
+				<p>Start php-fpm before the server starts listening:</p>
 
-                <ul>
-                    <li><strong>command</strong> is the command to execute; it may be followed by arguments</li>
-                </ul>
+				<p><code class="block"><span class="cf-dir">startup</span> <span class="cf-arg">/etc/init.d/php-fpm start</span></code></p>
 
-                <h3 id="examples">Examples</h3>
+				<p>On windows, you might need to use quotes when the command path contains spaces:</p>
 
-                <p>Start php-fpm before the server starts listening:</p>
-
-                <p><code class="block"><span class="cf-dir">startup</span> <span class="cf-arg">/etc/init.d/php-fpm start</span></code></p>
-
-                <p>On windows, you might need to use quotes when the command path contains spaces:</p>
-
-                <p><code class="block"><span class="cf-dir">startup</span> <span class="cf-arg">&quot;\&quot;C:\Program Files\PHP\v7.0\php-cgi.exe\&quot; -b 127.0.0.1:9123&quot; &amp;</span></code></p>
+				<p><code class="block"><span class="cf-dir">startup</span> <span class="cf-arg">&quot;\&quot;C:\Program Files\PHP\v7.0\php-cgi.exe\&quot; -b 127.0.0.1:9123&quot; &amp;</span></code></p>
 
 
 
-                {{.Include "/includes/docs-helpbox.html"}}
-            </article>
-        </div>
-        {{.Include "/includes/footer.html"}}
-    </body>
+				{{.Include "/includes/docs-helpbox.html"}}
+			</article>
+		</div>
+		{{.Include "/includes/footer.html"}}
+	</body>
 </head>

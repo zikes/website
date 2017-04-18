@@ -1,105 +1,135 @@
 <!DOCTYPE html>
-
 <head>
+	<head>
+		<title>http.errors - Caddy User Guide</title>
+		{{.Include "/includes/head.html"}}
+		<link rel="stylesheet" href="/resources/css/docs.css">
+	</head>
+	<body>
+		{{.Include "/includes/docs-nav.html"}}
 
-    <head>
-        <title>http.basicauth - Caddy User Guide</title>
-        {{.Include "/includes/head.html"}}
-        <link rel="stylesheet" href="/resources/css/docs.css">
-    </head>
+		<div class="content-container">
+			{{.Include "/includes/docs-nav-side.html"}}
 
-    <body>
-        {{.Include "/includes/docs-nav.html"}}
+			<article>
+				<h2>http.errors</h2>
 
-        <div class="content-container">
-            {{.Include "/includes/docs-nav-side.html"}}
+				<p>errors allows you to set custom error pages and enable error logging.</p>
 
-            <article>
+				<p>
+					Without this middleware, error responses (HTTP status &gt;= 400) are not logged and the client receives a plaintext error message.
+				</p>
 
+				<p>
+					Using an error log, the text of each error will be recorded so you can determine what is going wrong without exposing those details to the clients. With error pages, you can present custom error messages and instruct your visitor what to do. When you specify custom error pages, error logging is automatically enabled.
+				</p>
 
-                <h2>errors </h2>
+				<h3 id="syntax">Syntax</h3>
 
+				<p><code class="block"><span class="cf-dir">errors</span> <span class="cf-arg">[<i>logfile</i>]</span></code></p>
 
+				<ul>
+					<li><strong>logfile</strong> is the path to the error log file to create (or append to), relative to the current working directory. See <a href="#destination">Log Destination</a> for more details about how to specify an output location. Default is <code>stderr</code>.</li>
+				</ul>
 
-                <p>errors allows you to set custom error pages and enable error logging.</p>
+				<p>
+					To specify custom error pages, open a block:
+				</p>
 
-                <p>By default, error responses (HTTP status &gt;= 400) are not logged and the client receives a plaintext error
-                    message.
-                </p>
-
-                <p>Using an error log, the text of each error will be recorded so you can determine what is going wrong without
-                    exposing those details to the clients. With error pages, you can present custom error messages and instruct
-                    your visitor what to do.</p>
-
-                <h3 id="syntax">Syntax</h3>
-
-                <p><code class="block"><span class="cf-dir">errors</span> <span class="cf-arg">[<i>logfile</i>]</span></code></p>
-
-                <ul>
-                    <li><strong>logfile</strong> is the path to the error log file to create (or append to), relative to the
-                        current working directory. It can also be <code>stdout</code> or <code>stderr</code> to write to
-                        the console, <code>syslog</code> to write to the system log (except on Windows), or <code>visible</code>
-                        to write the error (including full stack trace, if applicable) to the response. Writing errors to
-                        the response is NOT advised except in local debug situations. Default is <code>stderr</code>.</li>
-                </ul>
-
-                <p>
-                    The above syntax will simply enable error reporting on the server. To specify custom error pages, open a block:
-                </p>
-
-                <p>
-                    <code class="block"><span class="cf-dir">errors</span> {
-    <span class="cf-subdir"><i>what</i></span> <i>where</i>
+					<code class="block"><span class="cf-dir">errors</span> <span class="cf-arg">[<i>logfile</i>]</span> {
+	<span class="cf-subdir"><i>code</i></span> <i>file</i>
+	<span class="cf-subdir">rotate_size</span> <i>mb</i>
+	<span class="cf-subdir">rotate_age</span>  <i>days</i>
+	<span class="cf-subdir">rotate_keep</span> <i>count</i>
 }</code>
-                </p>
 
-                <ul>
-                    <li><strong>what</strong> can be an HTTP status code (4xx, 5xx, or <code>*</code> for default error page)
-                        or log.</li>
-                    <li><strong>where</strong> depends on what. If an error page, it is the HTML file of the error page (path
-                        is relative to site root). If log, it is the path to the log file (as described above) and you can
-                        enable <a href="/docs/log#rotate">rotation</a> to manage the log files.</li>
-                </ul>
+				<ul>
+					<li><strong>code</strong> can be an HTTP status code (4xx, 5xx, or <code>*</code> for default error page).</li>
+					<li><strong>file</strong> is the static HTML file of the error page (path is relative to site root).</li>
+					<li><strong>rotate_size</strong> is the size in megabytes a log file must reach before rolling it.</li>
+					<li><strong>rotate_age</strong> is how long in days to keep rotated log files.</li>
+					<li><strong>rotate_keep</strong> is the maximum number of rotated log files to keep; older rotated log files get pruned.</li>
+				</ul>
 
-                <h3 id="examples">Examples</h3>
+				<h3 id="destination">Log Destination</h3>
 
-                <p>Log errors into a file in the parent directory:</p>
+				<p>
+					The log destination can be one of a few things:
+				</p>
+				<ul>
+					<li>a filename relative to the current working directory</li>
+					<li><code>stdout</code> or <code>stderr</code> to write to the console</li>
+					<li><code>visible</code> to write the error (including full stack trace, if applicable) to the response (NOT recommended except for local debugging)</li>
+					<li><code>syslog</code> to write to the local system log (except on Windows)</li>
+					<li><code>syslog://host[:port]</code> to write via UDP to a local or remote syslog server</li>
+					<li><code>syslog+udp://host[:port]</code> is the same as above</li>
+					<li><code>syslog+tcp://host[:port]</code> to write via TCP to local or remote syslog server</li>
+				</ul>
+				<p>
+					The default log destination is <code>stderr</code>.
+				</p>
 
-                <p><code class="block"><span class="cf-dir">errors</span> <span class="cf-arg">../error.log</span></code></p>
+				<h3 id="rolling">Log Rolling</h3>
 
-                <p>Log errors but also serve custom error pages:</p>
+				<p>
+					Logs have the potential to fill the disk. To mitigate this, error logs are rotated ("rolled") automatically according to this default configuration:
+				</p>
 
-                <p><code class="block"><span class="cf-dir">errors</span> {
-    <span class="cf-subdir">log</span> ../error.log
-    <span class="cf-subdir">404</span> 404.html <span class="hl-comment"># Not Found</span>
-    <span class="cf-subdir">500</span> 500.html <span class="hl-comment"># Internal Server Error</span>
+				<code class="block"><span class="cf-subdir">rotate_size</span> 100 <span class="cf-comment"># Rotate a log when it reaches 100 MB</span>
+<span class="cf-subdir">rotate_age</span>  14  <span class="cf-comment"># Keep rotated log files for 14 days</span>
+<span class="cf-subdir">rotate_keep</span> 10  <span class="cf-comment"># Keep at most 10 rotated log files</span></code>
+
+				<p>
+					You can specify these subdirectives to customize log rolling.
+				</p>
+
+				<h3 id="examples">Examples</h3>
+
+				<p>Log errors to error.log:</p>
+
+				<p><code class="block"><span class="cf-dir">errors</span></code></p>
+
+				<p>Log errors to a custom file in the parent directory:</p>
+
+				<p><code class="block"><span class="cf-dir">errors</span> <span class="cf-arg">../error.log</span></code></p>
+
+				<p>Log errors and serve custom error pages:</p>
+
+				<p><code class="block"><span class="cf-dir">errors</span> {
+	<span class="cf-subdir">404</span> 404.html <span class="cf-comment"># Not Found</span>
+	<span class="cf-subdir">500</span> 500.html <span class="cf-comment"># Internal Server Error</span>
 }</code></p>
 
-                <p>Define a default, catch-all error page:</p>
+				<p>Log errors to custom log file and serve custom error pages:</p>
 
-                <p><code class="block"><span class="cf-dir">errors</span> {
-    <span class="cf-subdir">*</span> default_error.html
+				<p><code class="block"><span class="cf-dir">errors</span> ../error.log {
+	<span class="cf-subdir">404</span> 404.html <span class="cf-comment"># Not Found</span>
+	<span class="cf-subdir">500</span> 500.html <span class="cf-comment"># Internal Server Error</span>
 }</code></p>
 
-                <p>Make errors visible to the client (for debugging only):</p>
+				<p>Define a default, catch-all error page:</p>
 
-                <p><code class="block"><span class="cf-dir">errors</span> <span class="cf-arg">visible</span></code></p>
+				<p><code class="block"><span class="cf-dir">errors</span> {
+	<span class="cf-subdir">*</span> default_error.html
+}</code></p>
 
-                <p>Maintain error log files automatically:</p>
+				<p>Make errors visible to the client (for debugging only):</p>
 
-                <p><code class="block"><span class="cf-dir">errors</span> {
-    <span class="cf-subdir">log</span> error.log {
-        <span class="cf-subdir">size</span> 50 <span class="hl-comment"># Rotate after 50 MB</span>
-        <span class="cf-subdir">age</span>  30 <span class="hl-comment"># Keep rotated files for 30 days</span>
-        <span class="cf-subdir">keep</span> 5  <span class="hl-comment"># Keep at most 5 log files</span>
-    }
+				<p><code class="block"><span class="cf-dir">errors</span> <span class="cf-arg">visible</span></code></p>
+
+				<p>Customize error log rolling:</p>
+
+				<p><code class="block"><span class="cf-dir">errors</span> {
+	<span class="cf-subdir">rotate_size</span> 50 <span class="cf-comment"># Rotate after 50 MB</span>
+	<span class="cf-subdir">rotate_age</span>  90 <span class="cf-comment"># Keep rotated files for 90 days</span>
+	<span class="cf-subdir">rotate_keep</span> 20 <span class="cf-comment"># Keep at most 20 log files</span>
 }</code></p>
 
 
 
-                {{.Include "/includes/docs-helpbox.html"}}
-            </article>
-        </div>
-        {{.Include "/includes/footer.html"}}
-    </body>
+				{{.Include "/includes/docs-helpbox.html"}}
+			</article>
+		</div>
+		{{.Include "/includes/footer.html"}}
+	</body>
 </head>

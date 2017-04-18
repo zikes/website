@@ -63,6 +63,14 @@ ol {
 	margin-left: 2rem;
 }
 
+ul ul,
+ul ol,
+ol ul,
+ol ol {
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
+
 header {
 	background-image: linear-gradient(0deg, #0fe48c 0%, #2a9def 100%);
 	background-position: 50%;
@@ -246,8 +254,8 @@ code.cmd.bash::before {
 
 
 
-.cf-addr { color: #D22500; } /* TODO: Rename! addr -> label */
-.cf-dir { color: #006C96; }
+.cf-addr { color: #D22500; font-weight: bold; } /* TODO: Rename! addr -> label */
+.cf-dir { color: #006C96; font-weight: bold; }
 .cf-subdir { color: #835234; }
 .cf-arg { color: #008000; }
 .cf-comment { color: #86A6B6; }

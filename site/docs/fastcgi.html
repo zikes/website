@@ -1,124 +1,117 @@
 <!DOCTYPE html>
-
 <head>
+	<head>
+		<title>http.fastcgi - Caddy User Guide</title>
+		{{.Include "/includes/head.html"}}
+		<link rel="stylesheet" href="/resources/css/docs.css">
+	</head>
+	<body>
+		{{.Include "/includes/docs-nav.html"}}
 
-    <head>
-        <title>http.basicauth - Caddy User Guide</title>
-        {{.Include "/includes/head.html"}}
-        <link rel="stylesheet" href="/resources/css/docs.css">
-    </head>
+		<div class="content-container">
+			{{.Include "/includes/docs-nav-side.html"}}
 
-    <body>
-        {{.Include "/includes/docs-nav.html"}}
+			<article>
+				<h2>http.fastcgi</h2>
 
-        <div class="content-container">
-            {{.Include "/includes/docs-nav-side.html"}}
+				<p>fastcgi proxies requests to a FastCGI server. Even though the most common use for this directive is to serve
+					PHP sites, it is by default a generic FastCGI proxy. This directive may be used multiple times with different
+					request paths.</p>
 
-            <article>
-                <h2>fastcgi</h2>
+				<h3 id="syntax">Syntax</h3>
 
-                <p>fastcgi proxies requests to a FastCGI server. Even though the most common use for this directive is to serve
-                    PHP sites, it is by default a generic FastCGI proxy. This directive may be used multiple times with different
-                    request paths.</p>
-
-                <h3 id="syntax">Syntax</h3>
-
-                <p>
-                    <code class="block"><span class="cf-dir">fastcgi</span> <span class="cf-arg"><i>path endpoint</i> [<i>preset</i>]</span> {
-    <span class="cf-subdir">root</span>     <i>directory</i>
-    <span class="cf-subdir">ext</span>      <i>extension</i>
-    <span class="cf-subdir">split</span>    <i>splitval</i>
-    <span class="cf-subdir">index</span>    <i>indexfile</i>
-    <span class="cf-subdir">env</span>      <i>key value</i>
-    <span class="cf-subdir">except</span>   <i>ignored_paths...</i>
-    <span class="cf-subdir">pool</span>     <i>pool_size</i>
-    <span class="cf-subdir">upstream</span> <i>endpoint</i>
-    <span class="cf-subdir">connect_timeout</span> <i>duration</i>
-    <span class="cf-subdir">read_timeout</span>    <i>duration</i>
-    <span class="cf-subdir">send_timeout</span>    <i>duration</i>
+				<p>
+					<code class="block"><span class="cf-dir">fastcgi</span> <span class="cf-arg"><i>path endpoint</i> [<i>preset</i>]</span> {
+	<span class="cf-subdir">root</span>     <i>directory</i>
+	<span class="cf-subdir">ext</span>      <i>extension</i>
+	<span class="cf-subdir">split</span>    <i>splitval</i>
+	<span class="cf-subdir">index</span>    <i>indexfile</i>
+	<span class="cf-subdir">env</span>      <i>key value</i>
+	<span class="cf-subdir">except</span>   <i>ignored_paths...</i>
+	<span class="cf-subdir">pool</span>     <i>pool_size</i>
+	<span class="cf-subdir">upstream</span> <i>endpoint</i>
+	<span class="cf-subdir">connect_timeout</span> <i>duration</i>
+	<span class="cf-subdir">read_timeout</span>    <i>duration</i>
+	<span class="cf-subdir">send_timeout</span>    <i>duration</i>
 }</code>
-                </p>
+				</p>
 
-                <ul>
-                    <li><strong>path</strong> is the base path to match before the request will be forwarded.</li>
-                    <li><strong>endpoint</strong> is the address or Unix socket of the FastCGI server.</li>
-                    <li><strong>preset</strong> is an optional preset name (see below).</li>
-                    <li><strong>directory</strong> specifies the root directory used by the FastCGI server if different from
-                        the root directory of the virtual host. Useful if the FastCGI server is on a different server, chroot-jailed,
-                        and/or containerized.</li>
-                    <li><strong>ext</strong> specifies the extension which, if the request URL has it, would proxy the request
-                        to FastCGI.</li>
-                    <li><strong>split</strong> specifies how to split the URL; the split value becomes the end of the first part
-                        and anything in the URL after it becomes part of the PATH_INFO CGI variable.</li>
-                    <li><strong>index</strong> specifies the default file to try if a file is not specified by the URL.</li>
-                    <li><strong>env</strong> sets an environment variable named <em>key</em> with the given <em>value</em>; the
-                        <strong>env</strong> property can be used multiple times and values may use <a href="/docs/placeholders">request placeholders</a>.</li>
-                    <li><strong>except</strong> is a list of space-separated request paths to be excepted from fastcgi processing,
-                        even if it matches the base path.</li>
-                    <li><strong>pool</strong> is the number of persistent connections to reuse (can be good for performance on
-                        Windows); default is 0.</li>
-                    <li><strong>upstream</strong> specifies an additional backend to use. Basic load balancing will be performed.
-                        This can be specified multiple times.</li>
-                    <li><strong>connect_timeout</strong> is the time allowed for connecting to the backend. Must be a duration
-                        value (e.g. &quot;10s&quot;).</li>
-                    <li><strong>read_timeout</strong> is the time allowed to read a response from the backend. Must be a duration
-                        value.</li>
-                    <li><strong>send_timeout</strong> is the time allowed to send a request to the backend. Must be a duration
-                        value.</li>
-                </ul>
+				<ul>
+					<li><strong>path</strong> is the base path to match before the request will be forwarded.</li>
+					<li><strong>endpoint</strong> is the address or Unix socket of the FastCGI server.</li>
+					<li><strong>preset</strong> is an optional preset name (see below). You do not need to repeat a preset's individual settings when using a preset.</li>
+					<li><strong>directory</strong> specifies the root directory used by the FastCGI server if different from
+						the root directory of the virtual host. Useful if the FastCGI server is on a different server, chroot-jailed,
+						and/or containerized.</li>
+					<li><strong>ext</strong> specifies the extension which, if the request URL has it, would proxy the request
+						to FastCGI.</li>
+					<li><strong>split</strong> specifies how to split the URL; the split value becomes the end of the first part
+						and anything in the URL after it becomes part of the PATH_INFO CGI variable.</li>
+					<li><strong>index</strong> specifies the default file to try if a file is not specified by the URL.</li>
+					<li><strong>env</strong> sets an environment variable named <em>key</em> with the given <em>value</em>; the
+						<strong>env</strong> property can be used multiple times and values may use <a href="/docs/placeholders">request placeholders</a>.</li>
+					<li><strong>except</strong> is a list of space-separated request paths to be excepted from fastcgi processing,
+						even if it matches the base path.</li>
+					<li><strong>pool</strong> is the number of persistent connections to reuse (can be good for performance on
+						Windows); default is 0.</li>
+					<li><strong>upstream</strong> specifies an additional backend to use. Basic load balancing will be performed.
+						This can be specified multiple times.</li>
+					<li><strong>connect_timeout</strong> is the time allowed for connecting to the backend. Must be a duration
+						value (e.g. &quot;10s&quot;).</li>
+					<li><strong>read_timeout</strong> is the time allowed to read a response from the backend. Must be a duration
+						value.</li>
+					<li><strong>send_timeout</strong> is the time allowed to send a request to the backend. Must be a duration
+						value.</li>
+				</ul>
 
-                <h3 id="presets">Presets</h3>
+				<h3 id="presets">Presets</h3>
 
-                <p>This directive can be customized to work with a variety of FastCGI applications. To make things easier for
-                    proxying to common types of sites, some presets have been configured:</p>
+				<p>
+					A preset is shorthand for a certain FastCGI configuration. These presets are available:
+				</p>
 
-                <ul>
-                    <li>
-                        <strong>php</strong><br />
-                        <code class="block"><span class="cf-subdir">ext</span> .php
-                        <span class="cf-subdir">split</span> .php
-                        <span class="cf-subdir">index</span> index.php</code>
-                    </li>
-                </ul>
+				<ul>
+					<li>
+						<strong>php</strong> is shorthand for:
+						<code class="block"><span class="cf-subdir">ext</span>   .php
+<span class="cf-subdir">split</span> .php
+<span class="cf-subdir">index</span> index.php</code>
+					</li>
+				</ul>
 
-                <p>If a preset is used, its values can be overwritten if needed by declaring them manually inside the block.</p>
+				<p><b>You do not need to specify the individual configuration settings for a preset.</b> However, you can overwrite its individual settings if needed by declaring them manually.</p>
 
-                <h3 id="examples">Examples</h3>
+				<h3 id="examples">Examples</h3>
 
-                <p>Proxy all requests to a FastCGI responder listening at 127.0.0.1:9000:</p>
+				<p>Proxy all requests to a FastCGI responder listening at 127.0.0.1:9000:</p>
 
-                <p><code class="block"><span class="cf-dir">fastcgi</span> <span class="cf-arg">/ 127.0.0.1:9000</span></code></p>
+				<code class="block"><span class="cf-dir">fastcgi</span> <span class="cf-arg">/ 127.0.0.1:9000</span></code>
 
-                <p>Forward all requests in /blog to a PHP site (like WordPress) being served with php-fpm:</p>
+				<p>Forward all requests in /blog to a PHP site (like WordPress) being served with php-fpm:</p>
 
-                <p><code class="block"><span class="cf-dir">fastcgi</span> <span class="cf-arg">/blog/ 127.0.0.1:9000 php</span></code></p>
+				<code class="block"><span class="cf-dir">fastcgi</span> <span class="cf-arg">/blog/ 127.0.0.1:9000 php</span></code>
 
-                <p>With custom FastCGI configuration:</p>
+				<p>With custom FastCGI configuration:</p>
 
-                <p>
-                    <code class="block"><span class="cf-dir">fastcgi</span> <span class="cf-arg">/ 127.0.0.1:9001</span> {
-                    <span class="cf-subdir">split</span> .html
-                    }</code>
-                </p>
+				<code class="block"><span class="cf-dir">fastcgi</span> <span class="cf-arg">/ 127.0.0.1:9001</span> {
+	<span class="cf-subdir">split</span> .html
+}</code>
 
-                <p>With PHP preset, but overriding the ext property:</p>
+				<p>With PHP preset, but overriding the ext property:</p>
 
-                <p>
-                    <code class="block"><span class="cf-dir">fastcgi</span> <span class="cf-arg">/ 127.0.0.1:9001 php</span> {
-                    <span class="cf-subdir">ext</span> .html
-                    }</code>
-                </p>
+				<code class="block"><span class="cf-dir">fastcgi</span> <span class="cf-arg">/ 127.0.0.1:9001 php</span> {
+	<span class="cf-subdir">ext</span> .html
+}</code>
 
-                <p>With PHP preset, but the FastCGI server is running in a container based on an <a href="https://hub.docker.com/_/php/">official Docker image</a>                    (with container port 9000 published to 127.0.0.1:9001):</p>
+				<p>With PHP preset, but the FastCGI server is running in a container based on an <a href="https://hub.docker.com/_/php/">official Docker image</a> (with container port 9000 published to 127.0.0.1:9001):</p>
 
-                <p>
-                    <code class="block"><span class="cf-dir">fastcgi</span> <span class="cf-arg">/ 127.0.0.1:9001 php</span> {
-                    <span class="cf-subdir">root</span> /var/www/html
-                    }</code>
-                </p>
-                {{.Include "/includes/docs-helpbox.html"}}
-            </article>
-        </div>
-        {{.Include "/includes/footer.html"}}
-    </body>
+				<code class="block"><span class="cf-dir">fastcgi</span> <span class="cf-arg">/ 127.0.0.1:9001 php</span> {
+	<span class="cf-subdir">root</span> /var/www/html
+}</code>
+
+				{{.Include "/includes/docs-helpbox.html"}}
+			</article>
+		</div>
+		{{.Include "/includes/footer.html"}}
+	</body>
 </head>

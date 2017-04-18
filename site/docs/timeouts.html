@@ -1,92 +1,74 @@
 <!DOCTYPE html>
-
 <head>
+	<head>
+		<title>http.timeouts - Caddy User Guide</title>
+		{{.Include "/includes/head.html"}}
+		<link rel="stylesheet" href="/resources/css/docs.css">
+	</head>
+	<body>
+		{{.Include "/includes/docs-nav.html"}}
 
-    <head>
-        <title>timeouts - Caddy User Guide</title>
-        {{.Include "/includes/head.html"}}
-        <link rel="stylesheet" href="/resources/css/docs.css">
-    </head>
+		<div class="content-container">
+			{{.Include "/includes/docs-nav-side.html"}}
 
-    <body>
-        {{.Include "/includes/docs-nav.html"}}
+			<article>
+				<h2>http.timeouts</h2>
 
-        <div class="content-container">
-            {{.Include "/includes/docs-nav-side.html"}}
+				<p>timeouts configures Caddy's HTTP timeouts:</p>
 
-            <article>
-                <h2>timeouts</h2>
+				<ul>
+					<li><strong>Read:</strong> Maximum duration for reading the entire request, including the body.</li>
+					<li><strong>Read Header:</strong> The amount of time allowed to read request headers.</li>
+					<li><strong>Write:</strong> The maximum duration before timing out writes of the response.</li>
+					<li><strong>Idle:</strong> The maximum time to wait for the next request (when using keep-alive).</li>
+				</ul>
 
-                <p>timeouts configures Caddy's HTTP timeouts:</p>
+				<p>
+					Timeouts are an important way to maintain server connectivity in the face of buggy or malicious clients.
+				</p>
 
-                <ul>
-                    <li><strong>Read:</strong> Maximum duration for reading the entire request, including the body.</li>
-                    <li><strong>Read Header:</strong> The amount of time allowed to read request headers.</li>
-                    <li><strong>Write:</strong> The maximum duration before timing out writes of the response.</li>
-                    <li><strong>Idle:</strong> The maximum time to wait for the next request (when using keep-alive).</li>
-                </ul>
+				<p>
+					Because timeouts apply to an entire HTTP server which may serve multiple sites defined in your Caddyfile, the timeout values for each site will be reduced to their minimum values (with 0 or none being the lowest) across all sites that share that server. It's a good idea to keep your timeouts the same or just set them on one site to avoid confusion. A timeout set on one site will apply to all sites that share that server.
+				</p>
 
-                <p>By default, Caddy applies these timeout values:</p>
+				<h3 id="syntax">Syntax</h3>
 
-                <ul>
-                    <li><strong>Read:</strong> 10s</li>
-                    <li><strong>Read Header:</strong> 10s</li>
-                    <li><strong>Write:</strong> 20s</li>
-                    <li><strong>Idle:</strong> 2m</li>
-                </ul>
+				<p>To set all the timeouts to the same value:</p>
 
-                <p>Timeouts are an important way to maintain server connectivity. However, some use cases may necessitate raising
-                    or removing the timeouts altogether (for example: legitimate clients on slow networks, long polling,
-                    or proxying long requests to trusted upstreams).</p>
+				<p><code class="block"><span class="cf-dir">timeouts</span> <span class="cf-arg"><i>val</i></span></code></p>
 
-                <p>Because timeouts apply to an entire HTTP server which may serve multiple sites defined in your Caddyfile,
-                    the timeout values for each site will be reduced to their minimum values (with 0, or disabled, being
-                    the lowest) across all sites that share that server. It's a good idea to keep your timeouts the same
-                    or just set them on one site to avoid confusion. A timeout set on one site will apply to all sites that
-                    share that server.</p>
+				<ul>
+					<li><strong>val</strong> is a duration value (e.g. 30s, 2m30s, 5m, 1h) that will apply to all timeouts. Set
+						to <code>0</code> or <code>none</code> to disable timeouts that were previously enabled.</li>
+				</ul>
 
-                <h3 id="syntax">Syntax</h3>
+				<p>You can also configure each timeout individually:</p>
 
-                <p>To set all the timeouts to the same value:</p>
-
-                <p><code class="block"><span class="cf-dir">timeouts</span> <span class="cf-arg"><i>val</i></span></code></p>
-
-                <ul>
-                    <li><strong>val</strong> is a duration value (e.g. 30s, 2m30s, 5m, 1h) that will apply to all timeouts. Set
-                        to <code>0</code> or <code>none</code> to disable timeouts.</li>
-                </ul>
-
-                <p>You can also configure each timeout individually:</p>
-
-                <p><code class="block"><span class="cf-dir">timeouts</span> {
-    <span class="cf-subdir">read</span>   <i>val</i>
-    <span class="cf-subdir">header</span> <i>val</i>
-    <span class="cf-subdir">write</span>  <i>val</i>
-    <span class="cf-subdir">idle</span>   <i>val</i>
+				<p><code class="block"><span class="cf-dir">timeouts</span> {
+	<span class="cf-subdir">read</span>   <i>val</i>
+	<span class="cf-subdir">header</span> <i>val</i>
+	<span class="cf-subdir">write</span>  <i>val</i>
+	<span class="cf-subdir">idle</span>   <i>val</i>
 }</code></p>
 
-                <p>Valid values are durations, or <code>0</code> or <code>none</code> to disable the timeout.</p>
+				<p>Valid values are durations, or <code>0</code> or <code>none</code> to disable the timeout if it was previously enabled.</p>
 
-                <h3 id="examples">Examples</h3>
+				<h3 id="examples">Examples</h3>
 
-                <p>Set all timeouts to 1 minute:</p>
+				<p>Set all timeouts to 1 minute:</p>
 
-                <p><code class="block"><span class="cf-dir">timeouts</span> <span class="cf-arg">1m</span></code></p>
+				<p><code class="block"><span class="cf-dir">timeouts</span> <span class="cf-arg">1m</span></code></p>
 
-                <p>Set a custom read timeout and disable the write timeout:</p>
+				<p>Set custom read timeout and write timeouts:</p>
 
-                <p><code class="block"><span class="cf-dir">timeouts</span> {
-    <span class="cf-subdir">read</span>  30s
-    <span class="cf-subdir">write</span> none
+				<p><code class="block"><span class="cf-dir">timeouts</span> {
+	<span class="cf-subdir">read</span>  30s
+	<span class="cf-subdir">write</span> 20s
 }</code></p>
 
-                <p>Disable all timeouts (not recommended unless you trust the clients):</p>
-
-                <p><code class="block"><span class="cf-dir">timeouts</span> <span class="cf-arg">none</span></code></p>
-
-                {{.Include "/includes/docs-helpbox.html"}}
-            </article>
-        </div>
-        {{.Include "/includes/footer.html"}}
-    </body>
+				{{.Include "/includes/docs-helpbox.html"}}
+			</article>
+		</div>
+		{{.Include "/includes/footer.html"}}
+	</body>
 </head>

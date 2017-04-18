@@ -1,78 +1,75 @@
 <!DOCTYPE html>
-
 <head>
+	<head>
+		<title>http.header - Caddy User Guide</title>
+		{{.Include "/includes/head.html"}}
+		<link rel="stylesheet" href="/resources/css/docs.css">
+	</head>
+	<body>
+		{{.Include "/includes/docs-nav.html"}}
 
-    <head>
-        <title>header - Caddy User Guide</title>
-        {{.Include "/includes/head.html"}}
-        <link rel="stylesheet" href="/resources/css/docs.css">
-    </head>
+		<div class="content-container">
+			{{.Include "/includes/docs-nav-side.html"}}
 
-    <body>
-        {{.Include "/includes/docs-nav.html"}}
+			<article>
+				<h2>http.header</h2>
 
-        <div class="content-container">
-            {{.Include "/includes/docs-nav-side.html"}}
+				<p>header can manipulate response headers.</p>
 
-            <article>
-                <h2>header</h2>
+				<p>Note that if you wish to remove response headers from a proxied backend, you must do so in the <a href="/docs/proxy">proxy</a> directive.</p>
 
-                <p>header can manipulate response headers.</p>
+				<h3 id="syntax">Syntax</h3>
 
-                <p>Note that if you wish to remove response headers from a proxied backend, you must do so in the <a href="/docs/proxy">proxy</a>                    directive.</p>
+				<p><code class="block"><span class="cf-dir">header</span> <span class="cf-arg"><i>path name value</i></span></code></p>
 
-                <h3 id="syntax">Syntax</h3>
+				<ul>
+					<li><strong>path</strong> is the base path to match.</li>
+					<li><strong>name</strong> is the name of the field. Prefix with a hyphen (<code>-</code>) to remove the header
+						or a plus (<code>+</code>) to append instead of overwrite.</li>
+					<li><strong>value</strong> is the value for the field. Dynamic values can also be inserted using <a href="/docs/placeholders">placeholders</a>.</li>
+				</ul>
 
-                <p><code class="block"><span class="cf-dir">header</span> <span class="cf-arg"><i>path name value</i></span></code></p>
+				<p>This directive can be used multiple times, or you can group multiple custom header fields for the same path:</p>
 
-                <ul>
-                    <li><strong>path</strong> is the base path to match.</li>
-                    <li><strong>name</strong> is the name of the field. Prefix with a hyphen (<code>-</code>) to remove the header
-                        or a plus (<code>+</code>) to append instead of overwrite.</li>
-                    <li><strong>value</strong> is the value for the field. Dynamic values can also be inserted using <a href="/docs/placeholders">placeholders</a>.</li>
-                </ul>
-
-                <p>This directive can be used multiple times, or you can group multiple custom header fields for the same path:</p>
-
-                <p><code class="block"><span class="cf-dir">header</span> <span class="cf-arg"><i>path</i></span> {
-    <span class="cf-subdir"><i>name</i></span> <i>value</i>
+				<p><code class="block"><span class="cf-dir">header</span> <span class="cf-arg"><i>path</i></span> {
+	<span class="cf-subdir"><i>name</i></span> <i>value</i>
 }</code></p>
 
-                <h3 id="examples">Examples</h3>
+				<h3 id="examples">Examples</h3>
 
-                <p>Custom header for all pages:</p>
+				<p>Custom header for all pages:</p>
 
-                <p><code class="block"><span class="cf-dir">header</span> <span class="cf-arg">/ X-Custom-Header &quot;My value&quot;</span></code></p>
+				<p><code class="block"><span class="cf-dir">header</span> <span class="cf-arg">/ X-Custom-Header &quot;My value&quot;</span></code></p>
 
-                <p>Strip the &quot;Hidden&quot; field from header:</p>
+				<p>Strip the &quot;Hidden&quot; field from header:</p>
 
-                <p><code class="block"><span class="cf-dir">header</span> <span class="cf-arg">/ -Hidden</span></code></p>
+				<p><code class="block"><span class="cf-dir">header</span> <span class="cf-arg">/ -Hidden</span></code></p>
 
-                <p>Multiple custom headers for a specific path, while removing the Server field:</p>
+				<p>Multiple custom headers for a specific path, while removing the Server field:</p>
 
-                <p><code class="block"><span class="cf-dir">header</span> <span class="cf-arg">/api</span> {
-    <span class="cf-subdir">Access-Control-Allow-Origin</span>  *
-    <span class="cf-subdir">Access-Control-Allow-Methods</span> &quot;GET, POST, OPTIONS&quot;
-    <span class="cf-subdir">-Server</span>
+				<p><code class="block"><span class="cf-dir">header</span> <span class="cf-arg">/api</span> {
+	<span class="cf-subdir">Access-Control-Allow-Origin</span>  *
+	<span class="cf-subdir">Access-Control-Allow-Methods</span> &quot;GET, POST, OPTIONS&quot;
+	<span class="cf-subdir">-Server</span>
 }</code></p>
 
-                <p>Add some security headers to all pages:</p>
+				<p>Add some security headers to all pages:</p>
 
-                <p><code class="block"><span class="cf-dir">header</span> <span class="cf-arg">/</span> {
-    <span class="hl-comment"># Enable HTTP Strict Transport Security (HSTS) to force clients to always</span>
-    <span class="hl-comment"># connect via HTTPS (do not use if only testing)</span>
-    <span class="cf-subdir">Strict-Transport-Security</span> &quot;max-age=31536000;&quot;
-    <span class="hl-comment"># Enable cross-site filter (XSS) and tell browser to block detected attacks</span>
-    <span class="cf-subdir">X-XSS-Protection</span> &quot;1; mode=block&quot;
-    <span class="hl-comment"># Prevent some browsers from MIME-sniffing a response away from the declared Content-Type</span>
-    <span class="cf-subdir">X-Content-Type-Options</span> &quot;nosniff&quot;
-    <span class="hl-comment"># Disallow the site to be rendered within a frame (clickjacking protection)</span>
-    <span class="cf-subdir">X-Frame-Options</span> &quot;DENY&quot;
+				<p><code class="block"><span class="cf-dir">header</span> <span class="cf-arg">/</span> {
+	<span class="cf-comment"># Enable HTTP Strict Transport Security (HSTS) to force clients to always</span>
+	<span class="cf-comment"># connect via HTTPS (do not use if only testing)</span>
+	<span class="cf-subdir">Strict-Transport-Security</span> &quot;max-age=31536000;&quot;
+	<span class="cf-comment"># Enable cross-site filter (XSS) and tell browser to block detected attacks</span>
+	<span class="cf-subdir">X-XSS-Protection</span> &quot;1; mode=block&quot;
+	<span class="cf-comment"># Prevent some browsers from MIME-sniffing a response away from the declared Content-Type</span>
+	<span class="cf-subdir">X-Content-Type-Options</span> &quot;nosniff&quot;
+	<span class="cf-comment"># Disallow the site to be rendered within a frame (clickjacking protection)</span>
+	<span class="cf-subdir">X-Frame-Options</span> &quot;DENY&quot;
 }</code></p>
 
-                {{.Include "/includes/docs-helpbox.html"}}
-            </article>
-        </div>
-        {{.Include "/includes/footer.html"}}
-    </body>
+				{{.Include "/includes/docs-helpbox.html"}}
+			</article>
+		</div>
+		{{.Include "/includes/footer.html"}}
+	</body>
 </head>

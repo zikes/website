@@ -17,22 +17,22 @@ The Caddyfile is used to configure Caddy. Web server configurations are often pr
 To give you an idea, here is a real Caddyfile that configures three hosts (two sites):
 
 <code class="block"><span class="hl-vhost">http://caddyserver.com, https://caddyserver.com</span> {
-	<span class="hl-directive">tls</span>  <span class="hl-arg">"caddy bundle.crt" caddy.key</span>
-	<span class="hl-directive">root</span> <span class="hl-arg">/www/caddyserver.com</span>
-	<span class="hl-directive">ext</span>  <span class="hl-arg">.html .md</span>
-	<span class="hl-directive">gzip</span>
-	<span class="hl-directive">errors</span> {
-		<span class="hl-subdirective">log</span> error.log
-		<span class="hl-subdirective">404</span> 404.html
+	<span class="cf-dir">tls</span>  <span class="cf-arg">"caddy bundle.crt" caddy.key</span>
+	<span class="cf-dir">root</span> <span class="cf-arg">/www/caddyserver.com</span>
+	<span class="cf-dir">ext</span>  <span class="cf-arg">.html .md</span>
+	<span class="cf-dir">gzip</span>
+	<span class="cf-dir">errors</span> {
+		<span class="cf-subdir">log</span> error.log
+		<span class="cf-subdir">404</span> 404.html
 	}
-	<span class="hl-directive">templates</span>
-	<span class="hl-directive">proxy</span> <span class="hl-arg">/download/build localhost:5050</span>
-	<span class="hl-directive">proxy</span> <span class="hl-arg">/features.json  localhost:5050</span>
+	<span class="cf-dir">templates</span>
+	<span class="cf-dir">proxy</span> <span class="cf-arg">/download/build localhost:5050</span>
+	<span class="cf-dir">proxy</span> <span class="cf-arg">/features.json  localhost:5050</span>
 }<br>
 <span class="hl-vhost">http://matt.life</span> {
-	<span class="hl-directive">root</span> <span class="hl-arg">/www/matt.life</span>
-	<span class="hl-directive">ext</span>  <span class="hl-arg">.html</span>
-	<span class="hl-directive">gzip</span>
+	<span class="cf-dir">root</span> <span class="cf-arg">/www/matt.life</span>
+	<span class="cf-dir">ext</span>  <span class="cf-arg">.html</span>
+	<span class="cf-dir">gzip</span>
 }</code>
 
 New syntax? Yes. Familiar? Yes. However, I want to emphasize that this is not an ideal general-purpose configuration syntax. It was made only for Caddy.
@@ -43,9 +43,9 @@ A few distinct features of the Caddyfile are: very low duplication, almost no pu
 
 - **Almost No Punctuation:** The only punctuation in the Caddyfile is curly braces, commas, and quotes; and all of them are optional. A minimal Caddyfile that serves just one site may not need any punctuation (except in the values themselves):
 	<code class="block"><span class="hl-vhost">http://matt.life https://matt.life</span><br>
-	<span class="hl-directive">root</span> <span class="hl-arg">/www/matt.life</span>
-	<span class="hl-directive">ext</span>  <span class="hl-arg">.html</span>
-	<span class="hl-directive">gzip</span></code>
+	<span class="cf-dir">root</span> <span class="cf-arg">/www/matt.life</span>
+	<span class="cf-dir">ext</span>  <span class="cf-arg">.html</span>
+	<span class="cf-dir">gzip</span></code>
 This allows a Caddyfile to be written by a computer very easily. Each directive gets its own line, and arguments are space-separated. That's it. For convenience, addresses that declare a site may be followed by commas if you want to put the next one on a new line. If a value contains spaces or a newline, enclose it in quotes. This is familiar to almost anyone, and is very easy for newbies to learn. Quotes are ubiquitous and yet, in the Caddyfile, they are rare.
 
 - **Irrelevant Extraneous Whitespace:** Whitespace does matter, but only for separating arguments/values, and all that's needed is a single whitespace character (more is okay). Line breaks are significant, making semicolons unnecessary. Most Caddyfile lines are fairly short, so this is not usually a problem. Indentation doesn't matter, but proper indentation is strongly recommended for legibility.

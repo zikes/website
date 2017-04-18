@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-
 <head>
-
 	<head>
-		<title>http.basicauth - Caddy User Guide</title>
+		<title>http.expvar - Caddy User Guide</title>
 		{{.Include "/includes/head.html"}}
 		<link rel="stylesheet" href="/resources/css/docs.css">
 	</head>
@@ -15,13 +13,12 @@
 			{{.Include "/includes/docs-nav-side.html"}}
 
 			<article>
-				<h2>expvar</h2>
-				<p>expvar exposes variables about the runtime or current process state in JSON format. The default endpoint is /debug/vars.
-					By default, it reports memory statistics, the command used to run Caddy, and the number of goroutines.</p>
+				<h2>http.expvar</h2>
+
+				<p>expvar exposes variables about the runtime or current process state in JSON format. The default endpoint is /debug/vars. By default, it reports memory statistics, the command used to run Caddy, and the number of goroutines.</p>
 
 				<p>
-					<mark class="block">This is a debugging tool. Although it is usually safe to use this on live sites, take care that you do not reveal anything
-						sensitive. Also note that plugins may add to the list of values that are published.</mark>
+					<mark class="block">This is a debugging tool. Although it is usually safe to use this on live sites, take care that you do not reveal anything sensitive. Also note that plugins may add to the list of values that are published.</mark>
 				</p>
 
 				<p>For more information, please see <a href="https://golang.org/pkg/expvar/">Go's expvar documentation</a>.</p>

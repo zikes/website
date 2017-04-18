@@ -10,8 +10,8 @@ As of this week on the letsencrypt dev branch, Caddy serves all non-loopback hos
 For example:
 
 <code class="block"><span class="hl-vhost">example.com</span>
-<span class="hl-directive">root</span> <span class="hl-arg">/www/example.com</span>
-<span class="hl-directive">gzip</span></code>
+<span class="cf-dir">root</span> <span class="cf-arg">/www/example.com</span>
+<span class="cf-dir">gzip</span></code>
 
 This Caddyfile serves **<span style="color: #10A210;">https</span>://example.com** and redirects all requests for **http://example.com** to the HTTPS version. *You don't have to configure anything.*
 

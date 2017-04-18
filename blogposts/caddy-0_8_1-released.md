@@ -27,7 +27,7 @@ We will continue to refine and enhance the browse template over time.
 
 You can now [import](/docs/import) multiple files at once into a single Caddyfile using glob patterns. For example, this Caddyfile will import and use any files found in the "vhosts" folder:
 
-<code class="block"><span class="hl-directive">import</span>  <span class="hl-arg">vhosts/*</span></code>
+<code class="block"><span class="cf-dir">import</span>  <span class="cf-arg">vhosts/*</span></code>
 
 The `import` directive is a special one that can appear outside a server block. This makes it possible for you to add and remove hosts on-the-fly just by adding files to a folder and reload the config with USR1.
 
@@ -38,9 +38,9 @@ The [rewrite](/docs/rewrite) directive has powerful new matching capabilities in
 
 For example, you can rewrite based on User-Agent header values:
 
-<code class="block"><span class="hl-directive">rewrite</span> {
-     <span class="hl-subdirective">if</span> {>User-Agent} has iPhone
-     <span class="hl-subdirective">to</span> /mobile{uri}
+<code class="block"><span class="cf-dir">rewrite</span> {
+     <span class="cf-subdir">if</span> {>User-Agent} has iPhone
+     <span class="cf-subdir">to</span> /mobile{uri}
 }</code>
 
 You can also do something similar to the `try_files` of NGINX. At this point we'll point you to [the docs for rewrite](/docs/rewrite) if you're interested in learning more.

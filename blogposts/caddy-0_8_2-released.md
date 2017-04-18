@@ -15,8 +15,8 @@ With Caddy 0.8, we did something that no other server does: we turned on HTTPS a
 
 To enable this feature, specify *max_certs* in the `tls` directive:
 
-<code class="block"><span class="hl-directive">tls</span> {
-	<span class="hl-subdirective">max_certs</span> 50
+<code class="block"><span class="cf-dir">tls</span> {
+	<span class="cf-subdir">max_certs</span> 50
 }</code>
 
 This value sets the maximum number of new certificates that Caddy is allowed to issue during TLS handshakes. Currently, the value applies globally (if specified more than once, the lowest value is used), but this may change in the future. Be as conservative with this value as you can.
@@ -34,10 +34,10 @@ When Caddy obtains a certificate on demand, it stores it to disk and caches it i
 You can try this full Caddyfile as an experiment, being careful to specify the `-ca` flag to use Let's Encrypt's staging endpoint (`-ca="https://acme-staging.api.letsencrypt.org/directory"`). We assume you have a starting certificate that you want to use, as well as a backend app that serves new host names dynamically:
 
 <code class="block"><span class="hl-vhost">:443</span>
-<span class="hl-directive">tls</span> <span class="hl-arg">default.crt default.key</span> {
-	<span class="hl-subdirective">max_certs</span> 5
+<span class="cf-dir">tls</span> <span class="cf-arg">default.crt default.key</span> {
+	<span class="cf-subdir">max_certs</span> 5
 }
-<span class="hl-directive">proxy</span> <span class="hl-arg">/ localhost:5001</span>
+<span class="cf-dir">proxy</span> <span class="cf-arg">/ localhost:5001</span>
 </code>
 
 With a simple configuration like this, your app can serve all your different host names on-the-fly, even if they are not subdomains or even under the same TLD. Be aware this config serves *all* hostnames pointed at your machine. A future version of Caddy will allow you to narrowly scope the domains served without having to enumerate each one.
@@ -50,8 +50,8 @@ Remember that any rate limits enforced by the CA still apply.
 
 Caddy now has the ability to load certificates and keys from a directory, rather than individual files:
 
-<code class="block"><span class="hl-directive">tls</span> {
-	<span class="hl-subdirective">load</span> ../certificates
+<code class="block"><span class="cf-dir">tls</span> {
+	<span class="cf-subdir">load</span> ../certificates
 }</code>
 
 Similar to [how HAProxy does it](http://cbonte.github.io/haproxy-dconv/configuration-1.7.html#5.1-crt), Caddy will walk that directory, looking for .pem files. Each file should contain the certificate chain and associated key bundled in PEM format. This is an easy way to load many certificates at once. You can use this in conjunction with On-Demand TLS if you're already maintaining some of your own certificates you want to use.
