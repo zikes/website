@@ -5,7 +5,7 @@ date: 2017-04-20 16:00:00+00:00
 type: post
 ---
 
-We're thrilled to release Caddy 0.10 on the same day as we unveil [the new website](/blog/new-website-and-build-server) and [products for businesses](/blog/options-for-businesess). A lot of work has gone into this release, with contributions from more than 25 developers over the last 3 months.
+We're thrilled to release Caddy 0.10 on the same day as we unveil [the new website](/blog/new-website-and-build-server) and [products for businesses](/blog/options-for-businesses). A lot of work has gone into this release, with contributions from more than 25 developers over the last 3 months. Caddy 0.10 is available now on the [download page](/download) or at [GitHub releases](https://github.com/mholt/caddy/releases/tag/v0.10).
 
 It was kind of fun to watch people anticipate a version 1.0 release today, but I don't think version 0.10 will disappoint. Caddy 0.10 is the first version to be deployed with the new [automated release system](https://github.com/caddyserver/releaser). Releases now take about 10 minutes instead of 4 hours, and most of that time is spent uploading binaries. This version is built on Go 1.8.1 and sports plenty of new features, dozens of bug fixes, and lots of crypto improvements! Let's take a look, shall we?
 

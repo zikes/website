@@ -16,7 +16,7 @@ This is a great day for the Caddy project that will benefit its users and contri
 
 In case you didn't notice (or are new here), Caddy has been refreshed with a new look! The new logo is easier to read in a wider variety of backgrounds and contexts than the old one. We dropped the unexplainable tufts of grass for a green padlock icon that, when put in front of a light blue background, looks like a nice, secure landscape with the shackle being a mountain. (Okay, it's a stretch, but I can dream a little. I love mountains.)
 
-I think it's a hit because sticker pre-orders were wildly successful.
+I think it's a hit because [sticker pre-orders](https://goo.gl/forms/Q9Sc3gTmxtAwnxXo1) were wildly successful.
 
 <img src="/resources/images/blog/caddy-stickers.jpg" alt="Caddy stickers" width="300">
 
