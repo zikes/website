@@ -5,13 +5,15 @@ date: 2017-04-20 16:00:00+00:00
 type: post
 ---
 
-We're thrilled to release Caddy 0.10 on the same day as we unveil [the new website](/blog/new-website-and-build-server) and [products for businesses](/blog/options-for-businesses). A lot of work has gone into this release, with contributions from more than 25 developers over the last 3 months. Caddy 0.10 is available now on the [download page](/download) or at [GitHub releases](https://github.com/mholt/caddy/releases/tag/v0.10).
+We're thrilled to release Caddy 0.10 on the same day as we unveil [the new website](/blog/new-website-and-build-server) and [products for businesses](/blog/options-for-businesses). A lot of work has gone into this release, with contributions from more than 25 developers over the last 3 months. Caddy 0.10 is available now on the [download page](/download) or at [GitHub releases](https://github.com/mholt/caddy/releases/tag/v0.10.0).
 
 It was kind of fun to watch people anticipate a version 1.0 release today, but I don't think version 0.10 will disappoint. Caddy 0.10 is the first version to be deployed with the new [automated release system](https://github.com/caddyserver/releaser). Releases now take about 10 minutes instead of 4 hours, and most of that time is spent uploading binaries. This version is built on Go 1.8.1 and sports plenty of new features, dozens of bug fixes, and lots of crypto improvements! Let's take a look, shall we?
 
 ## MITM Detection
 
-Caddy can determine, with decent accuracy, if an HTTPS connection is being intercepted by a TLS proxy. This feature is based on [new research presented at NDSS '17](https://jhalderm.com/pub/papers/interception-ndss17.pdf) and Caddy is the first and (to date) only server to employ this technique. Site owners can now choose how to handle the case where it is likely that an HTTPS connection is being intercepted. Typical actions might be showing a warning on the page:
+Caddy has the ability to detect, with decent accuracy, Man-in-the-Middle (MITM) attacks on HTTPS connections that may otherwise be invisible to the browser and the end user. In other words, Caddy can determine whether it is "likely" or "unlikely" that a TLS proxy is actively intercepting the HTTPS connection. Despite benevolent intentions of some TLS proxies, [they actually do more harm than good](https://users.encs.concordia.ca/~mmannan/publications/ssl-interception-ndss2016.pdf). Because of the adverse effects on user privacy and the technical problems of TLS proxies of all kinds, Caddy proactively, carefully inspects all incoming HTTPS connections for possible interception. This feature is based on [new research presented at NDSS '17](https://jhalderm.com/pub/papers/interception-ndss17.pdf) and Caddy is the first and (to date) only server to employ this technique.
+
+Site owners can now choose how to handle the case where it is likely that an HTTPS connection is being intercepted. Typical actions might be showing a warning on the page:
 
 <code class="block">&#123;&#123;if .IsMITM&#125;&#125;
 &lt;b&gt;Your HTTPS connection is probably not secure!&lt;/b&gt;
@@ -68,8 +70,10 @@ One notable "miscellaneous" change is that access and error logs are now rolled 
 
 The proxy middleware now has a `max_conns` setting to limit the number of connections to each upstream, as well as a new `first` load balancing policy so you can set other backends as hot-standby instances.
 
-See the [release notes](https://github.com/mholt/caddy/releases/tag/v0.10) for the full list of notable changes.
+See the [release notes](https://github.com/mholt/caddy/releases/tag/v0.10.0) for the full list of notable changes.
 
 ## Thank You Contributors!
 
 We're very thankful to the many contributors that made this release possible. Over 119 commits and 3 months later we're very pleased with this! There's still a lot of work to do and we invite you to [be a part of it](https://github.com/mholt/caddy).
+
+*(Author's note: This version was tagged v0.10.0 by accident; the tag should have been v0.10 (without the trailing .0). I guess not every corner of the new automated deployment system was tested. The official name of this Caddy release is still 0.10. The release tooling has since been fixed.)*
