@@ -44,7 +44,7 @@ The new [features page](/features) lists all of Caddy's features and capabilitie
 
 ## Pricing Page
 
-This new site doesn't have a donation page like the old site, because we now have [options geared toward businesses](/blog/options-for-business) to sustain Caddy's development and growth. The [pricing](/pricing) page documents the Sponsorship and Engineering Package which are now available for purchase.
+This new site doesn't have a donation page like the old site, because we now have [options geared toward businesses](/blog/options-for-businesses) to sustain Caddy's development and growth. The [pricing](/pricing) page documents the Sponsorship and Engineering Package which are now available for purchase.
 
 Sponsoring Caddy helps keep Caddy free. It enables the community to grow and, as it does, Caddy can provide privacy to more and more sites and people. We promote your brand in return by linking to it on this website and in release announcements and on social media!
 
