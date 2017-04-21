@@ -62,7 +62,7 @@ There's a new type of plugin in town called Event Hook plugins. These plugins ca
 New plugins using these capabilities will be available shortly on the Caddy website. One is a PROXY Protocol plugin and another is a plugin that registers Caddy as a Windows service.
 
 
-## Other Miscellenous Things
+## Other Miscellaneous Things
 
 This release also sports lots of minor enhancements, not to mention dozens of bug fixes. For example, QUIC servers now reload with SIGUSR1 properly. A new [index](/docs/index) directive lets you customize the index files. New `-http-port` and `-https-port` CLI options let you customize which ports Caddy uses for HTTP and HTTPS (warning: only use if you know what you're doing!). There's also `-disable-http-challenge` and `-disable-tls-sni-challenge` flags to disable those ACME challenges if you have good reason that you need to do so. We recommend leaving both enabled in most cases.
 
