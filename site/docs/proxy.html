@@ -32,7 +32,7 @@
 				<p>However, advanced features including load balancing can be utilized with an expanded syntax:</p>
 
 				<p><code class="block"><span class="cf-dir">proxy</span> <span class="cf-arg"><i>from to...</i></span> {
-	<span class="cf-subdir">policy</span> random | least_conn | round_robin | ip_hash
+	<span class="cf-subdir">policy</span> random | least_conn | round_robin | first | ip_hash
 	<span class="cf-subdir">fail_timeout</span> <i>duration</i>
 	<span class="cf-subdir">max_fails</span> <i>integer</i>
 	<span class="cf-subdir">max_conns</span> <i>integer</i>
@@ -102,6 +102,8 @@
 				<li><strong>random</strong> (default) - Randomly select a backend</li>
 				<li><strong>least_conn</strong> - Select backend with the fewest active connections</li>
 				<li><strong>round_robin</strong> - Select backend in round-robin fashion</li>
+				<li><strong>first</strong> - Select the first available backend in the order they are defined in the Caddyfile</li>
+				<li><strong>ip_hash</strong> - Select backend by hashing the request IP, distributing evenly over the hash space based on the total number of backends</li>
 				</ul>
 
 				<h3 id="examples">Examples</h3>
