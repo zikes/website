@@ -34,5 +34,5 @@ Most of this behind-the-scenes work can be seen in repositories at [github.com/c
 
 ## Thank You to Contributors
 
-I want to thank all who have contributed hours and hours of their time to this release. Thank you for making Caddy better! And thank you to all who help on our [forums](https://forum.caddyserver.com). &lt;3 And of course, this wouldn't be possible without the sponsorship of DigitalOcean, Arroyo Networks, DNSimple, or the award from Mozilla. Be sure to support them!
+I want to thank all who have contributed hours and hours of their time to this release. Thank you for making Caddy better! And thank you to all who help on our [forums](https://caddy.community). &lt;3 And of course, this wouldn't be possible without the sponsorship of DigitalOcean, Arroyo Networks, DNSimple, or the award from Mozilla. Be sure to support them!
 

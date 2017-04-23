@@ -6,9 +6,9 @@ type: post
 cover: https://caddyserver.com/resources/images/blog/caddy-forum-screenshot.png
 ---
 
-If you've been with the Caddy community for some amount of time now, you'll know that we went from only GitHub issues, expanding to a channel in [Gophers Slack](https://gophers.slack.com), then to Gitter. The number of site owners adopting Caddy has been growing fast, as has been the number of questions, so today I'm relieved to present a new, self-hosted [home for the Caddy community](https://forum.caddyserver.com).
+If you've been with the Caddy community for some amount of time now, you'll know that we went from only GitHub issues, expanding to a channel in [Gophers Slack](https://gophers.slack.com), then to Gitter. The number of site owners adopting Caddy has been growing fast, as has been the number of questions, so today I'm relieved to present a new, self-hosted [home for the Caddy community](https://caddy.community).
 
-The [Caddy community forum](https://forum.caddyserver.com) is for all discussion that doesn't belong in GitHub issues or pull requests. GitHub is where specific, development-related discussion occurs: bug reports, new features, code reviews, etc. Everything else can go in the forum.
+The [Caddy community forum](https://caddy.community) is for all discussion that doesn't belong in GitHub issues or pull requests. GitHub is where specific, development-related discussion occurs: bug reports, new features, code reviews, etc. Everything else can go in the forum.
 
 I hope you'll participate with us!
 

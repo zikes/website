@@ -199,7 +199,7 @@ As for features, we will shortly begin work on a REST API and web UI with which 
 
 ## Get Involved
 
-Want to get involved with an awesome project? We have a place for you! The most helpful thing newcomers to our project can do is help [fix bugs](https://github.com/mholt/caddy/issues) by writing tests and submitting pull requests. Or, perhaps [find another open issue](https://github.com/mholt/caddy/issues) and add to the discussion. Join our [forum](https://forum.caddyserver.com) and answer questions that others have.
+Want to get involved with an awesome project? We have a place for you! The most helpful thing newcomers to our project can do is help [fix bugs](https://github.com/mholt/caddy/issues) by writing tests and submitting pull requests. Or, perhaps [find another open issue](https://github.com/mholt/caddy/issues) and add to the discussion. Join our [forum](https://caddy.community) and answer questions that others have.
 
 You may also [implement new server types or plugins for Caddy](https://github.com/mholt/caddy/wiki/Extending-Caddy) to add new functionality. We'd love to see what you come up with! Together we can get _all the Internet things_ secured and usable.
 

@@ -79,5 +79,5 @@ It's important to note, especially for plugin developers, that the build server 
 
 ## And next...
 
-Of course, we're going to keep improving on the site to make sure Caddy is crystal-clear to use and easy to understand. We also especially want plugin developers to have a good experience doing what they do best. Please participate [on GitHub](https://github.com/mholt/caddy) and [on our forums](https://forum.caddyserver.com) if you have any feedback or would like to contribute! We hope you like the changes.
+Of course, we're going to keep improving on the site to make sure Caddy is crystal-clear to use and easy to understand. We also especially want plugin developers to have a good experience doing what they do best. Please participate [on GitHub](https://github.com/mholt/caddy) and [on our forums](https://caddy.community) if you have any feedback or would like to contribute! We hope you like the changes.
 

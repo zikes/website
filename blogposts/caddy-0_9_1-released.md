@@ -73,4 +73,4 @@ Until now, Caddy would consume all ACME challenge requests, even for names it di
 
 The `max_certs` limit in the `tls` directive is no longer a process-wide global maximum; it applies only to the site in which it is defined.
 
-If you want to be a part of this project, join our [forums](https://forum.caddyserver.com), check out our [issues](https://github.com/mholt/caddy/issues), read the [wiki](https://github.com/mholt/caddy/wiki) - there are a lot of ways to help out. Thanks for using Caddy, we hope you like this new release!
+If you want to be a part of this project, join our [forums](https://caddy.community), check out our [issues](https://github.com/mholt/caddy/issues), read the [wiki](https://github.com/mholt/caddy/wiki) - there are a lot of ways to help out. Thanks for using Caddy, we hope you like this new release!
