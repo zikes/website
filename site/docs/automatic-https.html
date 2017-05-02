@@ -200,7 +200,14 @@
 				<p>Caddy staples OCSP information of all certificates containing an OCSP link to protect the privacy of your sites' clients and reduce stress on OCSP servers. The cached OCSP status is checked on a regular basis, and if there is a change, the server will staple the new response.</p>
 
 				<p>When new OCSP responses are obtained, Caddy persists the staple to disk so that it can weather long OCSP responder outages. Like certificates, persisted OCSP responses are fully maintained within the .caddy folder.</p>
-
+				
+				<h3 id="hsts">HTTP Strict Transport Security</h3>
+				
+				<p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism which helps to protect websites against protocol downgrade attacks and cookie hijacking. Enabling HSTS declares that web browsers should only interact with the server using a secure HTTPS connection, and never via an insecure HTTP connection. The policy specifies a period of time during which the server must be accessed in a secure fashion.</p>
+				
+				<p>Caddy does not enable HSTS by default, because if you wish to use the domain without HTTPS, HSTS having been enabled and remembered by a browser means the browser will not allow connections to your server. HSTS should only be enabled in a production environment when you know that you won't want to disable HTTPS in the future. It can easily be enabled by adding the header below to your Caddyfile.</p>
+				
+				<p><code class="block"><span class="cf-dir">header</span> <span class="cf-arg">/ Strict-Transport-Security "max-age=31536000;"</span></code></p>
 
 			</article>
 		</div>
