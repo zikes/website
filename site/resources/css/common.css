@@ -306,6 +306,7 @@ footer .footer-sponsors img.arroyo { max-width: 200px; position: relative; top: 
 footer .footer-sponsors img.do { max-width: 180px; }
 footer .footer-sponsors img.dnsimple { max-width: 120px; }
 footer .footer-sponsors img.minio { max-height: 50px; }
+footer .footer-sponsors img.uptimerobot { max-width: 150px; }
 
 footer .footer-sponsors .become {
 	line-height: 1rem;
