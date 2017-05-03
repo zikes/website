@@ -207,6 +207,7 @@ if (!purchaseIncludedOnce) {
 						"invoice_addr": addr
 					})
 				}).done(function(data, status, jqxhr) {
+					ga('send', 'event', 'Payment', 'Invoice Requested', product+'-yearly');
 					swal({
 						type: "success",
 						title: "Invoice Requested",
