@@ -39,6 +39,7 @@
 	<span class="cf-subdir">try_duration</span> <i>duration</i>
 	<span class="cf-subdir">try_interval</span> <i>duration</i>
 	<span class="cf-subdir">health_check</span> <i>path</i>
+	<span class="cf-subdir">health_check_port</span> <i>port</i>
 	<span class="cf-subdir">health_check_interval</span> <i>interval_duration</i>
 	<span class="cf-subdir">health_check_timeout</span> <i>timeout_duration</i>
 	<span class="cf-subdir">header_upstream</span> <i>name value</i>
@@ -61,6 +62,7 @@
 				<li><strong>try_duration</strong> is how long to try selecting available upstream hosts for each request. By default, this retry is disabled (&quot;0s&quot;). Clients may hang for this long while the proxy tries to find an available upstream host. This value is only used if a request to the initially-selected upstream host fails.</li>
 				<li><strong>try_interval</strong> is how long to wait between selecting another upstream host to handle a request. Default is 250ms. Only relevant when a request to an upstream host fails. Be aware that setting this to 0 with a non-zero try_duration can result in very tight looping and spin the CPU if all hosts stay down.</li>
 				<li><strong>health_check</strong> will use <em>path</em> to check the health of each backend. If a backend returns a status code of 200-399, then that backend is considered healthy. If it doesn't, the backend is marked as unhealthy for at least <em>health_check_interval</em> and no requests are routed to it. If this option is not provided then health checks are disabled.</li>
+				<li><strong>health_check_port</strong> will use <em>port</em> to perform the health check instead of the port provided for the upstream. This is useful if you use an internal port for debug purposes where your health check endpoint is hidden from public view.</li>
 				<li><strong>health_check_interval</strong> specifies the time between each health check on unhealthy backends. The default interval is 30 seconds (&quot;30s&quot;).</li>
 				<li><strong>health_check_timeout</strong> sets a deadline for health check requests. If a health check does not respond within <em>health_check_timeout</em>, the health check is considered failed. The default is 60 seconds (&quot;60s&quot;).</li>
 				<li><strong>header_upstream</strong> sets headers to be passed to the backend. The field name is <em>name</em> and the value is <em>value</em>. This option can be specified multiple times for multiple headers, and dynamic values can also be inserted using <a href="/docs/placeholders">request placeholders</a>. By default, existing header fields will be replaced, but you can add/merge field values by prefixing the field name with a plus sign (+). You can remove fields by prefixing the header name with a minus sign (-) and leaving the value blank.</li>
