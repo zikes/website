@@ -237,6 +237,8 @@ blockquote cite a:hover {
 
 .footer-sponsors {
 	border-top: none;
+	background: #fff;
+	padding-bottom: 0;
 }
 
 @media (max-width: 1200px) {
