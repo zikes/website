@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<head>
+	<head>
+		<title>http.limits - Caddy User Guide</title>
+		{{.Include "/includes/head.html"}}
+		<link rel="stylesheet" href="/resources/css/docs.css">
+	</head>
+
+	<body>
+		{{.Include "/includes/docs-nav.html"}}
+
+		<div class="content-container">
+			{{.Include "/includes/docs-nav-side.html"}}
+
+			<article>
+				<h2>http.limits</h2>
+				
+				<p>limits sets limits on HTTP requests that are accepted. The request header and body sizes can be limited.</p>
+
+				<p>The request header size can be capped at some number of bytes. Due to the way the Go libraries work, one limit applies to all sites on the same listener (if there are multiple configured, the minimum limit is selected).</p>
+
+				<p>Request body sizes can also be limited. When the number of bytes read from a request body exceeds the limit, reading will terminate and an error will be sent to the client. (Technically, it depends on	each middleware that reads a request body to handle the error properly, but standard Caddy directives should respond with HTTP 413.) By default, there is no size limit.</p>
+
+				<p>The size values must be positive integers and are interpreted as bytes unless a unit is given. Valid examples: <code>3500</code> (3,500 bytes), <code>500kb</code> (500 kilobytes), <code>10mb</code> (10 megabytes), <code>1gb</code> (1 gigabyte).</p>
+
+				<h3 id="syntax">Syntax</h3>
+
+				<p><code class="block"><span class="cf-dir">limits</span> <span class="cf-arg"><i>size</i></span></code></p>
+
+				<ul>
+					<li><strong>size</strong> is the maximum size for both headers and bodies (individually) for the whole site.</li>
+				</ul>
+
+				<p>For more control, you can open a block:</p>
+
+				<p><code class="block"><span class="cf-dir">limits</span> {
+	<span class="cf-subdir">header</span> <i>size</i>
+	<span class="cf-subdir">body</span>   [<i>path</i>] <i>size</i>
+}</code></p>
+
+				<ul>
+					<li><strong>header</strong> restricts the size of the request header.</li>
+					<li><strong>body</strong> restricts the size of a request body, optionally only for a base path.</li>
+				</ul>
+
+				<h3 id="examples">Examples</h3>
+
+				<p>Limit all request headers and bodies to 7.5 kilobytes:</p>
+
+				<p><code class="block"><span class="cf-dir">limits</span> <span class="cf-arg">7500</span></code></p>
+
+				<p>Limit only request bodies within /upload to 50 megabytes:</p>
+
+				<p><code class="block"><span class="cf-dir">limits</span> {
+	<span class="cf-subdir">body</span> /upload 50mb
+}</code></p>
+
+				<p>Various limits:</p>
+
+				<p><code class="block"><span class="cf-dir">limits</span> {
+	<span class="cf-subdir">header</span> 100KB
+	<span class="cf-subdir">body</span>   /upload 100MB
+	<span class="cf-subdir">body</span>   /profile 25KB
+	<span class="cf-subdir">body</span>   /api 10KB
+}</code></p>
+
+
+				{{.Include "/includes/docs-helpbox.html"}}
+			</article>
+		</div>
+		{{.Include "/includes/footer.html"}}
+	</body>
+</head>
