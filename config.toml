@@ -4,6 +4,7 @@ contentDir = "blogposts"
 languageCode = "en-us"
 uglyURLs = true
 copyright = "(c) Light Code Labs. All rights reserved."
+title = "The Caddy Blog"
 
 [blackfriday]
 extensionsmask = [ "autolink" ]

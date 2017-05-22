@@ -1,6 +1,6 @@
 <div class="top-bar content">
 	<div class="left-links">
-		<a href="/"><img src="/resources/images/caddy-white.png" id="logo"></a>
+		<a href="/">{{if gt (len .Args) 0}}<img src="/resources/images/caddy-{{index .Args 0}}.png" id="logo">{{else}}<img src="/resources/images/caddy-white.png" id="logo">{{end}}</a>
 	</div>
 	<nav class="center-links links">
 		<a href="/features">Features</a>

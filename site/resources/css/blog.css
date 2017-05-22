@@ -1,28 +1,38 @@
 header {
-	background-image: linear-gradient(0deg, #9fb8ca 0%, #458ab9 100%);
+	background-image: linear-gradient(0deg, #ffffff 0%, #efefef 100%);
 }
 
-main {
-	background: #9fb8ca;
+header nav a {
+	color: #000;
+}
+
+header nav a:hover {
+	opacity: 1;
+	color: #000;
+	text-decoration: underline;
+}
+
+#logo:hover {
+	opacity: 1;
+}
+
+article {
+	border: 1px solid #c0c0c0;
 }
 
 main > h1,
 .pagenum {
-	text-shadow: 0 1px 3px rgba(0,0,0,.3);
 	text-align: center;
-	color: #FFF;
 }
 
 main > h1 {
 	font-size: 5rem;
-	font-weight: 300;
 	margin-bottom: 4rem;
 }
 
 .pagenum {
 	font-size: 1.5rem;
 	margin-top: -3rem;
-	color: #fff;
 	text-align: center;
 	font-weight: bold;
 }
