@@ -5,14 +5,14 @@ date: 2017-05-20 16:00:00+00:00
 type: post
 ---
 
-Caddy stepped into unknown territory when it became the first web server to use HTTPS by default and manage your TLS certificates for you. When [Let's Encrypt suffered a connectivity issue](https://letsencrypt.status.io/) yesterday, it exposed some grave realities (and misunderstandings) about automated certificate management. I'd like to talk about what happened, clarify a few things, make some recommendations, and raise questions for future consideration.
+Caddy stepped into unknown territory when it became the first web server to use HTTPS by default and manage your TLS certificates for you. When [Let's Encrypt suffered a connectivity issue](https://community.letsencrypt.org/t/ocsp-and-issuance-outage-2017-05-19/34506) yesterday, it exposed some grave realities (and misunderstandings) about automated certificate management. I'd like to talk about what happened, clarify a few things, make some recommendations, and raise questions for future consideration.
 
 
 ## The incident
 
 Approximately 1 hour after I went to sleep on Thursday night, Let's Encrypt began having some troubles with issuance. It looks like their team pulled an all-nighter, but it still took the better part of the day for all their systems to return to normal for everyone&mdash;mostly because of far-reaching effects that had to be resolved with an ISP and CDN. During that time, some Caddy users stopped and restarted their Caddy processes or just started new ones.
 
-Most Caddy users who did this during the downtime would not have experienced any problems, but a few of them [reported](https://twitter.com/karnauskas/status/865660132075511809) that, much to their surprise, Caddy refused to start, citing timeout errors. This is understandably jarring to any site owners because Caddy is the first web server to offer this technology, although [many Traefik users expressed similar frustration](https://github.com/containous/traefik/issues/1637) for the same reason.
+Most Caddy users who did this during the downtime would not have experienced any problems, but a few of them [reported](https://twitter.com/karnauskas/status/865660132075511809) that, much to their surprise, Caddy refused to start, citing timeout errors. This is understandably jarring to any site owners because Caddy is the first web server to offer this technology, although [many Traefik users expressed similar frustration](https://github.com/containous/traefik/issues/1641) for the same reason.
 
 In the past, this behavior has been [reported](https://caddy.community/t/how-to-have-bad-domain-in-config-skipped/513?u=matt) [multiple times](https://caddy.community/t/behavior-of-automatic-https-on-failure-to-generate-cert/342?u=matt) and even [filed as a bug](https://github.com/mholt/caddy/issues/642), but each time, it was due to faulty DNS configuration (or lacking a registered domain entirely). But this situation is different, and arguably more agitating, since its cause is entirely out of the control of the site owner.
 
@@ -64,7 +64,7 @@ So I think in order for most users (i.e. those who were already running Caddy) t
 Users who were first starting a new Caddy instance during the outage to serve a new site would also have seen this behavior regardless of renewal windows because in that case, there's no valid certificate on disk already, so Caddy quits because it cannot obtain one and serve your site over HTTPS. In this case, you can get around this quite easily by disabling HTTPS or supplying your own certificates (like the good ol' days).
 
 
-### Why not start if Caddy has a valid certificate on disk?
+### Why does Caddy behave this way?
 
 If you had to drive over 1,000 miles through the middle of nowhere in a foreign country and you knew you only had a range of 150 miles left in your vehicle but weren't sure if/where you could refill (or recharge), would you even start the journey? You'd probably want some assurances that you could find a gas or charging station that accepted your card, had fuel that was compatible with your vehicle, and if something went wrong, somebody would be around to help out.
 
@@ -87,6 +87,7 @@ When Caddy was started before yesterday's change, it would treat any certificate
 
 This gives about 3 weeks of buffer room. If it takes 3 weeks to cycle your server, you might still be affected by such outages. But if your cycles take a matter of minutes, there is more than enough time to not ever notice a failed start because of this again. If your server hasn't been able to talk to the CA for three weeks, something is seriously wrong and definitely demands your attention.
 
+Basically, this issue is not expected to manifest itself any longer unless there is a sustained outage, attack, or misconfiguration.
 
 
 ## Recommendations for site owners
@@ -94,6 +95,8 @@ This gives about 3 weeks of buffer room. If it takes 3 weeks to cycle your serve
 First, we recommend signaling with USR1 to reload configuration changes, rather than stopping and restarting the process. USR1 reloads are graceful and incur zero downtime. If there is an error, Caddy will log it and continue serving the site as before.
 
 Second, if you somehow find yourself in this situation in the future, you may override Caddy's certificate management policies by specifying certificates manually with the [`tls` directive](/docs/tls). You will be responsible for renewing them and reloading the config when that happens, but Caddy will always accept them without question if you provide them explicitly.
+
+Note again that this scenario was already highly localized, and **with v0.10.3, the need for these workarounds was almost entirely eradicated.** If you still need them, it's probably because your server was down for ~3 weeks or you're bringing a new server instance online at an unfortunate time.
 
 Finally, please get involved in the discussion in positive, constructive ways! Search existing issues to see if it has been reported before, then add your 👍 vote or comment with any additional, helpful information. All your feedback is valuable when it contributes to a solution.
 
@@ -107,9 +110,15 @@ Caddy is the only web server with a fully automatic, integrated OCSP implementat
 
 ## The question of policy
 
-So where do we go from here? Automated certificate mangement policies are kind of new, and only a small handful of software supports them. We're still learning what the optimal policies are. There needs to be a good balance between making errors noticable/actionable and letting users do what they want _as long as they understand the risks_ (and this is the hard part, ask [Adrienne Porter Felt](https://twitter.com/__apf__), who engineers Chrome security UI/UX).
+So where do we go from here? Automated certificate mangement policies are kind of new, and only a small handful of software supports them. We're still learning what the optimal policies are. There needs to be a good balance between making errors noticable/actionable and letting users do what they want _as long as they understand the risks_ (and this is the hard part, ask [Adrienne Porter Felt](https://twitter.com/__apf__), who engineers Chrome security UI/UX, or [Jean Camp](http://www.ljean.com) who researches risk communication).
 
-Should the certificate management policy be configurable? I haven't ruled it out. But I want to make sure we understand what the needs are, and that takes time. Will there be certain policies to choose from or would each individual behavior be managed? How much configuration surface do we really need to expose, vs. what works well most of the time and in times of duress? We will continue to seek answers to these questions and others and improve Caddy's certificate management policies over time.
+When considering certificate management policy, we must remember that TLS, ACME, and OCSP are security protocols. When faced with errors or uncertainty, we could make decisions as though we weren't under attack, but then why are we using security protocols? For instance, if the CA can't verify the domain to issue a certificate, is the certificate which is expiring soon really still valid? If so, what is the point of renewing it? Why not just extend the validity period. There are a number of reasons that make the answers to these questions variable. If a certificate cannot be renewed, it could be because DNS or the domain itself was compromised. Or it could be an attacker dropping packets. Or it could be an innocent outage. It's often impossible to tell, even if some are more likely than others.
+
+We also have to accept the consequences of these decisions. For example, right now Caddy will continue serving a site over HTTPS even if it cannot ever renew its certificate and it expires. Browsers will start showing security warnings. Is this worse or better than disconnecting the site entirely? The server knows the certificate has expired, and the more we show unsuspecting users (harmless?) security warnings, the more likely they are to click through to bypass them. Do we want security warnings to be treated like car alarms, which are now practically useless?
+
+Should the certificate management policy be configurable? I haven't ruled it out. I know most of you will say yes. But I want to make sure we understand what the needs are, what the risks are and how to communicate them, and that takes time. Will there be certain policies to choose from or would each individual behavior be managed? How much configuration surface do we really need to expose, vs. what works well most of the time and in times of duress?
+
+Caddy's security features, as well as the advent of automated certificate management, challenge some of the assumptions we're used to making or never had to make before. We will continue to seek answers to these and other questions to improve Caddy's certificate management policies over time in the best interest of the Web and its future.
 
 
 ## A thank you to the community
