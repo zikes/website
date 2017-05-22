@@ -103,9 +103,9 @@ Finally, please get involved in the discussion in positive, constructive ways! S
 
 ## Caddy is more robust during CA outages than other web servers
 
-What didn't get enough attention during this incident is Caddy's high-quality OCSP implementation that kept your sites green during Let's Encrypt's OCSP responder outage. You just didn't notice because Caddy's OCSP implementation weathered the storm gracefully.
+What didn't get enough attention during this incident is Caddy's high-quality OCSP implementation that kept your sites green during  Let's Encrypt's OCSP responder outage. You just didn't notice because Caddy's OCSP implementation weathered the storm gracefully (whereas sites like [www.gnu.org reportedly went down](https://www.reddit.com/r/sysadmin/comments/6c3j8e/letsencrypt_is_down/dhvn6t3/?context=3) due to [stapling issues](https://gist.github.com/AGWA/1de6c26be5396f7cbce7ee016302d684)).
 
-Caddy is the only web server with a fully automatic, integrated OCSP implementation that is robust against attacks and network outages. [Apache's support is poor](https://gist.github.com/AGWA/1de6c26be5396f7cbce7ee016302d684) and nginx doesn't do it by default. Caddy's is enabled automatically and works for all certificates with OCSP information embedded in them. Specifically, Caddy implements points 1, 2, 3, 5, 7, 8, and 10 of [Ryan Sleevi's unofficial Guide to OCSP Stapling](https://gist.github.com/sleevi/5efe9ef98961ecfb4da8). I'll probably write up more about this in a future post.
+Caddy is the only web server with a fully automatic, integrated OCSP implementation that is robust against attacks and network outages. Caddy's is enabled automatically and works for all certificates with OCSP information embedded in them. Specifically, Caddy implements points 1, 2, 3, 5, 7, 8, and 10 of [Ryan Sleevi's unofficial Guide to OCSP Stapling](https://gist.github.com/sleevi/5efe9ef98961ecfb4da8). I'll probably write up more about this in a future post.
 
 
 ## The question of policy
