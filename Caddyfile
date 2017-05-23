@@ -28,6 +28,10 @@ proxy /account   localhost:2016
 proxy /download/ localhost:2016
 proxy /tx        localhost:5051
 
+push /docs/mitm-detection /resources/css/mitm.css
+push /docs/mitm-detection /resources/js/mitm.js
+push /docs/mitm-detection /resources/mitm.html
+
 header / {
 	Content-Security-Policy "style-src   'self' https://fonts.googleapis.com;
 	                         script-src  'self' data: https://www.google-analytics.com https://checkout.stripe.com;

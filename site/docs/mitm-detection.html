@@ -4,6 +4,8 @@
 		<title>Detecting HTTPS Interception - Caddy</title>
 		{{.Include "/includes/head.html"}}
 		<link rel="stylesheet" href="/resources/css/docs.css">
+		<link rel="stylesheet" href="/resources/css/mitm.css">
+		<script src="/resources/js/mitm.js"></script>
 	</head>
 	<body>
 		{{.Include "/includes/docs-nav.html"}}
@@ -15,6 +17,22 @@
 				<h2>Detecting HTTPS Interception</h2>
 
 				<p>Caddy has the ability to detect certain Man-in-the-Middle (MITM) attacks on HTTPS connections that may otherwise be invisible to the browser and the end user. This means Caddy can determine whether it is &quot;likely&quot; or &quot;unlikely&quot; that a TLS proxy is actively intercepting an HTTPS connection.</p>
+
+				<div class="demo">
+					<div class="demo-title">This Connection</div>
+					<div class="demo-result">(Loading)</div>
+					<div class="demo-explanations">
+						<div class="demo-explanation demo-mitm-likely">
+							It seems likely that your connection is actively being intercepted by a TLS proxy. Your connection is probably NOT private! (Read the rest of this page to learn about possible false positives.)
+						</div>
+						<div class="demo-explanation demo-mitm-unlikely">
+							Phew! It looks like your connection to this website is not being intercepted. (Read the rest of this page to learn about possible false negatives.)
+						</div>
+						<div class="demo-explanation demo-unavailable">
+							Your connection is not over HTTPS, so Caddy cannot detect if there is a Man-in-the-Middle, although without encryption there probably is one.
+						</div>
+					</div>
+				</div>
 
 				<p>All incoming HTTPS connections are automatically checked for tampering using techniques described by Durumeric, Halderman, et. al. in their <a href="https://jhalderm.com/pub/papers/interception-ndss17.pdf">NDSS '17 paper</a>. The results of the inspection are exposed in various ways throughout Caddy so you can choose how to handle a suspected MITM attack on your clients. (Keep in mind that many TLS proxies take the form of &quot;benevolent&quot; antivirus or firewall products.)</p>
 
