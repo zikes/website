@@ -739,10 +739,20 @@ span[data-tooltip] {
 
 
 
+@media (max-width: 1150px) {
+	#get-involved-link {
+		display: none;
+	}
+}
+
 @media (max-width: 1000px) {
 	.top-bar .left-links {
 		width: auto;
 		flex-grow: 1;
+	}
+
+	#top-github-link {
+		display: none;
 	}
 
 	header h1 {
