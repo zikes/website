@@ -307,6 +307,7 @@ code.cmd.bash::before {
 .footer-sponsors img.dnsimple { max-width: 80px; }
 .footer-sponsors img.minio { max-height: 50px; }
 .footer-sponsors img.uptimerobot { max-width: 150px; }
+.footer-sponsors img.sourcegraph { max-width: 175px; }
 
 .footer-sponsors .become {
 	line-height: 1rem;
