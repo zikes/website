@@ -52,15 +52,17 @@
 				</p>
 
 				<code class="block"><span class="cf-dir">log</span> <span class="cf-arg"><i>path file </i>[<i>format</i>]</span> {
-	<span class="cf-subdir">rotate_size</span> <i>mb</i>
-	<span class="cf-subdir">rotate_age</span>  <i>days</i>
-	<span class="cf-subdir">rotate_keep</span> <i>count</i>
+	<span class="cf-subdir">rotate_size</span>     <i>mb</i>
+	<span class="cf-subdir">rotate_age</span>      <i>days</i>
+	<span class="cf-subdir">rotate_keep</span>     <i>count</i>
+	<span class="cf-subdir">rotate_compress</span>
 }</code>
 
 				<ul>
 					<li><strong>rotate_size</strong> is the size in megabytes a log file must reach before rolling it.</li>
 					<li><strong>rotate_age</strong> is how long in days to keep rotated log files.</li>
 					<li><strong>rotate_keep</strong> is the maximum number of rotated log files to keep; older rotated log files get pruned.</li>
+					<li><strong>rotate_compress</strong> is the option to compress rotated log files. gzip is the only format supported.</li>
 				</ul>
 
 				<h3 id="log-format">Log Format</h3>
@@ -107,12 +109,13 @@
 				<code class="block"><span class="cf-subdir">rotate_size</span> 100 <span class="cf-comment"># Rotate a log when it reaches 100 MB</span>
 <span class="cf-subdir">rotate_age</span>  14  <span class="cf-comment"># Keep rotated log files for 14 days</span>
 <span class="cf-subdir">rotate_keep</span> 10  <span class="cf-comment"># Keep at most 10 rotated log files</span></code>
+<span class="cf-subdir">rotate_compress</span> <span class="cf-comment"># Compress rotated log files in gzip format</span></code>
 
 				<p>
 					You can specify these subdirectives to customize log rolling.
 				</p>
 
-				
+
 				<h3 id="examples">Examples</h3>
 
 				<p>Log all requests to access.log:</p>
@@ -134,9 +137,10 @@
 				<p>With rotation:</p>
 
 				<p><code class="block"><span class="cf-dir">log</span> requests.log {
-	<span class="cf-subdir">rotate_size</span> 50 <span class="cf-comment"># Rotate after 50 MB</span>
-	<span class="cf-subdir">rotate_age</span>  90 <span class="cf-comment"># Keep rotated files for 90 days</span>
-	<span class="cf-subdir">rotate_keep</span> 20 <span class="cf-comment"># Keep at most 20 log files</span>
+	<span class="cf-subdir">rotate_size</span> 50  <span class="cf-comment"># Rotate after 50 MB</span>
+	<span class="cf-subdir">rotate_age</span>  90  <span class="cf-comment"># Keep rotated files for 90 days</span>
+	<span class="cf-subdir">rotate_keep</span> 20  <span class="cf-comment"># Keep at most 20 log files</span>
+	<span class="cf-subdir">rotate_compress</span> <span class="cf-comment"># Compress rotated log files in gzip format</span></code>
 }</code></p>
 
 				{{.Include "/includes/docs-helpbox.html"}}
