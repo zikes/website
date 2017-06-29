@@ -5,7 +5,7 @@ date: 2017-05-20 16:00:00+00:00
 type: post
 ---
 
-Caddy stepped into unknown territory when it became the first web server to use HTTPS by default and manage your TLS certificates for you. When [Let's Encrypt suffered a connectivity issue](https://community.letsencrypt.org/t/ocsp-and-issuance-outage-2017-05-19/34506) yesterday, it exposed some grave realities (and misunderstandings) about automated certificate management. I'd like to talk about what happened, clarify a few things, make some recommendations, and raise questions for future consideration.
+Caddy stepped into unknown territory when it became the first web server to use HTTPS by default and manage your TLS certificates for you. When [Let's Encrypt suffered a connectivity issue](https://community.letsencrypt.org/t/may-19-2017-ocsp-and-issuance-outage-postmortem/34922) yesterday, it exposed some grave realities (and misunderstandings) about automated certificate management. I'd like to talk about what happened, clarify a few things, make some recommendations, and raise questions for future consideration.
 
 
 ## The incident

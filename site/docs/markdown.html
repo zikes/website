@@ -24,27 +24,19 @@
 }</code></p>
 
 				<ul>
-					<li><strong>basepath</strong> is the base path to match. Markdown will not activate if the request URL is
-						not prefixed with this path. Default is site root.</li>
-					<li><strong>extensions...</strong> is a space-delimited list of file extensions to treat as Markdown (defaults
-						to .md, .markdown, and .mdown); this is different from the <a href="/docs/ext">ext</a> directive
-						which assumes a missing file extension.</li>
+					<li><strong>basepath</strong> is the base path to match. Markdown will not activate if the request URL is not prefixed with this path. Default is site root.</li>
+					<li><strong>extensions...</strong> is a space-delimited list of file extensions to treat as Markdown (defaults to .md, .markdown, and .mdown); this is different from the <a href="/docs/ext">ext</a> directive which assumes a missing file extension.</li>
 					<li><strong>css</strong> indicates that the next argument is a CSS file to use on the page.</li>
 					<li><strong>js</strong> indicates that the next argument is a JavaScript file to include on the page.</li>
 					<li><strong>file</strong> is the JS or CSS file to add to the page.</li>
-					<li><strong>template</strong> defines a template with the given <strong>name</strong> to be at the given
-						<strong>path</strong>. To specify the default template, omit <em>name</em>. Markdown files can choose
-						a template by using the name in its front matter.</li>
+					<li><strong>template</strong> defines a template with the given <strong>name</strong> to be at the given <strong>path</strong>. To specify the default template, omit <em>name</em>. Markdown files can choose a template by using the name in its front matter.</li>
 				</ul>
 
-				<p>You can use the js and css arguments more than once to add more files to the default template. If you want
-					to accept defaults, you should completely omit the curly braces.</p>
+				<p>You can use the js and css arguments more than once to add more files to the default template. If you want to accept defaults, you should completely omit the curly braces.</p>
 
 				<h3 id="front-matter-document-metadata">Front Matter (Document Metadata)</h3>
 
-				<p>Markdown files may begin with <em>front matter</em>, which is a specially-formatted block of metadata about
-					the file. For example, it could describe the HTML template to use to render the file, or define the contents
-					of the title tag. Front matter can be in YAML, TOML, or JSON formats.</p>
+				<p>Markdown files may begin with <em>front matter</em>, which is a specially-formatted block of metadata about the file. For example, it could describe the HTML template to use to render the file, or define the contents of the title tag. Front matter can be in YAML, TOML, or JSON formats.</p>
 
 				<p><a href="https://github.com/toml-lang/toml">TOML</a> front matter starts and ends with <code>+++</code>:</p>
 
@@ -73,14 +65,11 @@ sitename: A Caddy site
 }
 </code></pre>
 
-				<p>The front matter fields &quot;author&quot;, &quot;copyright&quot;, &quot;description&quot;, and &quot;subject&quot;
-					will be used to create <code>&lt;meta&gt;</code> tags on the rendered pages.</p>
+				<p>The front matter fields &quot;author&quot;, &quot;copyright&quot;, &quot;description&quot;, and &quot;subject&quot; will be used to create <code>&lt;meta&gt;</code> tags on the rendered pages.</p>
 
 				<h3 id="markdown-templates">Markdown Templates</h3>
 
-				<p>Template files are just HTML files with template tags, called actions, that can insert dynamic content depending
-					on the file being served. The variables defined in metadata can be accessed from the templates like <code>&#123;&#123;.Doc.variable&#125;&#125;</code>                    where 'variable' is the name of the variable. The variable <code>.Doc.body</code> holds the body of the
-					markdown file.</p>
+				<p>Template files are just HTML files with template tags, called actions, that can insert dynamic content depending on the file being served. The variables defined in metadata can be accessed from the templates like <code>&#123;&#123;.Doc.variable&#125;&#125;</code> where 'variable' is the name of the variable. The variable <code>.Doc.body</code> holds the body of the markdown file.</p>
 
 				<p>Here is a simple example template (contrived):</p>
 
@@ -97,8 +86,7 @@ sitename: A Caddy site
 &lt;/html&gt;
 </code></pre>
 
-				<p>Along with these template actions, all the standard <a href="/docs/template-actions">Caddy template actions</a>                    are available to you in Markdown templates. Be sure to sanitize anything you render as HTML (use the
-					<code>html</code>, <code>js</code>, and <code>urlquery</code> functions)!</p>
+				<p>Along with these template actions, all the standard <a href="/docs/template-actions">Caddy template actions</a> are available to you in Markdown templates. Be sure to sanitize anything you render as HTML (use the <code>html</code>, <code>js</code>, and <code>urlquery</code> functions)!</p>
 
 				<h3 id="examples">Examples</h3>
 
