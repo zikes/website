@@ -69,6 +69,7 @@
 				<p>Advanced users may open a settings block for more control, optionally specifying their own certificate and key:</p>
 
 				<code class="block"><span class="cf-dir">tls</span> <span class="cf-arg">[<i>cert key</i>]</span> {
+    <span class="cf-subdir">ca</span>        <i>uri</i>
     <span class="cf-subdir">protocols</span> <i>min max</i>
     <span class="cf-subdir">ciphers</span>   <i>ciphers...</i>
     <span class="cf-subdir">curves</span>    <i>curves...</i>
@@ -82,6 +83,7 @@
 }</code>
 
 				<ul>
+					<li><b>ca</b> specifies the ACME-compatible Certificate Authority endpoint to request certificates from.</li>
 					<li><b>cert</b> and <b>key</b> are the same as above.</li>
 					<li><b>protocols</b> specifies the minimum and maximum protocol versions to support. See below for valid values. If min and max are the same, it need only be specified once.</li>
 					<li><b>ciphers</b> is a list of space-separated ciphers that will be supported, overriding the defaults. If you list any, only the ones you specify will be allowed and preferred in the order given. See below for valid values.</li>
@@ -181,6 +183,11 @@
 
 				<code class="block"><span class="cf-dir">tls</span> <span class="cf-arg">self_signed</span></code>
 
+				<p>Use the LetsEncrypt Staging endpoint:</p>
+
+				<code class="block"><span class="cf-dir">tls</span> {
+    <span class="cf-subdir">ca</span> https://acme-staging.api.letsencrypt.org/directory
+}</code>
 
 				{{.Include "/includes/docs-helpbox.html"}}
 			</article>
