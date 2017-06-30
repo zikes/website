@@ -21,6 +21,8 @@
 
 				{{.Markdown (html $plugin.Description)}}
 
+				<p><b><a href="{{html $plugin.Docs}}" class="external-link">Full documentation</a></b></p>
+
 				{{if gt (len $plugin.Examples) 0}}
 					<h3>Examples</h3>
 					<div class="examples">

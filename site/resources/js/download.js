@@ -186,7 +186,7 @@ $(function() {
 		if (version.length == 40)
 			version = version.substr(0, 8);
 		$('#plugin-version').text(version);
-		$('#plugin-docs').attr('href', plugin.Docs);
+		$('#plugin-docs').attr('href', "/docs/"+plugin.Name);
 		$('#plugin-support').attr('href', plugin.Support);
 		$('#plugin-website').attr('href', plugin.Website);
 		$('#plugin-howto').hide(150);
