@@ -18,9 +18,10 @@
 				<h3 id="syntax">Syntax</h3>
 
 				<p><code class="block"><span class="cf-dir">markdown</span> <span class="cf-arg">[<i>basepath</i>]</span> {
-	<span class="cf-subdir">ext</span>      <i>extensions...</i>
-	<span class="cf-subdir">[css|js]</span> <i>file</i>
-	<span class="cf-subdir">template</span> [<i>name</i>] <i>path</i>
+	<span class="cf-subdir">ext</span>         <i>extensions...</i>
+	<span class="cf-subdir">[css|js]</span>    <i>file</i>
+	<span class="cf-subdir">template</span>    [<i>name</i>] <i>path</i>
+	<span class="cf-subdir">templatedir</span> <i>defaultpath</i>
 }</code></p>
 
 				<ul>
@@ -30,6 +31,7 @@
 					<li><strong>js</strong> indicates that the next argument is a JavaScript file to include on the page.</li>
 					<li><strong>file</strong> is the JS or CSS file to add to the page.</li>
 					<li><strong>template</strong> defines a template with the given <strong>name</strong> to be at the given <strong>path</strong>. To specify the default template, omit <em>name</em>. Markdown files can choose a template by using the name in its front matter.</li>
+					<li><strong>templatedir</strong> sets the default path with the given <em>defaultpath</em> to be used when listing templates.</li>
 				</ul>
 
 				<p>You can use the js and css arguments more than once to add more files to the default template. If you want to accept defaults, you should completely omit the curly braces.</p>
