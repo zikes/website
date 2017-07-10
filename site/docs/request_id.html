@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<head>
+	<head>
+		<title>http.request_id - Caddy User Guide</title>
+		{{.Include "/includes/head.html"}}
+		<link rel="stylesheet" href="/resources/css/docs.css">
+	</head>
+	<body>
+		{{.Include "/includes/docs-nav.html"}}
+
+		<div class="content-container">
+			{{.Include "/includes/docs-nav-side.html"}}
+			
+			<article>
+				<h2>http.request_id</h2>
+								
+				<p>request_id generates a UUID which can be referenced via the <code>{request_id}</code> <a href="placeholders">placeholder</a>, for use in many other directives including <a href="header"><code>header</code></a> and <a href="log"><code>log</code></a></p>
+
+				<p>When request_id is used, the <code>{request_id}</code> <a href="/docs/placeholders">placeholder</a> will have a value; otherwise it will be empty.</p>	
+
+				<h3 id="syntax">Syntax</h3>
+
+				<p><code class="block"><span class="cf-dir">request_id</span></code></p>
+
+				<h3 id="examples">Examples</h3>
+
+				<p>Set the request ID in a response header</p>
+
+				<code class="block"><span class="cf-dir">request_id</span> 
+				<span class="cf-arg">  header /  X-Request-Id {request_id}</span></code>
+
+				{{.Include "/includes/docs-helpbox.html"}}
+			</article>
+
+		</div>
+		{{.Include "/includes/footer.html"}}
+	</body>
+</head>

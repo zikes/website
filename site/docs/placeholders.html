@@ -103,6 +103,10 @@
 					<tr>
 						<td><b>{request}</b></td>
 						<td>The entire HTTP request (sans body), compacted to one line</td>
+					</tr>					
+					<tr>
+						<td><b>{request_id}</b></td>
+						<td>The request_id UUID.  Will be blank unless <a href="request_id"><code>request_id</code></a> directive is used in Caddyfile</td>
 					</tr>
 					<tr>
 						<td><b>{request_body}</b></td>
