@@ -32,7 +32,7 @@
 				<p>However, advanced features including load balancing can be utilized with an expanded syntax:</p>
 
 				<p><code class="block"><span class="cf-dir">proxy</span> <span class="cf-arg"><i>from to...</i></span> {
-	<span class="cf-subdir">policy</span> random | least_conn | round_robin | first | ip_hash | uri_hash
+	<span class="cf-subdir">policy</span> <i>name</i> <i>[value]</i>
 	<span class="cf-subdir">fail_timeout</span> <i>duration</i>
 	<span class="cf-subdir">max_fails</span> <i>integer</i>
 	<span class="cf-subdir">max_conns</span> <i>integer</i>
@@ -55,7 +55,7 @@
 				<ul>
 				<li><strong>from</strong> is the base path to match for the request to be proxied.</li>
 				<li><strong>to</strong> is the destination endpoint to proxy to. At least one is required, but multiple may be specified. If a scheme (http/https) is not specified, http is used. Unix sockets may also be used by prefixing &quot;unix:&quot;.</li>
-				<li><strong>policy</strong> is the load balancing policy to use; applies only with multiple backends. May be one of random, least_conn, round_robin, first, ip_hash, or uri_hash. Default is random.</li>
+				<li><strong>policy</strong> is the load balancing policy to use; applies only with multiple backends. May be one of random, least_conn, round_robin, first, ip_hash, uri_hash, or header. If header is chosen, the header name must also be provided. Default is random.</li>
 				<li><strong>fail_timeout</strong> specifies how long to remember a failed request to a backend. A timeout &gt; 0 enables request failure counting and is required for load balancing between backends in case of failures. If the number of failed requests accumulates to the max_fails value, the host will be considered down and no requests will be routed to it until failed requests begin to be forgotten. By default, this is disabled (0s), meaning that failed requests will not be remembered and the backend will always be considered available. Must be a duration value (like &quot;10s&quot; or &quot;1m&quot;).</li>
 				<li><strong>max_fails</strong> is the number of failed requests within fail_timeout that are needed before considering a backend to be down. Not used if fail_timeout is 0. Must be at least 1. Default is 1.</li>
 				<li><strong>max_conns</strong> is the maximum number of concurrent requests to each backend. 0 means no limit. When the limit is reached, additional requests will fail with Bad Gateway (502). Default is 0.</li>
@@ -98,7 +98,7 @@
 
 				<h3 id="policies">Policies</h3>
 
-				<p>There are three load balancing policies available:</p>
+				<p>There are several load balancing policies available:</p>
 
 				<ul>
 				<li><strong>random</strong> (default) - Randomly select a backend</li>
@@ -107,6 +107,7 @@
 				<li><strong>first</strong> - Select the first available backend in the order they are defined in the Caddyfile</li>
 				<li><strong>ip_hash</strong> - Select backend by hashing the request IP, distributing evenly over the hash space based on the total number of backends</li>
 				<li><strong>uri_hash</strong> - Select backend by hashing the request URI, distributing evenly over the hash space based on the total number of backends</li>
+				<li><strong>header</strong> - Select by hashing the value of a given header, specified by the <i>[value]</i> after the policy name, distributing evenly over the hash space based on the total number of backends</li>
 				</ul>
 
 				<h3 id="examples">Examples</h3>
@@ -119,7 +120,13 @@
 
 				<p><code class="block"><span class="cf-dir">proxy</span> <span class="cf-arg">/ web1.local:80 web2.local:90 web3.local:100</span></code></p>
 
-				<p>Same as above, but round-robin style:</p>
+				<p>Same as above, with header affinity:</p>
+
+				<p><code class="block"><span class="cf-dir">proxy</span> <span class="cf-arg">/ web1.local:80 web2.local:90 web3.local:100</span> {
+	<span class="cf-subdir">policy</span> header X-My-Header
+}</code></p>
+
+				<p>Round-robin style:</p>
 
 				<p><code class="block"><span class="cf-dir">proxy</span> <span class="cf-arg">/ web1.local:80 web2.local:90 web3.local:100</span> {
 	<span class="cf-subdir">policy</span> round_robin
